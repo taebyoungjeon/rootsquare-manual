@@ -41,42 +41,33 @@
         <span>재고·발주</span>
         <strong id="count-stock">0</strong>
       </button>
-      <button class="category" data-category="pos">
-        <span>POS·정산</span>
-        <strong id="count-pos">0</strong>
-      </button>
       <button class="category" data-category="equipment">
         <span>장비 유지보수</span>
         <strong id="count-equipment">0</strong>
-      </button>
-      <button class="category" data-category="emergency">
-        <span>비상 상황</span>
-        <strong id="count-emergency">0</strong>
-      </button>
-      <button class="category" data-category="training">
-        <span>신입 교육</span>
-        <strong id="count-training">0</strong>
       </button>
     </aside>
 
     <section class="workspace">
       <section class="notice-panel" aria-label="중요 공지">
         <div>
-          <p class="notice-label">NOTICE</p>
-          <h2>오늘 가장 주의할 것</h2>
+          <p class="notice-label">TODAY</p>
+          <h2>오늘의 필수 확인</h2>
         </div>
-        <ul id="notice-list"></ul>
+        <div class="notice-content">
+          <div class="must-checks" id="today-checks"></div>
+          <div class="notice-groups" id="notice-groups"></div>
+        </div>
       </section>
 
       <div class="search-panel">
         <label for="manual-search">검색</label>
-        <input id="manual-search" type="search" placeholder="예: 아이스 아메리카노, 환불, 마감 청소">
+        <input id="manual-search" type="search" placeholder="예: 오픈, 품절, 스무디, 베이스, 마감 청소">
       </div>
 
       <section class="quick-links" aria-label="상황별 바로가기">
         <button data-shortcut="open">출근 직후</button>
         <button data-shortcut="rush">피크타임</button>
-        <button data-shortcut="claim">컴플레인</button>
+        <button data-shortcut="claim">품절 안내</button>
         <button data-shortcut="close">마감 전</button>
       </section>
 

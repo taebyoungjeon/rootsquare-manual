@@ -4,7 +4,8 @@ const detailEl = document.querySelector("#article-detail");
 const searchEl = document.querySelector("#manual-search");
 const resultCountEl = document.querySelector("#result-count");
 const shortcutButtons = [...document.querySelectorAll("[data-shortcut]")];
-const noticeListEl = document.querySelector("#notice-list");
+const todayChecksEl = document.querySelector("#today-checks");
+const noticeGroupsEl = document.querySelector("#notice-groups");
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -12,10 +13,7 @@ const categoryLabels = {
   service: "고객 응대",
   clean: "위생·청소",
   stock: "재고·발주",
-  pos: "POS·정산",
-  equipment: "장비 유지보수",
-  emergency: "비상 상황",
-  training: "신입 교육"
+  equipment: "장비 유지보수"
 };
 
 let activeCategory = "all";
@@ -52,12 +50,31 @@ function renderCounts() {
 
   Object.keys(categoryLabels).forEach((category) => {
     const countEl = document.querySelector(`#count-${category}`);
-    countEl.textContent = MANUALS.filter((manual) => manual.category === category).length;
+    const count = MANUALS.filter((manual) => manual.category === category).length;
+    countEl.textContent = count;
+    countEl.closest(".category").hidden = count === 0;
   });
 }
 
 function renderNotices() {
-  noticeListEl.innerHTML = NOTICES.map((notice) => `<li>${notice}</li>`).join("");
+  todayChecksEl.innerHTML = TODAY_CHECKS.map((item) => `
+    <label>
+      <input type="checkbox">
+      <span>${item}</span>
+    </label>
+  `).join("");
+
+  noticeGroupsEl.innerHTML = NOTICE_GROUPS.map((group) => `
+    <section class="notice-card">
+      <div class="notice-card-head">
+        <span>${group.label}</span>
+        <h3>${group.title}</h3>
+      </div>
+      <ul>
+        ${group.items.map((item) => `<li>${item}</li>`).join("")}
+      </ul>
+    </section>
+  `).join("");
 }
 
 function renderArticles() {
@@ -156,8 +173,8 @@ shortcutButtons.forEach((button) => {
     const shortcut = button.dataset.shortcut;
     const shortcutMap = {
       open: { category: "shift", query: "오픈" },
-      rush: { category: "service", query: "대기 주문 피크" },
-      claim: { category: "service", query: "컴플레인 환불 불만" },
+      rush: { category: "drink", query: "스무디 따뜻한 음료" },
+      claim: { category: "service", query: "품절 안내 응대" },
       close: { category: "shift", query: "마감 클로즈" }
     };
     const next = shortcutMap[shortcut];
