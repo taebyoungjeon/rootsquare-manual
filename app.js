@@ -43,7 +43,8 @@ function getKoreanInitials(text) {
 }
 
 function createSearchText(parts) {
-  const normalized = normalize(parts.join(" "));
+  const source = Array.isArray(parts) ? parts.join(" ") : parts;
+  const normalized = normalize(source);
   return `${normalized} ${getKoreanInitials(normalized)}`;
 }
 
@@ -63,9 +64,13 @@ function getFilteredManuals() {
       ...manual.tags,
       ...manual.steps,
       ...manual.checklist
-    ].join(" "));
+    ]);
 
-    return inCategory && (!terms.length || terms.some((term) => searchable.includes(term)));
+    if (terms.length) {
+      return terms.some((term) => searchable.includes(term));
+    }
+
+    return inCategory;
   });
 }
 
