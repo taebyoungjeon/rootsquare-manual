@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>루트스퀘어 운영 매뉴얼</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">ROOTSQUARE OPS WIKI</p>
+      <h1>루트스퀘어 운영 매뉴얼</h1>
+    </div>
+    <div class="status-pill">초안 v0.1</div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="매뉴얼 카테고리">
+      <button class="category is-active" data-category="all">
+        <span>전체</span>
+        <strong id="count-all">0</strong>
+      </button>
+      <button class="category" data-category="drink">
+        <span>음료 제조</span>
+        <strong id="count-drink">0</strong>
+      </button>
+      <button class="category" data-category="shift">
+        <span>오픈·클로즈</span>
+        <strong id="count-shift">0</strong>
+      </button>
+      <button class="category" data-category="service">
+        <span>고객 응대</span>
+        <strong id="count-service">0</strong>
+      </button>
+      <button class="category" data-category="clean">
+        <span>위생·청소</span>
+        <strong id="count-clean">0</strong>
+      </button>
+      <button class="category" data-category="stock">
+        <span>재고·발주</span>
+        <strong id="count-stock">0</strong>
+      </button>
+      <button class="category" data-category="pos">
+        <span>POS·정산</span>
+        <strong id="count-pos">0</strong>
+      </button>
+      <button class="category" data-category="equipment">
+        <span>장비 유지보수</span>
+        <strong id="count-equipment">0</strong>
+      </button>
+      <button class="category" data-category="emergency">
+        <span>비상 상황</span>
+        <strong id="count-emergency">0</strong>
+      </button>
+      <button class="category" data-category="training">
+        <span>신입 교육</span>
+        <strong id="count-training">0</strong>
+      </button>
+    </aside>
+
+    <section class="workspace">
+      <section class="notice-panel" aria-label="중요 공지">
+        <div>
+          <p class="notice-label">NOTICE</p>
+          <h2>오늘 가장 주의할 것</h2>
+        </div>
+        <ul id="notice-list"></ul>
+      </section>
+
+      <div class="search-panel">
+        <label for="manual-search">검색</label>
+        <input id="manual-search" type="search" placeholder="예: 아이스 아메리카노, 환불, 마감 청소">
+      </div>
+
+      <section class="quick-links" aria-label="상황별 바로가기">
+        <button data-shortcut="open">출근 직후</button>
+        <button data-shortcut="rush">피크타임</button>
+        <button data-shortcut="claim">컴플레인</button>
+        <button data-shortcut="close">마감 전</button>
+      </section>
+
+      <div class="content-grid">
+        <section class="article-list" aria-label="매뉴얼 목록">
+          <div class="section-heading">
+            <h2>항목</h2>
+            <span id="result-count">0개</span>
+          </div>
+          <div id="articles"></div>
+        </section>
+
+        <article class="article-detail" id="article-detail" aria-live="polite">
+          <div class="empty-state">
+            <h2>찾고 싶은 항목을 선택하세요</h2>
+            <p>왼쪽 카테고리나 검색창으로 필요한 매뉴얼을 바로 찾을 수 있습니다.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="manual-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
