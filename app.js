@@ -11,6 +11,7 @@ const categoryLabels = {
   drink: "음료 제조",
   shift: "오픈·클로즈",
   service: "고객 응대",
+  parttimer: "파트타이머",
   clean: "위생·청소",
   stock: "재고·발주",
   equipment: "장비 유지보수"
@@ -173,6 +174,7 @@ shortcutButtons.forEach((button) => {
     const shortcut = button.dataset.shortcut;
     const shortcutMap = {
       open: { category: "shift", query: "오픈" },
+      parttimer: { category: "parttimer", query: "" },
       rush: { category: "drink", query: "스무디 따뜻한 음료" },
       claim: { category: "service", query: "품절 안내 응대" },
       close: { category: "shift", query: "마감 클로즈" }
