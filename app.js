@@ -23,8 +23,28 @@ const categoryLabels = {
 let activeCategory = "all";
 let activeArticleId = MANUALS[0]?.id;
 
+const koreanInitials = [
+  "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
+  "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
+];
+
 function normalize(text) {
   return text.toLowerCase().replace(/\s+/g, "");
+}
+
+function getKoreanInitials(text) {
+  return [...text].map((char) => {
+    const code = char.charCodeAt(0);
+    if (code < 0xac00 || code > 0xd7a3) {
+      return char;
+    }
+    return koreanInitials[Math.floor((code - 0xac00) / 588)];
+  }).join("");
+}
+
+function createSearchText(parts) {
+  const normalized = normalize(parts.join(" "));
+  return `${normalized} ${getKoreanInitials(normalized)}`;
 }
 
 function getFilteredManuals() {
@@ -36,7 +56,7 @@ function getFilteredManuals() {
 
   return MANUALS.filter((manual) => {
     const inCategory = activeCategory === "all" || manual.category === activeCategory;
-    const searchable = normalize([
+    const searchable = createSearchText([
       manual.title,
       manual.summary,
       categoryLabels[manual.category],
