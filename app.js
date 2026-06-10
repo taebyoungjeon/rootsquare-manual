@@ -9,6 +9,9 @@ const noticeGroupsEl = document.querySelector("#notice-groups");
 
 const categoryLabels = {
   drink: "음료 제조",
+  drinkRecipe: "음료 레시피",
+  baseRecipe: "베이스 제조",
+  dessertRecipe: "디저트·베이커리",
   shift: "오픈·클로즈",
   service: "고객 응대",
   parttimer: "파트타이머",
@@ -120,6 +123,8 @@ function renderDetail() {
     return;
   }
 
+  const isRecipe = ["drinkRecipe", "baseRecipe", "dessertRecipe"].includes(manual.category);
+
   detailEl.innerHTML = `
     <h2>${manual.title}</h2>
     <p class="summary">${manual.summary}</p>
@@ -130,14 +135,14 @@ function renderDetail() {
     </div>
 
     <section class="manual-section">
-      <h3>진행 순서</h3>
+      <h3>${isRecipe ? "레시피 내용" : "진행 순서"}</h3>
       <ol class="steps">
         ${manual.steps.map((step) => `<li>${step}</li>`).join("")}
       </ol>
     </section>
 
     <section class="manual-section">
-      <h3>확인 체크리스트</h3>
+      <h3>${isRecipe ? "핵심 확인" : "확인 체크리스트"}</h3>
       <div class="checklist">
         ${manual.checklist.map((item) => `
           <label>
@@ -175,6 +180,9 @@ shortcutButtons.forEach((button) => {
     const shortcutMap = {
       open: { category: "shift", query: "오픈" },
       parttimer: { category: "parttimer", query: "" },
+      drinkRecipe: { category: "drinkRecipe", query: "" },
+      baseRecipe: { category: "baseRecipe", query: "" },
+      dessertRecipe: { category: "dessertRecipe", query: "" },
       rush: { category: "drink", query: "스무디 따뜻한 음료" },
       claim: { category: "service", query: "품절 안내 응대" },
       close: { category: "shift", query: "마감 클로즈" }

@@ -25,6 +25,18 @@
         <span>음료 제조</span>
         <strong id="count-drink">0</strong>
       </button>
+      <button class="category" data-category="drinkRecipe">
+        <span>음료 레시피</span>
+        <strong id="count-drinkRecipe">0</strong>
+      </button>
+      <button class="category" data-category="baseRecipe">
+        <span>베이스 제조</span>
+        <strong id="count-baseRecipe">0</strong>
+      </button>
+      <button class="category" data-category="dessertRecipe">
+        <span>디저트·베이커리</span>
+        <strong id="count-dessertRecipe">0</strong>
+      </button>
       <button class="category" data-category="shift">
         <span>오픈·클로즈</span>
         <strong id="count-shift">0</strong>
@@ -65,12 +77,15 @@
 
       <div class="search-panel">
         <label for="manual-search">검색</label>
-        <input id="manual-search" type="search" placeholder="예: 오픈, 품절, 스무디, 베이스, 마감 청소">
+        <input id="manual-search" type="search" placeholder="예: 오픈, 품절, 스무디, 베이스, 티라미수, 마감 청소">
       </div>
 
       <section class="quick-links" aria-label="상황별 바로가기">
         <button data-shortcut="open">출근 직후</button>
         <button data-shortcut="parttimer">파트타이머</button>
+        <button data-shortcut="drinkRecipe">음료 레시피</button>
+        <button data-shortcut="baseRecipe">베이스 제조</button>
+        <button data-shortcut="dessertRecipe">디저트</button>
         <button data-shortcut="rush">피크타임</button>
         <button data-shortcut="claim">품절 안내</button>
         <button data-shortcut="close">마감 전</button>
@@ -96,6 +111,7 @@
   </main>
 
   <script src="manual-data.js"></script>
+  <script src="recipe-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
