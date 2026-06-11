@@ -21,6 +21,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-x: hidden;
 }
 
 button,
@@ -104,6 +105,7 @@ h1 {
 }
 
 .workspace {
+  min-width: 0;
   padding: 24px clamp(18px, 4vw, 42px) 40px;
 }
 
@@ -249,6 +251,7 @@ h1 {
   display: grid;
   gap: 18px;
   grid-template-columns: minmax(260px, 380px) minmax(0, 1fr);
+  min-width: 0;
 }
 
 .article-list,
@@ -257,6 +260,7 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   box-shadow: var(--shadow);
+  min-width: 0;
 }
 
 .article-list {
@@ -363,6 +367,8 @@ h1 {
 
 .manual-section {
   margin-bottom: 24px;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .manual-section h3 {
@@ -441,7 +447,13 @@ h1 {
   gap: 18px;
   justify-content: space-between;
   margin-bottom: 18px;
+  max-width: 100%;
+  min-width: 0;
   padding: 20px;
+}
+
+.schedule-hero > div {
+  min-width: 0;
 }
 
 .schedule-hero h2 {
@@ -486,12 +498,14 @@ h1 {
   gap: 10px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-bottom: 24px;
+  min-width: 0;
 }
 
 .schedule-summary-card {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
+  min-width: 0;
   padding: 14px;
 }
 
@@ -508,6 +522,7 @@ h1 {
   font-size: 18px;
   line-height: 1.35;
   margin-bottom: 10px;
+  overflow-wrap: anywhere;
 }
 
 .schedule-summary-card div {
@@ -530,6 +545,7 @@ h1 {
 .schedule-timeline {
   display: grid;
   gap: 10px;
+  min-width: 0;
 }
 
 .schedule-block {
@@ -539,6 +555,7 @@ h1 {
   display: grid;
   gap: 14px;
   grid-template-columns: 130px minmax(0, 1fr);
+  min-width: 0;
   padding: 14px;
 }
 
@@ -562,11 +579,13 @@ h1 {
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: 0;
 }
 
 .schedule-teams div {
   background: #faf7f0;
   border-radius: 8px;
+  min-width: 0;
   padding: 10px;
 }
 
@@ -580,12 +599,15 @@ h1 {
 .schedule-teams p {
   line-height: 1.45;
   margin-bottom: 0;
+  overflow-wrap: anywhere;
 }
 
 .week-strip {
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(7, minmax(0, 1fr));
+  max-width: 100%;
+  min-width: 0;
 }
 
 .week-strip button {
@@ -596,6 +618,7 @@ h1 {
   display: grid;
   gap: 5px;
   min-height: 116px;
+  min-width: 0;
   padding: 12px;
   text-align: left;
 }
@@ -688,10 +711,16 @@ h1 {
 
   .article-list,
   .article-detail {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
     width: 100%;
   }
 
   .article-detail.is-schedule-detail {
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
     padding: 16px;
   }
 
@@ -724,12 +753,16 @@ h1 {
 
   .week-strip {
     display: flex;
+    max-width: 100%;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .week-strip button {
     flex: 0 0 138px;
+    min-width: 0;
   }
 }
 
@@ -745,6 +778,8 @@ h1 {
   }
 
   .article-detail.is-schedule-detail {
+    max-width: 100%;
+    overflow-x: hidden;
     padding: 12px;
   }
 
