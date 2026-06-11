@@ -783,9 +783,28 @@ h1 {
   width: 48px;
 }
 
+.fab svg {
+  fill: none;
+  height: 23px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 23px;
+}
+
+.fab-schedule {
+  background: #d7c9aa;
+  color: #24311f;
+}
+
 .fab:hover {
   background: var(--green-strong);
   transform: scale(1.08);
+}
+
+.fab-schedule:hover {
+  background: #efe7d5;
 }
 
 .fab:active {

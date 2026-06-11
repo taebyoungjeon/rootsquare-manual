@@ -81,6 +81,7 @@ function renderCounts() {
   Object.keys(categoryLabels).forEach((category) => {
     const countEl = document.querySelector(`#count-${category}`);
     const count = MANUALS.filter((manual) => manual.category === category).length;
+    if (!countEl) return;
     countEl.textContent = count;
     countEl.closest(".category").hidden = count === 0;
   });
@@ -309,6 +310,7 @@ renderDetail();
 // ── Sticky offset: sidebar 높이를 CSS 변수로 전달 ──
 const sidebarEl = document.querySelector(".sidebar");
 const searchPanelEl = document.querySelector(".search-panel");
+const fabScheduleEl = document.getElementById("fab-schedule");
 const fabTopEl = document.getElementById("fab-top");
 const fabItemsEl = document.getElementById("fab-items");
 
@@ -323,6 +325,20 @@ updateSidebarHeight();
 window.addEventListener("resize", updateSidebarHeight);
 
 // ── FAB 버튼 ──
+fabScheduleEl.addEventListener("click", () => {
+  searchEl.value = "";
+  activeArticleId = "weekly-schedule-sample";
+  setCategory("schedule");
+  const target = document.getElementById("manual-content");
+  if (!target) return;
+  const isMobile = window.innerWidth <= 920;
+  const stickyOffset = isMobile
+    ? sidebarEl.offsetHeight + searchPanelEl.offsetHeight + 12
+    : 16;
+  const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
+  window.scrollTo({ top, behavior: "smooth" });
+});
+
 fabTopEl.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });

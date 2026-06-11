@@ -49,10 +49,6 @@
         <span>파트타이머</span>
         <strong id="count-parttimer">0</strong>
       </button>
-      <button class="category" data-category="schedule">
-        <span>근무 시간표</span>
-        <strong id="count-schedule">0</strong>
-      </button>
       <button class="category" data-category="clean">
         <span>위생·청소</span>
         <strong id="count-clean">0</strong>
@@ -116,6 +112,13 @@
   </main>
 
   <div class="fab-group">
+    <button class="fab fab-schedule" id="fab-schedule" type="button" aria-label="오늘 근무표" title="오늘 근무표">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="5" width="16" height="15" rx="2"></rect>
+        <path d="M8 3v4M16 3v4M4 10h16"></path>
+        <path d="M8 14h3M13 14h3M8 17h3"></path>
+      </svg>
+    </button>
     <button class="fab" id="fab-top" type="button" aria-label="맨 위로" title="맨 위로">↑</button>
     <button class="fab" id="fab-items" type="button" aria-label="항목으로 이동" title="항목으로 이동">↓</button>
   </div>
@@ -123,6 +126,6 @@
   <script src="manual-data.js?v=20260610-recipes"></script>
   <script src="recipe-data.js?v=20260610-recipes"></script>
   <script src="schedule-data.js?v=20260611-schedule-sample"></script>
-  <script src="app.js?v=20260611-schedule-width"></script>
+  <script src="app.js?v=20260611-schedule-fab"></script>
 </body>
 </html>
