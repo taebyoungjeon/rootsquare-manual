@@ -1,3 +1,7 @@
+window.SCHEDULE_SHEET_CONFIG = {
+  csvUrl: ""
+};
+
 MANUALS.push({
   id: "weekly-schedule-sample",
   category: "schedule",

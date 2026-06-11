@@ -49,6 +49,163 @@ function createSearchText(parts) {
   return `${normalized} ${getKoreanInitials(normalized)}`;
 }
 
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"' && inQuotes && nextChar === '"') {
+      value += '"';
+      i += 1;
+    } else if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === "," && !inQuotes) {
+      row.push(value.trim());
+      value = "";
+    } else if ((char === "\n" || char === "\r") && !inQuotes) {
+      if (char === "\r" && nextChar === "\n") i += 1;
+      row.push(value.trim());
+      if (row.some(Boolean)) rows.push(row);
+      row = [];
+      value = "";
+    } else {
+      value += char;
+    }
+  }
+
+  row.push(value.trim());
+  if (row.some(Boolean)) rows.push(row);
+  return rows;
+}
+
+function getCell(row, names) {
+  for (const name of names) {
+    if (row[name]) return row[name].trim();
+  }
+  return "";
+}
+
+function splitPeople(value) {
+  return value
+    .split(/[,\n/·]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function formatLocalDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function getDayName(dateText) {
+  const date = new Date(dateText);
+  if (Number.isNaN(date.getTime())) return "";
+  return ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+}
+
+function toSheetRows(csvText) {
+  const rows = parseCsv(csvText);
+  const headers = rows.shift()?.map((header) => header.trim()) || [];
+
+  return rows.map((cells) => headers.reduce((row, header, index) => {
+    row[header] = cells[index] || "";
+    return row;
+  }, {}));
+}
+
+function buildScheduleFromSheetRows(sheetRows) {
+  const rows = sheetRows
+    .map((row) => ({
+      date: getCell(row, ["날짜", "date", "Date"]),
+      day: getCell(row, ["요일", "day", "Day"]),
+      time: getCell(row, ["시간", "시간대", "time", "Time"]),
+      status: getCell(row, ["상태", "업무", "status", "Status"]),
+      regular: splitPeople(getCell(row, ["정규직", "직원", "regular", "Regular"])),
+      parttimer: splitPeople(getCell(row, ["파트타이머", "알바", "parttimer", "Parttimer"])),
+      roles: splitPeople(getCell(row, ["역할", "메모", "role", "Role"])),
+      changedAt: getCell(row, ["변경일", "수정일", "changedAt", "ChangedAt"]),
+      changeLabel: getCell(row, ["변경내용", "변경 내역", "change", "Change"])
+    }))
+    .filter((row) => row.date && row.time);
+
+  if (!rows.length) return null;
+
+  rows.sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`));
+
+  const todayText = formatLocalDate(new Date());
+  const groupedByDate = rows.reduce((groups, row) => {
+    groups[row.date] ||= [];
+    groups[row.date].push(row);
+    return groups;
+  }, {});
+
+  const availableDates = Object.keys(groupedByDate).sort();
+  const selectedDate = groupedByDate[todayText]
+    ? todayText
+    : availableDates.find((date) => date >= todayText) || availableDates[0];
+  const todayRows = groupedByDate[selectedDate] || [];
+  const allTodayPeople = [...new Set(todayRows.flatMap((row) => [...row.regular, ...row.parttimer]))];
+  const nextRow = todayRows[1] || todayRows[0];
+  const closeRow = todayRows[todayRows.length - 1] || todayRows[0];
+  const selectedDay = todayRows[0]?.day || getDayName(selectedDate);
+  const weekLabel = `${selectedDate.slice(0, 4)}년 ${Number(selectedDate.slice(5, 7))}월 근무표`;
+
+  const changes = rows
+    .filter((row) => row.changedAt && row.changeLabel)
+    .map((row) => ({ date: row.changedAt, label: row.changeLabel }));
+
+  return {
+    weekLabel,
+    sourceLabel: "Google Sheet 연동",
+    todayLabel: `표시일: ${Number(selectedDate.slice(5, 7))}/${Number(selectedDate.slice(8, 10))} ${selectedDay}`,
+    updatedAt: changes[0]?.date || selectedDate,
+    changes,
+    summaryCards: [
+      {
+        label: "오늘 근무",
+        value: allTodayPeople.length ? `총 ${allTodayPeople.length}명` : "등록된 근무자 없음",
+        people: allTodayPeople
+      },
+      {
+        label: "다음 출근",
+        value: nextRow ? `${nextRow.time} ${nextRow.status || "근무"}` : "등록된 시간 없음",
+        people: nextRow ? [...nextRow.regular, ...nextRow.parttimer, ...nextRow.roles] : []
+      },
+      {
+        label: "마감 예정",
+        value: closeRow ? `${closeRow.time} ${closeRow.status || "근무"}` : "등록된 시간 없음",
+        people: closeRow ? [...closeRow.regular, ...closeRow.parttimer, ...closeRow.roles] : []
+      }
+    ],
+    timeBlocks: todayRows.map((row) => ({
+      time: row.time,
+      status: row.status || "근무",
+      teams: [
+        { label: "정규직", people: row.regular.length ? row.regular : ["-"] },
+        { label: "파트타이머", people: row.parttimer.length ? row.parttimer : ["-"] },
+        { label: "역할", people: row.roles.length ? row.roles : ["-"] }
+      ]
+    })),
+    weekDays: availableDates.map((date) => {
+      const dateRows = groupedByDate[date];
+      const day = dateRows[0]?.day || getDayName(date);
+      const peopleCount = new Set(dateRows.flatMap((row) => [...row.regular, ...row.parttimer])).size;
+      return {
+        day,
+        date: `${Number(date.slice(5, 7))}/${Number(date.slice(8, 10))}`,
+        badge: date === todayText ? "오늘" : `${peopleCount}명 · ${dateRows.length}개 시간대`
+      };
+    })
+  };
+}
+
 function getFilteredManuals() {
   const terms = searchEl.value
     .trim()
@@ -343,6 +500,35 @@ function renderScheduleBadge() {
   fabScheduleEl.title = changeCount > 0 ? `오늘 근무표 · 최근 변경 ${changeCount}건` : "오늘 근무표";
 }
 
+async function loadScheduleSheet() {
+  const csvUrl = window.SCHEDULE_SHEET_CONFIG?.csvUrl?.trim();
+  if (!csvUrl) return;
+
+  try {
+    const response = await fetch(csvUrl, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Google Sheet 응답 오류: ${response.status}`);
+
+    const csvText = await response.text();
+    const schedule = buildScheduleFromSheetRows(toSheetRows(csvText));
+    const scheduleManual = MANUALS.find((manual) => manual.type === "schedule");
+    if (!schedule || !scheduleManual) return;
+
+    scheduleManual.title = "근무 시간표";
+    scheduleManual.summary = "Google Sheet에 등록된 근무 시간표를 기준으로 오늘 근무자와 이번 주 시간표를 확인합니다.";
+    scheduleManual.updated = schedule.updatedAt;
+    scheduleManual.tags = ["근무표", "오늘근무", "파트타이머", "정규직", "Google Sheet"];
+    scheduleManual.note = "Google Sheet에서 불러온 근무표입니다. 수정은 담당자용 시트에서 진행합니다.";
+    scheduleManual.schedule = schedule;
+
+    renderCounts();
+    renderArticles();
+    renderDetail();
+    renderScheduleBadge();
+  } catch (error) {
+    console.warn("근무표 Google Sheet를 불러오지 못했습니다.", error);
+  }
+}
+
 function updateSidebarHeight() {
   if (window.innerWidth <= 920) {
     document.documentElement.style.setProperty("--sidebar-h", sidebarEl.offsetHeight + "px");
@@ -352,6 +538,7 @@ function updateSidebarHeight() {
 }
 updateSidebarHeight();
 renderScheduleBadge();
+loadScheduleSheet();
 window.addEventListener("resize", updateSidebarHeight);
 
 // ── FAB 버튼 ──
