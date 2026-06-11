@@ -15,6 +15,7 @@ const categoryLabels = {
   shift: "오픈·클로즈",
   service: "고객 응대",
   parttimer: "파트타이머",
+  schedule: "근무 시간표",
   clean: "위생·청소",
   stock: "재고·발주",
   equipment: "장비 유지보수"
@@ -148,6 +149,11 @@ function renderDetail() {
     return;
   }
 
+  if (manual.type === "schedule") {
+    renderScheduleDetail(manual);
+    return;
+  }
+
   const isRecipe = ["drinkRecipe", "baseRecipe", "dessertRecipe"].includes(manual.category);
 
   detailEl.innerHTML = `
@@ -185,6 +191,76 @@ function renderDetail() {
   `;
 }
 
+function renderScheduleDetail(manual) {
+  const schedule = manual.schedule;
+
+  detailEl.innerHTML = `
+    <div class="schedule-hero">
+      <div>
+        <p class="schedule-label">${schedule.sourceLabel}</p>
+        <h2>${manual.title}</h2>
+        <p>${manual.summary}</p>
+      </div>
+      <div class="schedule-date">
+        <span>${schedule.weekLabel}</span>
+        <strong>${schedule.todayLabel}</strong>
+      </div>
+    </div>
+
+    <section class="schedule-summary" aria-label="오늘 근무 요약">
+      ${schedule.summaryCards.map((card) => `
+        <article class="schedule-summary-card">
+          <span>${card.label}</span>
+          <strong>${card.value}</strong>
+          <div>
+            ${card.people.map((person) => `<em>${person}</em>`).join("")}
+          </div>
+        </article>
+      `).join("")}
+    </section>
+
+    <section class="manual-section">
+      <h3>시간대별 근무</h3>
+      <div class="schedule-timeline">
+        ${schedule.timeBlocks.map((block) => `
+          <article class="schedule-block">
+            <div class="schedule-time">
+              <strong>${block.time}</strong>
+              <span>${block.status}</span>
+            </div>
+            <div class="schedule-teams">
+              ${block.teams.map((team) => `
+                <div>
+                  <b>${team.label}</b>
+                  <p>${team.people.join(" · ")}</p>
+                </div>
+              `).join("")}
+            </div>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h3>이번 주 보기</h3>
+      <div class="week-strip">
+        ${schedule.weekDays.map((day) => `
+          <button type="button" class="${day.badge.includes("오늘") ? "is-today" : ""}">
+            <span>${day.day}</span>
+            <strong>${day.date}</strong>
+            <em>${day.badge}</em>
+          </button>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="manual-section">
+      <h3>운영 메모</h3>
+      <p class="note">${manual.note}</p>
+    </section>
+  `;
+}
+
 function setCategory(category) {
   activeCategory = category;
   categoryButtons.forEach((button) => {
@@ -207,6 +283,7 @@ shortcutButtons.forEach((button) => {
     const shortcut = button.dataset.shortcut;
     const shortcutMap = {
       open: { category: "shift", query: "오픈" },
+      schedule: { category: "schedule", query: "" },
       parttimer: { category: "parttimer", query: "" },
       drinkRecipe: { category: "drinkRecipe", query: "" },
       baseRecipe: { category: "baseRecipe", query: "" },
