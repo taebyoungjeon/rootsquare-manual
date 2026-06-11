@@ -1,5 +1,5 @@
 window.SCHEDULE_SHEET_CONFIG = {
-  csvUrl: ""
+  csvUrl: "https://docs.google.com/spreadsheets/d/1eqp92eDcOofu_vrgCik807lrZRaU1Bl1BPge4ev1Cpw/gviz/tq?tqx=out:csv"
 };
 
 MANUALS.push({
