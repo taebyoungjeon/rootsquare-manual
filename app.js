@@ -311,8 +311,37 @@ renderDetail();
 const sidebarEl = document.querySelector(".sidebar");
 const searchPanelEl = document.querySelector(".search-panel");
 const fabScheduleEl = document.getElementById("fab-schedule");
+const scheduleChangeBadgeEl = document.getElementById("schedule-change-badge");
 const fabTopEl = document.getElementById("fab-top");
 const fabItemsEl = document.getElementById("fab-items");
+
+function getScheduleChangeCount(days = 3) {
+  const scheduleManual = MANUALS.find((manual) => manual.type === "schedule");
+  const changes = scheduleManual?.schedule?.changes || [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  return changes.filter((change) => {
+    const changedAt = new Date(change.date);
+    if (Number.isNaN(changedAt.getTime())) return false;
+    changedAt.setHours(0, 0, 0, 0);
+    const diffDays = (today - changedAt) / 86400000;
+    return diffDays >= 0 && diffDays < days;
+  }).length;
+}
+
+function renderScheduleBadge() {
+  const changeCount = getScheduleChangeCount();
+  if (!scheduleChangeBadgeEl) return;
+
+  scheduleChangeBadgeEl.hidden = changeCount === 0;
+  scheduleChangeBadgeEl.textContent = changeCount > 9 ? "9+" : "N";
+  fabScheduleEl.setAttribute(
+    "aria-label",
+    changeCount > 0 ? `오늘 근무표, 최근 변경 ${changeCount}건` : "오늘 근무표"
+  );
+  fabScheduleEl.title = changeCount > 0 ? `오늘 근무표 · 최근 변경 ${changeCount}건` : "오늘 근무표";
+}
 
 function updateSidebarHeight() {
   if (window.innerWidth <= 920) {
@@ -322,6 +351,7 @@ function updateSidebarHeight() {
   }
 }
 updateSidebarHeight();
+renderScheduleBadge();
 window.addEventListener("resize", updateSidebarHeight);
 
 // ── FAB 버튼 ──

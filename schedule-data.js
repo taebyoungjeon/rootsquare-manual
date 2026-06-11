@@ -26,6 +26,10 @@ MANUALS.push({
     sourceLabel: "엑셀 업로드 예시",
     todayLabel: "오늘 예시: 6/17 수",
     updatedAt: "2026-06-11",
+    changes: [
+      { date: "2026-06-12", label: "예시 변경: 파트타이머 출근 시간 조정" },
+      { date: "2026-06-11", label: "예시 변경: 마감 담당자 확인" }
+    ],
     summaryCards: [
       {
         label: "지금 근무",

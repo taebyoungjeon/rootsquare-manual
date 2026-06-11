@@ -814,6 +814,7 @@ h1 {
   font-size: 20px;
   height: 48px;
   justify-content: center;
+  position: relative;
   transition: background 0.15s, transform 0.1s;
   width: 48px;
 }
@@ -831,6 +832,28 @@ h1 {
 .fab-schedule {
   background: #d7c9aa;
   color: #24311f;
+}
+
+.fab-badge {
+  align-items: center;
+  background: #c9432f;
+  border: 2px solid #fffdf8;
+  border-radius: 999px;
+  color: #fffdf8;
+  display: inline-flex;
+  font-size: 11px;
+  font-weight: 900;
+  height: 20px;
+  justify-content: center;
+  min-width: 20px;
+  padding: 0 5px;
+  position: absolute;
+  right: -3px;
+  top: -4px;
+}
+
+.fab-badge[hidden] {
+  display: none;
 }
 
 .fab:hover {
@@ -857,5 +880,13 @@ h1 {
     font-size: 18px;
     height: 42px;
     width: 42px;
+  }
+
+  .fab-badge {
+    font-size: 10px;
+    height: 18px;
+    min-width: 18px;
+    right: -3px;
+    top: -5px;
   }
 }
