@@ -194,7 +194,10 @@ function setCategory(category) {
 }
 
 categoryButtons.forEach((button) => {
-  button.addEventListener("click", () => setCategory(button.dataset.category));
+  button.addEventListener("click", () => {
+    searchEl.value = "";
+    setCategory(button.dataset.category);
+  });
 });
 
 searchEl.addEventListener("input", renderArticles);
@@ -222,3 +225,35 @@ renderCounts();
 renderNotices();
 renderArticles();
 renderDetail();
+
+// ── Sticky offset: sidebar 높이를 CSS 변수로 전달 ──
+const sidebarEl = document.querySelector(".sidebar");
+const searchPanelEl = document.querySelector(".search-panel");
+const fabTopEl = document.getElementById("fab-top");
+const fabItemsEl = document.getElementById("fab-items");
+
+function updateSidebarHeight() {
+  if (window.innerWidth <= 920) {
+    document.documentElement.style.setProperty("--sidebar-h", sidebarEl.offsetHeight + "px");
+  } else {
+    document.documentElement.style.removeProperty("--sidebar-h");
+  }
+}
+updateSidebarHeight();
+window.addEventListener("resize", updateSidebarHeight);
+
+// ── FAB 버튼 ──
+fabTopEl.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+fabItemsEl.addEventListener("click", () => {
+  const target = document.getElementById("manual-content");
+  if (!target) return;
+  const isMobile = window.innerWidth <= 920;
+  const stickyOffset = isMobile
+    ? sidebarEl.offsetHeight + searchPanelEl.offsetHeight + 12
+    : 16;
+  const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
+  window.scrollTo({ top, behavior: "smooth" });
+});

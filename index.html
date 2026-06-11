@@ -91,7 +91,7 @@
         <button data-shortcut="close">마감 전</button>
       </section>
 
-      <div class="content-grid">
+      <div class="content-grid" id="manual-content">
         <section class="article-list" aria-label="매뉴얼 목록">
           <div class="section-heading">
             <h2>항목</h2>
@@ -110,8 +110,13 @@
     </section>
   </main>
 
+  <div class="fab-group">
+    <button class="fab" id="fab-top" type="button" aria-label="맨 위로" title="맨 위로">↑</button>
+    <button class="fab" id="fab-items" type="button" aria-label="항목으로 이동" title="항목으로 이동">↓</button>
+  </div>
+
   <script src="manual-data.js?v=20260610-recipes"></script>
   <script src="recipe-data.js?v=20260610-recipes"></script>
-  <script src="app.js?v=20260610-initial-search-fix"></script>
+  <script src="app.js?v=20260611-sticky-mobile"></script>
 </body>
 </html>

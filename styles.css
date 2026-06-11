@@ -9,6 +9,7 @@
   --rust: #a95d3f;
   --blue: #3e6f8f;
   --shadow: 0 14px 36px rgba(35, 31, 24, 0.08);
+  --sidebar-h: 64px;
 }
 
 * {
@@ -450,23 +451,56 @@ h1 {
   }
 
   .sidebar {
+    background: var(--bg);
     border-bottom: 1px solid var(--line);
     border-right: 0;
     display: flex;
     gap: 8px;
     overflow-x: auto;
-    padding: 12px 16px;
+    padding: 10px 16px;
+    position: sticky;
+    top: 0;
+    scrollbar-width: thin;
+    z-index: 100;
   }
 
   .category {
     flex: 0 0 auto;
     gap: 10px;
     margin-bottom: 0;
+    min-height: 42px;
+    padding: 9px 12px;
     width: auto;
+  }
+
+  .search-panel {
+    margin-bottom: 14px;
+    padding: 12px;
+    position: sticky;
+    top: var(--sidebar-h);
+    z-index: 90;
+  }
+
+  .search-panel label {
+    font-size: 12px;
+  }
+
+  .search-panel input {
+    min-height: 44px;
+  }
+
+  .quick-links {
+    gap: 7px;
+    margin-bottom: 16px;
+  }
+
+  .quick-links button {
+    padding: 8px 11px;
   }
 
   .content-grid {
     grid-template-columns: 1fr;
+    scroll-margin-top: calc(var(--sidebar-h) + 86px);
   }
 
   .notice-panel {
@@ -488,5 +522,55 @@ h1 {
 
   .workspace {
     padding-inline: 14px;
+  }
+}
+
+/* ── FAB (Floating Action Buttons) ── */
+.fab-group {
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  right: 20px;
+  z-index: 300;
+}
+
+.fab {
+  align-items: center;
+  background: #24311f;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 16px rgba(35, 31, 24, 0.35);
+  color: #fffdf8;
+  cursor: pointer;
+  display: flex;
+  font-size: 20px;
+  height: 48px;
+  justify-content: center;
+  transition: background 0.15s, transform 0.1s;
+  width: 48px;
+}
+
+.fab:hover {
+  background: var(--green-strong);
+  transform: scale(1.08);
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 560px) {
+  .fab-group {
+    bottom: max(14px, env(safe-area-inset-bottom));
+    gap: 8px;
+    right: 14px;
+  }
+
+  .fab {
+    font-size: 18px;
+    height: 42px;
+    width: 42px;
   }
 }
