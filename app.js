@@ -140,6 +140,7 @@ function renderDetail() {
   const manual = MANUALS.find((item) => item.id === activeArticleId);
 
   if (!manual) {
+    detailEl.classList.remove("is-schedule-detail");
     detailEl.innerHTML = `
       <div class="empty-state">
         <h2>검색 결과가 없습니다</h2>
@@ -148,6 +149,8 @@ function renderDetail() {
     `;
     return;
   }
+
+  detailEl.classList.toggle("is-schedule-detail", manual.type === "schedule");
 
   if (manual.type === "schedule") {
     renderScheduleDetail(manual);

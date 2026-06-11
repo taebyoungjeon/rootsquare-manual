@@ -686,6 +686,15 @@ h1 {
     scroll-margin-top: calc(var(--sidebar-h) + 86px);
   }
 
+  .article-list,
+  .article-detail {
+    width: 100%;
+  }
+
+  .article-detail.is-schedule-detail {
+    padding: 16px;
+  }
+
   .notice-panel {
     grid-template-columns: 1fr;
   }
@@ -733,6 +742,17 @@ h1 {
 
   .workspace {
     padding-inline: 14px;
+  }
+
+  .article-detail.is-schedule-detail {
+    padding: 12px;
+  }
+
+  .article-detail.is-schedule-detail .schedule-hero,
+  .article-detail.is-schedule-detail .schedule-summary-card,
+  .article-detail.is-schedule-detail .schedule-block,
+  .article-detail.is-schedule-detail .week-strip button {
+    border-radius: 8px;
   }
 }
 
