@@ -466,6 +466,7 @@ function renderArticles() {
       activeArticleId = button.dataset.articleId;
       renderArticles();
       renderDetail();
+      scrollToDetail();
     });
   });
 
@@ -473,6 +474,23 @@ function renderArticles() {
     activeArticleId = manuals[0]?.id;
     renderDetail();
   }
+}
+
+function getStickyOffset() {
+  if (window.innerWidth > 920) return 18;
+
+  const sidebarHeight = sidebarEl?.offsetHeight || 0;
+  const searchHeight = searchPanelEl?.offsetHeight || 0;
+  return sidebarHeight + searchHeight + 18;
+}
+
+function scrollToDetail() {
+  if (!detailEl) return;
+
+  requestAnimationFrame(() => {
+    const top = detailEl.getBoundingClientRect().top + window.scrollY - getStickyOffset();
+    window.scrollTo({ top: Math.max(top, 0), behavior: "smooth" });
+  });
 }
 
 function renderDetail() {
@@ -611,6 +629,7 @@ function renderScheduleDetail(manual) {
     button.addEventListener("click", () => {
       selectedScheduleDateKey = button.dataset.scheduleDate;
       renderScheduleDetail(manual);
+      scrollToDetail();
     });
   });
 }
@@ -748,14 +767,7 @@ fabScheduleEl.addEventListener("click", () => {
   searchEl.value = "";
   activeArticleId = "weekly-schedule-sample";
   setCategory("schedule");
-  const target = document.getElementById("manual-content");
-  if (!target) return;
-  const isMobile = window.innerWidth <= 920;
-  const stickyOffset = isMobile
-    ? sidebarEl.offsetHeight + searchPanelEl.offsetHeight + 12
-    : 16;
-  const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
-  window.scrollTo({ top, behavior: "smooth" });
+  scrollToDetail();
 });
 
 fabTopEl.addEventListener("click", () => {
@@ -765,10 +777,6 @@ fabTopEl.addEventListener("click", () => {
 fabItemsEl.addEventListener("click", () => {
   const target = document.getElementById("manual-content");
   if (!target) return;
-  const isMobile = window.innerWidth <= 920;
-  const stickyOffset = isMobile
-    ? sidebarEl.offsetHeight + searchPanelEl.offsetHeight + 12
-    : 16;
-  const top = target.getBoundingClientRect().top + window.scrollY - stickyOffset;
+  const top = target.getBoundingClientRect().top + window.scrollY - getStickyOffset();
   window.scrollTo({ top, behavior: "smooth" });
 });
