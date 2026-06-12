@@ -23,6 +23,7 @@ const categoryLabels = {
 
 let activeCategory = "all";
 let activeArticleId = MANUALS[0]?.id;
+let selectedScheduleDateKey = null;
 
 const koreanInitials = [
   "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
@@ -240,6 +241,72 @@ function formatAssignment(name, task) {
   return task && task !== name ? `${name}(${task})` : name;
 }
 
+function buildScheduleView(days, selectedDateKey) {
+  const todayText = formatLocalDate(new Date());
+  const selectedDay = days.find((day) => day.key === selectedDateKey)
+    || days.find((day) => day.key === todayText)
+    || days.find((day) => day.key >= todayText)
+    || days[0];
+  const activeBlocks = selectedDay.blocks.filter((block) => block.assignments.length);
+  const allTodayPeople = [...new Set(activeBlocks.flatMap((block) => block.assignments.map((assignment) => assignment.name)))];
+  const nextBlock = activeBlocks[0];
+  const closeBlock = activeBlocks[activeBlocks.length - 1];
+
+  return {
+    weekLabel: selectedDay.sheetLabel,
+    sourceLabel: "Google Sheet 연동",
+    todayLabel: `표시일: ${selectedDay.label} ${selectedDay.day}`,
+    selectedDateKey: selectedDay.key,
+    updatedAt: todayText,
+    changes: [],
+    summaryCards: [
+      {
+        label: "선택일 근무",
+        value: allTodayPeople.length ? `총 ${allTodayPeople.length}명` : "등록된 근무자 없음",
+        people: allTodayPeople
+      },
+      {
+        label: "첫 근무",
+        value: nextBlock ? nextBlock.time : "등록된 시간 없음",
+        people: nextBlock ? nextBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+      },
+      {
+        label: "마감 근무",
+        value: closeBlock ? closeBlock.time : "등록된 시간 없음",
+        people: closeBlock ? closeBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+      }
+    ],
+    timeBlocks: activeBlocks.map((block) => {
+      const regular = block.assignments
+        .filter((assignment) => !assignment.isParttimer)
+        .map((assignment) => formatAssignment(assignment.name, assignment.task));
+      const parttimers = block.assignments
+        .filter((assignment) => assignment.isParttimer)
+        .map((assignment) => formatAssignment(assignment.name, assignment.task));
+      const roles = [...new Set(block.assignments.map((assignment) => assignment.task))];
+
+      return {
+        time: block.time,
+        status: "근무",
+        teams: [
+          { label: "정규직", people: regular.length ? regular : ["-"] },
+          { label: "파트타이머", people: parttimers.length ? parttimers : ["-"] },
+          { label: "역할", people: roles.length ? roles : ["-"] }
+        ]
+      };
+    }),
+    weekDays: days.map((day) => {
+      const peopleCount = new Set(day.blocks.flatMap((block) => block.assignments.map((assignment) => assignment.name))).size;
+      return {
+        key: day.key,
+        day: day.day,
+        date: day.label,
+        badge: day.key === todayText ? "오늘" : `${peopleCount}명 · ${day.blocks.length}개 시간대`
+      };
+    })
+  };
+}
+
 function buildScheduleFromWeeklySheets(sheets) {
   const days = [];
 
@@ -315,66 +382,9 @@ function buildScheduleFromWeeklySheets(sheets) {
     day.blocks.sort((a, b) => a.time.localeCompare(b.time));
   });
 
-  const todayText = formatLocalDate(new Date());
-  const selectedDay = days.find((day) => day.key === todayText)
-    || days.find((day) => day.key >= todayText)
-    || days[0];
-  const activeBlocks = selectedDay.blocks.filter((block) => block.assignments.length);
-  const allTodayPeople = [...new Set(activeBlocks.flatMap((block) => block.assignments.map((assignment) => assignment.name)))];
-  const nextBlock = activeBlocks[0];
-  const closeBlock = activeBlocks[activeBlocks.length - 1];
-
-  return {
-    weekLabel: selectedDay.sheetLabel,
-    sourceLabel: "Google Sheet 연동",
-    todayLabel: `표시일: ${selectedDay.label} ${selectedDay.day}`,
-    updatedAt: todayText,
-    changes: [],
-    summaryCards: [
-      {
-        label: "오늘 근무",
-        value: allTodayPeople.length ? `총 ${allTodayPeople.length}명` : "등록된 근무자 없음",
-        people: allTodayPeople
-      },
-      {
-        label: "첫 근무",
-        value: nextBlock ? nextBlock.time : "등록된 시간 없음",
-        people: nextBlock ? nextBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
-      },
-      {
-        label: "마감 근무",
-        value: closeBlock ? closeBlock.time : "등록된 시간 없음",
-        people: closeBlock ? closeBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
-      }
-    ],
-    timeBlocks: activeBlocks.map((block) => {
-      const regular = block.assignments
-        .filter((assignment) => !assignment.isParttimer)
-        .map((assignment) => formatAssignment(assignment.name, assignment.task));
-      const parttimers = block.assignments
-        .filter((assignment) => assignment.isParttimer)
-        .map((assignment) => formatAssignment(assignment.name, assignment.task));
-      const roles = [...new Set(block.assignments.map((assignment) => assignment.task))];
-
-      return {
-        time: block.time,
-        status: "근무",
-        teams: [
-          { label: "정규직", people: regular.length ? regular : ["-"] },
-          { label: "파트타이머", people: parttimers.length ? parttimers : ["-"] },
-          { label: "역할", people: roles.length ? roles : ["-"] }
-        ]
-      };
-    }),
-    weekDays: days.map((day) => {
-      const peopleCount = new Set(day.blocks.flatMap((block) => block.assignments.map((assignment) => assignment.name))).size;
-      return {
-        day: day.day,
-        date: day.label,
-        badge: day.key === todayText ? "오늘" : `${peopleCount}명 · ${day.blocks.length}개 시간대`
-      };
-    })
-  };
+  const schedule = buildScheduleView(days, selectedScheduleDateKey);
+  schedule.days = days;
+  return schedule;
 }
 
 function getFilteredManuals() {
@@ -524,7 +534,12 @@ function renderDetail() {
 }
 
 function renderScheduleDetail(manual) {
-  const schedule = manual.schedule;
+  const schedule = manual.schedule.days
+    ? buildScheduleView(manual.schedule.days, selectedScheduleDateKey || manual.schedule.selectedDateKey)
+    : manual.schedule;
+  if (manual.schedule.days) {
+    manual.schedule = { ...schedule, days: manual.schedule.days };
+  }
 
   detailEl.innerHTML = `
     <div class="schedule-hero">
@@ -577,7 +592,7 @@ function renderScheduleDetail(manual) {
       <h3>이번 주 보기</h3>
       <div class="week-strip">
         ${schedule.weekDays.map((day) => `
-          <button type="button" class="${day.badge.includes("오늘") ? "is-today" : ""}">
+          <button type="button" class="${day.key === schedule.selectedDateKey ? "is-today" : ""}" data-schedule-date="${day.key || ""}">
             <span>${day.day}</span>
             <strong>${day.date}</strong>
             <em>${day.badge}</em>
@@ -591,6 +606,13 @@ function renderScheduleDetail(manual) {
       <p class="note">${manual.note}</p>
     </section>
   `;
+
+  detailEl.querySelectorAll("[data-schedule-date]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectedScheduleDateKey = button.dataset.scheduleDate;
+      renderScheduleDetail(manual);
+    });
+  });
 }
 
 function setCategory(category) {
@@ -698,6 +720,7 @@ async function loadScheduleSheet() {
     scheduleManual.tags = ["근무표", "오늘근무", "파트타이머", "정규직", "Google Sheet"];
     scheduleManual.note = "Google Sheet에서 불러온 근무표입니다. 수정은 담당자용 시트에서 진행합니다.";
     scheduleManual.schedule = schedule;
+    selectedScheduleDateKey ||= schedule.selectedDateKey;
 
     renderCounts();
     renderArticles();
