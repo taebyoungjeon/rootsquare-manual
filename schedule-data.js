@@ -1,5 +1,14 @@
 window.SCHEDULE_SHEET_CONFIG = {
-  csvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?output=csv"
+  csvUrls: [
+    {
+      label: "26년6월2주",
+      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=1067241400&single=true&output=csv"
+    },
+    {
+      label: "26년6월3주",
+      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=431271102&single=true&output=csv"
+    }
+  ]
 };
 
 MANUALS.push({

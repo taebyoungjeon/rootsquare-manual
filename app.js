@@ -206,6 +206,177 @@ function buildScheduleFromSheetRows(sheetRows) {
   };
 }
 
+function parseScheduleDate(text) {
+  const match = text.match(/(\d{1,2})\/(\d{1,2})\s*([월화수목금토일])?/);
+  if (!match) return null;
+
+  const year = new Date().getFullYear();
+  const month = match[1].padStart(2, "0");
+  const day = match[2].padStart(2, "0");
+  return {
+    key: `${year}-${month}-${day}`,
+    label: `${Number(month)}/${Number(day)}`,
+    day: match[3] || getDayName(`${year}-${month}-${day}`)
+  };
+}
+
+function findRecentDateCell(row, columnIndex) {
+  for (let index = columnIndex; index >= 0; index -= 1) {
+    const parsed = parseScheduleDate(row[index] || "");
+    if (parsed) return parsed;
+  }
+  return null;
+}
+
+function isTimeRange(value) {
+  return /^\d{1,2}:\d{2}\s*[~-]\s*\d{1,2}:\d{2}/.test(value || "");
+}
+
+function isOffSchedule(value) {
+  return /휴무|연차|불가/.test(value || "");
+}
+
+function formatAssignment(name, task) {
+  return task && task !== name ? `${name}(${task})` : name;
+}
+
+function buildScheduleFromWeeklySheets(sheets) {
+  const days = [];
+
+  sheets.forEach((sheet) => {
+    const rows = parseCsv(sheet.csvText);
+    const dateRowIndex = rows.findIndex((row) => row.some((cell) => parseScheduleDate(cell || "")));
+    if (dateRowIndex < 0) return;
+
+    const dateRow = rows[dateRowIndex];
+    const nameRow = rows[dateRowIndex + 1] || [];
+    const timeColumns = nameRow
+      .map((cell, index) => (cell === "근무시간" ? index : -1))
+      .filter((index) => index >= 0);
+
+    timeColumns.forEach((timeColumn, timeColumnIndex) => {
+      const date = findRecentDateCell(dateRow, timeColumn);
+      if (!date) return;
+
+      const nextTimeColumn = timeColumns[timeColumnIndex + 1] || nameRow.length;
+      const names = [];
+      for (let column = timeColumn + 1; column < nextTimeColumn; column += 1) {
+        const name = (nameRow[column] || "").trim();
+        if (name) names.push({ column, name });
+      }
+
+      const blockMap = new Map();
+      rows.slice(dateRowIndex + 2).forEach((row) => {
+        const time = (row[timeColumn] || "").trim();
+        if (!isTimeRange(time)) return;
+
+        const assignments = names
+          .map(({ column, name }) => {
+            const task = (row[column] || "").trim().replace(/\s+/g, " ");
+            if (!task || isOffSchedule(task)) return null;
+            return {
+              name,
+              task,
+              isParttimer: /p$/i.test(name)
+            };
+          })
+          .filter(Boolean);
+
+        if (!assignments.length) return;
+        if (!blockMap.has(time)) {
+          blockMap.set(time, []);
+        }
+        blockMap.get(time).push(...assignments);
+      });
+
+      const day = days.find((item) => item.key === date.key) || {
+        ...date,
+        sheetLabel: sheet.label,
+        blocks: []
+      };
+
+      blockMap.forEach((assignments, time) => {
+        const existingBlock = day.blocks.find((block) => block.time === time);
+        if (existingBlock) {
+          existingBlock.assignments.push(...assignments);
+        } else {
+          day.blocks.push({ time, assignments });
+        }
+      });
+
+      if (!days.includes(day)) days.push(day);
+    });
+  });
+
+  if (!days.length) return null;
+
+  days.sort((a, b) => a.key.localeCompare(b.key));
+  days.forEach((day) => {
+    day.blocks.sort((a, b) => a.time.localeCompare(b.time));
+  });
+
+  const todayText = formatLocalDate(new Date());
+  const selectedDay = days.find((day) => day.key === todayText)
+    || days.find((day) => day.key >= todayText)
+    || days[0];
+  const activeBlocks = selectedDay.blocks.filter((block) => block.assignments.length);
+  const allTodayPeople = [...new Set(activeBlocks.flatMap((block) => block.assignments.map((assignment) => assignment.name)))];
+  const nextBlock = activeBlocks[0];
+  const closeBlock = activeBlocks[activeBlocks.length - 1];
+
+  return {
+    weekLabel: selectedDay.sheetLabel,
+    sourceLabel: "Google Sheet 연동",
+    todayLabel: `표시일: ${selectedDay.label} ${selectedDay.day}`,
+    updatedAt: todayText,
+    changes: [],
+    summaryCards: [
+      {
+        label: "오늘 근무",
+        value: allTodayPeople.length ? `총 ${allTodayPeople.length}명` : "등록된 근무자 없음",
+        people: allTodayPeople
+      },
+      {
+        label: "첫 근무",
+        value: nextBlock ? nextBlock.time : "등록된 시간 없음",
+        people: nextBlock ? nextBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+      },
+      {
+        label: "마감 근무",
+        value: closeBlock ? closeBlock.time : "등록된 시간 없음",
+        people: closeBlock ? closeBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+      }
+    ],
+    timeBlocks: activeBlocks.map((block) => {
+      const regular = block.assignments
+        .filter((assignment) => !assignment.isParttimer)
+        .map((assignment) => formatAssignment(assignment.name, assignment.task));
+      const parttimers = block.assignments
+        .filter((assignment) => assignment.isParttimer)
+        .map((assignment) => formatAssignment(assignment.name, assignment.task));
+      const roles = [...new Set(block.assignments.map((assignment) => assignment.task))];
+
+      return {
+        time: block.time,
+        status: "근무",
+        teams: [
+          { label: "정규직", people: regular.length ? regular : ["-"] },
+          { label: "파트타이머", people: parttimers.length ? parttimers : ["-"] },
+          { label: "역할", people: roles.length ? roles : ["-"] }
+        ]
+      };
+    }),
+    weekDays: days.map((day) => {
+      const peopleCount = new Set(day.blocks.flatMap((block) => block.assignments.map((assignment) => assignment.name))).size;
+      return {
+        day: day.day,
+        date: day.label,
+        badge: day.key === todayText ? "오늘" : `${peopleCount}명 · ${day.blocks.length}개 시간대`
+      };
+    })
+  };
+}
+
 function getFilteredManuals() {
   const terms = searchEl.value
     .trim()
@@ -501,15 +672,23 @@ function renderScheduleBadge() {
 }
 
 async function loadScheduleSheet() {
-  const csvUrl = window.SCHEDULE_SHEET_CONFIG?.csvUrl?.trim();
-  if (!csvUrl) return;
+  const config = window.SCHEDULE_SHEET_CONFIG || {};
+  const sources = Array.isArray(config.csvUrls)
+    ? config.csvUrls
+    : [{ label: "Google Sheet", url: config.csvUrl }];
+  const validSources = sources.filter((source) => source.url?.trim());
+  if (!validSources.length) return;
 
   try {
-    const response = await fetch(csvUrl, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Google Sheet 응답 오류: ${response.status}`);
-
-    const csvText = await response.text();
-    const schedule = buildScheduleFromSheetRows(toSheetRows(csvText));
+    const sheets = await Promise.all(validSources.map(async (source) => {
+      const response = await fetch(source.url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`Google Sheet 응답 오류: ${response.status}`);
+      return {
+        label: source.label,
+        csvText: await response.text()
+      };
+    }));
+    const schedule = buildScheduleFromWeeklySheets(sheets) || buildScheduleFromSheetRows(toSheetRows(sheets[0].csvText));
     const scheduleManual = MANUALS.find((manual) => manual.type === "schedule");
     if (!schedule || !scheduleManual) return;
 
