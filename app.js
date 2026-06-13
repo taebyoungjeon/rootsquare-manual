@@ -387,6 +387,19 @@ function buildScheduleFromWeeklySheets(sheets) {
   return schedule;
 }
 
+function buildScheduleFromParsedDays(days, sourceLabel = "Google Sheet") {
+  if (!Array.isArray(days) || !days.length) return null;
+
+  const sortedDays = [...days].sort((a, b) => (a.key || "").localeCompare(b.key || ""));
+  const schedule = buildScheduleView(sortedDays, selectedScheduleDateKey);
+  schedule.days = sortedDays;
+  schedule.weekLabel = `${sourceLabel} 기준`;
+  schedule.sourceLabel = "Google Sheet 색상 기준";
+  schedule.updatedAt = new Date().toISOString().slice(0, 10);
+  schedule.changes = [];
+  return schedule;
+}
+
 function getFilteredManuals() {
   const terms = searchEl.value
     .trim()
@@ -714,6 +727,25 @@ function renderScheduleBadge() {
 
 async function loadScheduleSheet() {
   const config = window.SCHEDULE_SHEET_CONFIG || {};
+  const scheduleManual = MANUALS.find((manual) => manual.type === "schedule");
+  const parsedSchedule = buildScheduleFromParsedDays(config.parsedDays, config.parsedLabel);
+
+  if (parsedSchedule && scheduleManual) {
+    scheduleManual.title = "근무 시간표";
+    scheduleManual.summary = "Google Sheet에 등록된 근무 시간표를 기준으로 오늘 근무자와 이번 주 시간표를 확인합니다.";
+    scheduleManual.updated = parsedSchedule.updatedAt;
+    scheduleManual.tags = ["근무표", "오늘근무", "파트타이머", "정규직", "Google Sheet"];
+    scheduleManual.note = "Google Sheet에서 불러온 근무표입니다. 수정은 담당자용 시트에서 진행합니다.";
+    scheduleManual.schedule = parsedSchedule;
+    selectedScheduleDateKey ||= parsedSchedule.selectedDateKey;
+
+    renderCounts();
+    renderArticles();
+    renderDetail();
+    renderScheduleBadge();
+    return;
+  }
+
   const sources = Array.isArray(config.csvUrls)
     ? config.csvUrls
     : [{ label: "Google Sheet", url: config.csvUrl }];
@@ -730,7 +762,6 @@ async function loadScheduleSheet() {
       };
     }));
     const schedule = buildScheduleFromWeeklySheets(sheets) || buildScheduleFromSheetRows(toSheetRows(sheets[0].csvText));
-    const scheduleManual = MANUALS.find((manual) => manual.type === "schedule");
     if (!schedule || !scheduleManual) return;
 
     scheduleManual.title = "근무 시간표";
