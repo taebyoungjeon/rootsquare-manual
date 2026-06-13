@@ -6,6 +6,12 @@ const resultCountEl = document.querySelector("#result-count");
 const shortcutButtons = [...document.querySelectorAll("[data-shortcut]")];
 const todayChecksEl = document.querySelector("#today-checks");
 const noticeGroupsEl = document.querySelector("#notice-groups");
+const dailyCheckFormEl = document.querySelector("#daily-check-form");
+const dailyCheckItemsEl = document.querySelector("#daily-check-items");
+const dailyCheckNameEl = document.querySelector("#daily-check-name");
+const dailyCheckNoteEl = document.querySelector("#daily-check-note");
+const dailyCheckStatusEl = document.querySelector("#daily-check-status");
+const dailyCheckTypeButtons = [...document.querySelectorAll("[data-daily-check-type]")];
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -24,6 +30,32 @@ const categoryLabels = {
 let activeCategory = "all";
 let activeArticleId = MANUALS[0]?.id;
 let selectedScheduleDateKey = null;
+let activeDailyCheckType = "open";
+
+const DAILY_CHECKLISTS = {
+  open: {
+    label: "오픈",
+    items: [
+      { text: "북카페 옆문을 열었습니다.", important: true },
+      { text: "작주온 문을 열었습니다.", important: true },
+      { text: "북카페 에어컨 번호를 확인했습니다.", important: true },
+      { text: "야외 음악은 11시 이후 재생 기준을 확인했습니다.", important: true },
+      { text: "스템가든/북카페 홀과 야외 테이블 상태를 확인했습니다.", important: false },
+      { text: "주말 손님이 적을 때 인포메이션 또는 스마트팜 앞 안내 근무 기준을 확인했습니다.", important: false }
+    ]
+  },
+  close: {
+    label: "마감",
+    items: [
+      { text: "스템가든 회전문 잠금 상태를 확인했습니다.", important: true },
+      { text: "북카페/외부 출입문 잠금 상태를 확인했습니다.", important: true },
+      { text: "야외 음악, 조명, 냉난방 종료 상태를 확인했습니다.", important: true },
+      { text: "우유 냉장고와 베이스 잔량을 확인했습니다.", important: false },
+      { text: "다음 날 소모품과 오픈 준비 상태를 확인했습니다.", important: false },
+      { text: "특이사항이 있으면 메모 또는 직원에게 공유했습니다.", important: false }
+    ]
+  }
+};
 
 const koreanInitials = [
   "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
@@ -463,6 +495,145 @@ function renderNotices() {
   `).join("");
 }
 
+function dailyCheckStorageKey(type = activeDailyCheckType) {
+  return `rootsquare-daily-check:${formatLocalDate(new Date())}:${type}`;
+}
+
+function setDailyCheckStatus(message, tone = "") {
+  if (!dailyCheckStatusEl) return;
+  dailyCheckStatusEl.textContent = message;
+  dailyCheckStatusEl.dataset.tone = tone;
+}
+
+function readDailyCheckState(type = activeDailyCheckType) {
+  try {
+    return JSON.parse(localStorage.getItem(dailyCheckStorageKey(type)) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function writeDailyCheckState(type = activeDailyCheckType) {
+  if (!dailyCheckItemsEl) return;
+
+  const checked = [...dailyCheckItemsEl.querySelectorAll("input[type='checkbox']")]
+    .filter((input) => input.checked)
+    .map((input) => Number(input.value));
+  const state = {
+    staffName: dailyCheckNameEl?.value.trim() || "",
+    note: dailyCheckNoteEl?.value.trim() || "",
+    checked,
+    savedAt: new Date().toISOString()
+  };
+  localStorage.setItem(dailyCheckStorageKey(type), JSON.stringify(state));
+}
+
+function renderDailyChecklist() {
+  if (!dailyCheckItemsEl) return;
+
+  const checklist = DAILY_CHECKLISTS[activeDailyCheckType];
+  const state = readDailyCheckState(activeDailyCheckType);
+  const submitButton = dailyCheckFormEl?.querySelector("button[type='submit']");
+  const isConnected = Boolean((window.CHECKLIST_SUBMIT_URL || "").trim());
+
+  dailyCheckTypeButtons.forEach((button) => {
+    button.classList.toggle("is-active", button.dataset.dailyCheckType === activeDailyCheckType);
+  });
+
+  if (submitButton) {
+    submitButton.disabled = !isConnected;
+    submitButton.textContent = isConnected ? "제출하기" : "연결 대기";
+  }
+
+  if (dailyCheckNameEl) dailyCheckNameEl.value = state.staffName || "";
+  if (dailyCheckNoteEl) dailyCheckNoteEl.value = state.note || "";
+
+  dailyCheckItemsEl.innerHTML = checklist.items.map((item, index) => `
+    <label class="${item.important ? "is-important" : ""}">
+      <input type="checkbox" value="${index}" ${state.checked?.includes(index) ? "checked" : ""}>
+      <span>
+        ${item.important ? "<em>주의</em>" : ""}
+        ${item.text}
+      </span>
+    </label>
+  `).join("");
+
+  const submittedAt = state.submittedAt
+    ? new Date(state.submittedAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })
+    : "";
+  setDailyCheckStatus(
+    !isConnected
+      ? "Google Apps Script 웹앱 URL을 연결하면 제출과 이메일 발송이 활성화됩니다."
+      : submittedAt
+      ? `오늘 ${checklist.label} 체크를 ${submittedAt}에 제출했습니다.`
+      : "체크 후 제출하면 Google Sheet 기록과 관리자 이메일이 함께 남습니다.",
+    submittedAt && isConnected ? "success" : ""
+  );
+}
+
+async function submitDailyChecklist(event) {
+  event.preventDefault();
+
+  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
+  const checklist = DAILY_CHECKLISTS[activeDailyCheckType];
+  const staffName = dailyCheckNameEl.value.trim();
+  const note = dailyCheckNoteEl.value.trim();
+  const checkedIndexes = [...dailyCheckItemsEl.querySelectorAll("input[type='checkbox']")]
+    .filter((input) => input.checked)
+    .map((input) => Number(input.value));
+  const checkedItems = checklist.items
+    .filter((_, index) => checkedIndexes.includes(index))
+    .map((item) => item.text);
+  const uncheckedItems = checklist.items
+    .filter((_, index) => !checkedIndexes.includes(index))
+    .map((item) => item.text);
+
+  if (!staffName) {
+    dailyCheckNameEl.focus();
+    setDailyCheckStatus("담당자 이름을 입력해주세요.", "error");
+    return;
+  }
+
+  if (!submitUrl) {
+    setDailyCheckStatus("Google Apps Script 웹앱 URL 연결 후 제출할 수 있습니다.", "error");
+    return;
+  }
+
+  const payload = {
+    submittedAt: new Date().toISOString(),
+    localDate: formatLocalDate(new Date()),
+    type: activeDailyCheckType,
+    typeLabel: checklist.label,
+    staffName,
+    checkedItems,
+    uncheckedItems,
+    note,
+    page: location.href
+  };
+
+  setDailyCheckStatus("제출 중입니다...", "");
+
+  try {
+    await fetch(submitUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    writeDailyCheckState(activeDailyCheckType);
+    const state = readDailyCheckState(activeDailyCheckType);
+    state.submittedAt = payload.submittedAt;
+    localStorage.setItem(dailyCheckStorageKey(activeDailyCheckType), JSON.stringify(state));
+    setDailyCheckStatus("제출했습니다. Google Sheet 기록과 관리자 이메일 발송 요청이 전송되었습니다.", "success");
+  } catch (error) {
+    console.warn("데일리 체크 제출 실패", error);
+    setDailyCheckStatus("제출에 실패했습니다. 네트워크 상태를 확인한 뒤 다시 시도해주세요.", "error");
+  }
+}
+
 function renderArticles() {
   const manuals = getFilteredManuals();
   resultCountEl.textContent = `${manuals.length}개`;
@@ -688,8 +859,22 @@ shortcutButtons.forEach((button) => {
   });
 });
 
+dailyCheckTypeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    writeDailyCheckState(activeDailyCheckType);
+    activeDailyCheckType = button.dataset.dailyCheckType;
+    renderDailyChecklist();
+  });
+});
+
+dailyCheckItemsEl?.addEventListener("change", () => writeDailyCheckState());
+dailyCheckNameEl?.addEventListener("input", () => writeDailyCheckState());
+dailyCheckNoteEl?.addEventListener("input", () => writeDailyCheckState());
+dailyCheckFormEl?.addEventListener("submit", submitDailyChecklist);
+
 renderCounts();
 renderNotices();
+renderDailyChecklist();
 renderArticles();
 renderDetail();
 

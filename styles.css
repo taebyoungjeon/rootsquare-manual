@@ -203,6 +203,164 @@ h1 {
   padding-left: 18px;
 }
 
+.daily-check-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 18px;
+}
+
+.daily-check-head {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.daily-check-head h2 {
+  color: var(--green-strong);
+  font-size: 21px;
+  margin-bottom: 0;
+}
+
+.daily-check-tabs {
+  background: #f1eadf;
+  border-radius: 999px;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+}
+
+.daily-check-tabs button {
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: var(--green-strong);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+
+.daily-check-tabs button.is-active {
+  background: #fffdf8;
+  box-shadow: 0 2px 8px rgba(35, 31, 24, 0.08);
+}
+
+.daily-check-form {
+  display: grid;
+  gap: 12px;
+}
+
+.daily-name-field,
+.daily-note-field {
+  display: grid;
+  gap: 8px;
+}
+
+.daily-name-field span,
+.daily-note-field span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.daily-name-field input,
+.daily-note-field textarea {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  padding: 12px;
+  width: 100%;
+}
+
+.daily-note-field textarea {
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.daily-check-items {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.daily-check-items label {
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 22px 1fr;
+  line-height: 1.5;
+  padding: 12px;
+}
+
+.daily-check-items label.is-important {
+  border-color: rgba(169, 93, 63, 0.42);
+}
+
+.daily-check-items input {
+  margin-top: 4px;
+}
+
+.daily-check-items em {
+  background: #f8eee7;
+  border-radius: 999px;
+  color: #8a432d;
+  display: inline-block;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+  margin-right: 6px;
+  padding: 3px 7px;
+}
+
+.daily-check-actions {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+}
+
+.daily-check-actions p {
+  color: var(--muted);
+  line-height: 1.45;
+  margin-bottom: 0;
+}
+
+.daily-check-actions p[data-tone="success"] {
+  color: var(--green-strong);
+  font-weight: 800;
+}
+
+.daily-check-actions p[data-tone="error"] {
+  color: #9d2f22;
+  font-weight: 800;
+}
+
+.daily-check-actions button {
+  background: var(--green-strong);
+  border: 0;
+  border-radius: 8px;
+  color: #fffdf8;
+  cursor: pointer;
+  font-weight: 900;
+  min-height: 44px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+
+.daily-check-actions button:disabled {
+  background: #bdb6aa;
+  cursor: not-allowed;
+}
+
 .search-panel {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -726,6 +884,24 @@ h1 {
 
   .notice-panel {
     grid-template-columns: 1fr;
+  }
+
+  .daily-check-head,
+  .daily-check-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .daily-check-tabs {
+    align-self: flex-start;
+  }
+
+  .daily-check-items {
+    grid-template-columns: 1fr;
+  }
+
+  .daily-check-actions button {
+    width: 100%;
   }
 
   .must-checks,

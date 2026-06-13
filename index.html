@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>루트스퀘어 운영 매뉴얼</title>
-  <link rel="stylesheet" href="styles.css?v=20260612-schedule-badge">
+  <link rel="stylesheet" href="styles.css?v=20260614-checklist-submit">
 </head>
 <body>
   <header class="topbar">
@@ -75,6 +75,34 @@
         </div>
       </section>
 
+      <section class="daily-check-panel" aria-label="데일리 체크리스트 제출">
+        <div class="daily-check-head">
+          <div>
+            <p class="notice-label">DAILY CHECK</p>
+            <h2>오픈·마감 체크 제출</h2>
+          </div>
+          <div class="daily-check-tabs" role="tablist" aria-label="체크리스트 유형">
+            <button type="button" class="is-active" data-daily-check-type="open">오픈 체크</button>
+            <button type="button" data-daily-check-type="close">마감 체크</button>
+          </div>
+        </div>
+        <form id="daily-check-form" class="daily-check-form">
+          <label class="daily-name-field">
+            <span>담당자 이름</span>
+            <input id="daily-check-name" name="staffName" type="text" placeholder="예: 김루트" autocomplete="name" required>
+          </label>
+          <div class="daily-check-items" id="daily-check-items"></div>
+          <label class="daily-note-field">
+            <span>특이사항 메모</span>
+            <textarea id="daily-check-note" name="note" rows="3" placeholder="미체크 사유나 인수인계할 내용을 적어주세요."></textarea>
+          </label>
+          <div class="daily-check-actions">
+            <p id="daily-check-status" aria-live="polite">제출 기록은 Google Sheet와 관리자 이메일로 남길 예정입니다.</p>
+            <button type="submit">제출하기</button>
+          </div>
+        </form>
+      </section>
+
       <div class="search-panel">
         <label for="manual-search">검색</label>
         <input id="manual-search" type="search" placeholder="예: 오픈, 품절, 티라미수, ㅌㅁㅌ, ㅂㄴㄹㄹㄸ">
@@ -127,6 +155,9 @@
   <script src="manual-data.js?v=20260610-recipes"></script>
   <script src="recipe-data.js?v=20260610-recipes"></script>
   <script src="schedule-data.js?v=2026061313-auto-tabs"></script>
-  <script src="app.js?v=2026061313-auto-tabs"></script>
+  <script>
+    window.CHECKLIST_SUBMIT_URL = "";
+  </script>
+  <script src="app.js?v=20260614-checklist-submit"></script>
 </body>
 </html>
