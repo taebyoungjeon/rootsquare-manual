@@ -401,13 +401,17 @@ async function main() {
   })));
   const scheduleSource = fs.readFileSync(scheduleDataPath, "utf8");
   const nextScheduleSource = replaceScheduleConfig(scheduleSource, renderScheduleConfig(activeTabs, parsedDays));
-  fs.writeFileSync(scheduleDataPath, nextScheduleSource);
+  const scheduleChanged = scheduleSource !== nextScheduleSource;
+  if (scheduleChanged) {
+    fs.writeFileSync(scheduleDataPath, nextScheduleSource);
 
-  const indexSource = fs.readFileSync(indexPath, "utf8");
-  fs.writeFileSync(indexPath, updateIndexVersion(indexSource));
+    const indexSource = fs.readFileSync(indexPath, "utf8");
+    fs.writeFileSync(indexPath, updateIndexVersion(indexSource));
+  }
 
   console.log(`Selected schedule tabs: ${activeTabs.map((tab) => tab.label).join(", ")}`);
   console.log(`Parsed schedule days: ${parsedDays.length}`);
+  console.log(`Schedule config changed: ${scheduleChanged ? "yes" : "no"}`);
 }
 
 main().catch((error) => {
