@@ -237,6 +237,10 @@ function isOffSchedule(value) {
   return /휴무|연차|불가/.test(value || "");
 }
 
+function assignmentTask(assignment) {
+  return assignment.task || assignment.role || "";
+}
+
 function formatAssignment(name, task) {
   return task && task !== name ? `${name}(${task})` : name;
 }
@@ -255,7 +259,7 @@ function buildScheduleView(days, selectedDateKey) {
   return {
     weekLabel: selectedDay.sheetLabel,
     sourceLabel: "Google Sheet 연동",
-    todayLabel: `표시일: ${selectedDay.label} ${selectedDay.day}`,
+    todayLabel: `표시일: ${selectedDay.date || selectedDay.label} ${selectedDay.day || selectedDay.label}`,
     selectedDateKey: selectedDay.key,
     updatedAt: todayText,
     changes: [],
@@ -268,22 +272,22 @@ function buildScheduleView(days, selectedDateKey) {
       {
         label: "첫 근무",
         value: nextBlock ? nextBlock.time : "등록된 시간 없음",
-        people: nextBlock ? nextBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+        people: nextBlock ? nextBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignmentTask(assignment))) : []
       },
       {
         label: "마감 근무",
         value: closeBlock ? closeBlock.time : "등록된 시간 없음",
-        people: closeBlock ? closeBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignment.task)) : []
+        people: closeBlock ? closeBlock.assignments.map((assignment) => formatAssignment(assignment.name, assignmentTask(assignment))) : []
       }
     ],
     timeBlocks: activeBlocks.map((block) => {
       const regular = block.assignments
         .filter((assignment) => !assignment.isParttimer)
-        .map((assignment) => formatAssignment(assignment.name, assignment.task));
+        .map((assignment) => formatAssignment(assignment.name, assignmentTask(assignment)));
       const parttimers = block.assignments
         .filter((assignment) => assignment.isParttimer)
-        .map((assignment) => formatAssignment(assignment.name, assignment.task));
-      const roles = [...new Set(block.assignments.map((assignment) => assignment.task))];
+        .map((assignment) => formatAssignment(assignment.name, assignmentTask(assignment)));
+      const roles = [...new Set(block.assignments.map(assignmentTask).filter(Boolean))];
 
       return {
         time: block.time,
@@ -299,8 +303,8 @@ function buildScheduleView(days, selectedDateKey) {
       const peopleCount = new Set(day.blocks.flatMap((block) => block.assignments.map((assignment) => assignment.name))).size;
       return {
         key: day.key,
-        day: day.day,
-        date: day.label,
+        day: day.day || day.label,
+        date: day.date || day.label,
         badge: day.key === todayText ? "오늘" : `${peopleCount}명 · ${day.blocks.length}개 시간대`
       };
     })

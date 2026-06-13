@@ -270,7 +270,7 @@ function parseScheduleHtml(html, label) {
 
     for (let column = timeColumn + 1; column < nextTimeColumn; column += 1) {
       const name = nameRow[column]?.text?.trim();
-      if (!name || name === "신입") continue;
+      if (!name) continue;
 
       let previousRole = "";
       for (let rowIndex = nameRowIndex + 1; rowIndex < rows.length; rowIndex += 1) {
