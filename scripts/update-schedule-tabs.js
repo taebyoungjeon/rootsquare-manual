@@ -383,8 +383,7 @@ function replaceScheduleConfig(source, nextConfig) {
 function updateIndexVersion(source) {
   const stamp = new Date().toISOString().slice(0, 13).replace(/[-T]/g, "");
   return source
-    .replace(/schedule-data\.js\?v=[^"]+/, `schedule-data.js?v=${stamp}-auto-tabs`)
-    .replace(/app\.js\?v=[^"]+/, `app.js?v=${stamp}-auto-tabs`);
+    .replace(/schedule-data\.js\?v=[^"]+/, `schedule-data.js?v=${stamp}-auto-tabs`);
 }
 
 async function main() {
