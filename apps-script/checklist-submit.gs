@@ -4,7 +4,6 @@ const ADMIN_EMAILS = [
 ];
 const SHEET_NAME = "체크리스트 제출 기록";
 const CONFIG_SHEET_NAME = "체크리스트 항목 관리";
-const CONFIG_SHEET_ID = 1897809790;
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -119,8 +118,8 @@ function getOrCreateSheet() {
 
 function getOrCreateConfigSheet() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = spreadsheet.getSheets().find((item) => item.getSheetId() === CONFIG_SHEET_ID)
-    || spreadsheet.getSheetByName(CONFIG_SHEET_NAME);
+  let sheet = spreadsheet.getSheetByName(CONFIG_SHEET_NAME)
+    || findSheetWithChecklistHeaders(spreadsheet);
   if (!sheet) {
     sheet = spreadsheet.insertSheet(CONFIG_SHEET_NAME);
   }
@@ -133,6 +132,13 @@ function getOrCreateConfigSheet() {
   }
 
   return sheet;
+}
+
+function findSheetWithChecklistHeaders(spreadsheet) {
+  return spreadsheet.getSheets().find((sheet) => {
+    const values = sheet.getDataRange().getValues();
+    return findConfigHeaderRowIndex(values) >= 0;
+  });
 }
 
 function getChecklistConfig() {
@@ -183,7 +189,7 @@ function findConfigHeaderRowIndex(values) {
     const keys = row.map((cell) => String(cell || "").trim().replace(/\s+/g, ""));
     return keys.includes("구분") && keys.some((key) => ["항목", "체크항목", "내용"].includes(key));
   });
-  return headerIndex >= 0 ? headerIndex : 0;
+  return headerIndex;
 }
 
 function getConfigCell(row, headerMap, names, fallbackIndex) {
