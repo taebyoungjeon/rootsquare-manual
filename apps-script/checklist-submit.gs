@@ -138,8 +138,9 @@ function getOrCreateConfigSheet() {
 function getChecklistConfig() {
   const sheet = getOrCreateConfigSheet();
   const values = sheet.getDataRange().getValues();
-  const headers = values[0] || [];
-  const rows = values.slice(1);
+  const headerRowIndex = findConfigHeaderRowIndex(values);
+  const headers = values[headerRowIndex] || [];
+  const rows = values.slice(headerRowIndex + 1);
   const headerMap = headers.reduce((map, header, index) => {
     const key = String(header || "").trim().replace(/\s+/g, "");
     if (key) map[key] = index;
@@ -175,6 +176,14 @@ function getChecklistConfig() {
   });
 
   return checklists;
+}
+
+function findConfigHeaderRowIndex(values) {
+  const headerIndex = values.findIndex((row) => {
+    const keys = row.map((cell) => String(cell || "").trim().replace(/\s+/g, ""));
+    return keys.includes("구분") && keys.some((key) => ["항목", "체크항목", "내용"].includes(key));
+  });
+  return headerIndex >= 0 ? headerIndex : 0;
 }
 
 function getConfigCell(row, headerMap, names, fallbackIndex) {
