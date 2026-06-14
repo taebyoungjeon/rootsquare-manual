@@ -1,5 +1,6 @@
 const ADMIN_EMAILS = [
-  "manager@example.com"
+  "hslee@mannacea.com",
+  "ceo@mannacea.com"
 ];
 const SHEET_NAME = "체크리스트 제출 기록";
 const TIMEZONE = "Asia/Seoul";
