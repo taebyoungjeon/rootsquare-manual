@@ -250,6 +250,22 @@ h1 {
   box-shadow: 0 2px 8px rgba(35, 31, 24, 0.08);
 }
 
+.daily-manage-link {
+  align-self: flex-start;
+  background: #edf1e7;
+  border-radius: 999px;
+  color: var(--green-strong);
+  font-size: 13px;
+  font-weight: 900;
+  justify-self: flex-start;
+  padding: 7px 10px;
+  text-decoration: none;
+}
+
+.daily-manage-link:hover {
+  background: #e3ebda;
+}
+
 .daily-check-form {
   display: grid;
   gap: 12px;

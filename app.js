@@ -12,6 +12,7 @@ const dailyCheckNameEl = document.querySelector("#daily-check-name");
 const dailyCheckNoteEl = document.querySelector("#daily-check-note");
 const dailyCheckStatusEl = document.querySelector("#daily-check-status");
 const dailyCheckTypeButtons = [...document.querySelectorAll("[data-daily-check-type]")];
+const dailyManageLinkEl = document.querySelector("#daily-manage-link");
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -571,6 +572,67 @@ function renderDailyChecklist() {
   );
 }
 
+function loadJsonp(url) {
+  return new Promise((resolve, reject) => {
+    const callbackName = `rootsquareChecklistCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+    const script = document.createElement("script");
+    const separator = url.includes("?") ? "&" : "?";
+    const timeoutId = window.setTimeout(() => {
+      delete window[callbackName];
+      script.remove();
+      reject(new Error("체크리스트 관리 데이터 응답 시간이 초과되었습니다."));
+    }, 5000);
+
+    window[callbackName] = (data) => {
+      window.clearTimeout(timeoutId);
+      delete window[callbackName];
+      script.remove();
+      resolve(data);
+    };
+
+    script.onerror = () => {
+      window.clearTimeout(timeoutId);
+      delete window[callbackName];
+      script.remove();
+      reject(new Error("체크리스트 관리 데이터를 불러오지 못했습니다."));
+    };
+
+    script.src = `${url}${separator}action=config&callback=${encodeURIComponent(callbackName)}&v=${Date.now()}`;
+    document.head.appendChild(script);
+  });
+}
+
+function applyChecklistConfig(config) {
+  if (!config?.checklists) return false;
+
+  ["open", "close"].forEach((type) => {
+    const items = config.checklists[type];
+    if (!Array.isArray(items) || !items.length) return;
+    DAILY_CHECKLISTS[type].items = items
+      .filter((item) => item?.text)
+      .map((item) => ({
+        text: item.text,
+        important: Boolean(item.important)
+      }));
+  });
+
+  return true;
+}
+
+async function loadDailyChecklistConfig() {
+  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
+  if (!submitUrl) return;
+
+  try {
+    const config = await loadJsonp(submitUrl);
+    if (config?.ok && applyChecklistConfig(config)) {
+      renderDailyChecklist();
+    }
+  } catch (error) {
+    console.warn("체크리스트 관리 데이터를 불러오지 못했습니다.", error);
+  }
+}
+
 async function submitDailyChecklist(event) {
   event.preventDefault();
 
@@ -878,6 +940,10 @@ renderDailyChecklist();
 renderArticles();
 renderDetail();
 
+if (dailyManageLinkEl && window.CHECKLIST_MANAGE_URL) {
+  dailyManageLinkEl.href = window.CHECKLIST_MANAGE_URL;
+}
+
 // ── Sticky offset: sidebar 높이를 CSS 변수로 전달 ──
 const sidebarEl = document.querySelector(".sidebar");
 const searchPanelEl = document.querySelector(".search-panel");
@@ -979,6 +1045,7 @@ function updateSidebarHeight() {
 }
 updateSidebarHeight();
 renderScheduleBadge();
+loadDailyChecklistConfig();
 loadScheduleSheet();
 window.addEventListener("resize", updateSidebarHeight);
 
