@@ -14,6 +14,7 @@ const dailyCheckStatusEl = document.querySelector("#daily-check-status");
 const dailyCheckTypeButtons = [...document.querySelectorAll("[data-daily-check-type]")];
 const dailyManageLinkEl = document.querySelector("#daily-manage-link");
 const noticeManageLinkEl = document.querySelector("#notice-manage-link");
+let noticePhotoDialogEl = null;
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -109,6 +110,37 @@ function toDisplayImageUrl(url) {
   }
 
   return value;
+}
+
+function openNoticePhotoDialog(imageUrl, title, originalUrl = "") {
+  if (!noticePhotoDialogEl) {
+    noticePhotoDialogEl = document.createElement("dialog");
+    noticePhotoDialogEl.className = "notice-photo-dialog";
+    document.body.appendChild(noticePhotoDialogEl);
+
+    noticePhotoDialogEl.addEventListener("click", (event) => {
+      if (event.target === noticePhotoDialogEl) {
+        noticePhotoDialogEl.close();
+      }
+    });
+  }
+
+  noticePhotoDialogEl.innerHTML = `
+    <div class="notice-photo-dialog-card">
+      <div class="notice-photo-dialog-head">
+        <strong>${escapeHtml(title || "공지 사진")}</strong>
+        <button type="button" data-close-notice-photo aria-label="사진 닫기">×</button>
+      </div>
+      <img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(title || "공지 사진")}">
+      ${originalUrl ? `<a href="${escapeHtml(originalUrl)}" target="_blank" rel="noopener">원본 열기</a>` : ""}
+    </div>
+  `;
+
+  noticePhotoDialogEl.querySelector("[data-close-notice-photo]")?.addEventListener("click", () => {
+    noticePhotoDialogEl.close();
+  });
+
+  noticePhotoDialogEl.showModal();
 }
 
 function parseCsv(text) {
@@ -531,10 +563,10 @@ function renderNotices() {
         <h3>${title}</h3>
       </div>
       ${imageUrl ? `
-        <a class="notice-photo-link" href="${escapeHtml(group.imageUrl)}" target="_blank" rel="noopener">
+        <button class="notice-photo-link" type="button" data-notice-photo="${escapeHtml(imageUrl)}" data-notice-photo-original="${escapeHtml(group.imageUrl)}" data-notice-photo-title="${title}">
           <img src="${escapeHtml(imageUrl)}" alt="${title}">
           <span>사진 크게 보기</span>
-        </a>
+        </button>
       ` : ""}
       ${items.length ? `
         <ul>
@@ -544,6 +576,16 @@ function renderNotices() {
     </section>
   `;
   }).join("");
+
+  noticeGroupsEl.querySelectorAll("[data-notice-photo]").forEach((button) => {
+    button.addEventListener("click", () => {
+      openNoticePhotoDialog(
+        button.dataset.noticePhoto,
+        button.dataset.noticePhotoTitle,
+        button.dataset.noticePhotoOriginal
+      );
+    });
+  });
 }
 
 function dailyCheckStorageKey(type = activeDailyCheckType) {
