@@ -337,6 +337,16 @@ h1 {
   padding: 3px 7px;
 }
 
+.daily-check-items b {
+  background: #edf1e7;
+  border-radius: 999px;
+  color: var(--green-strong);
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 6px;
+  padding: 3px 7px;
+}
+
 .daily-check-actions {
   align-items: center;
   display: flex;

@@ -554,6 +554,7 @@ function renderDailyChecklist() {
       <input type="checkbox" value="${index}" ${state.checked?.includes(index) ? "checked" : ""}>
       <span>
         ${item.important ? "<em>주의</em>" : ""}
+        ${item.group ? `<b>${item.group}</b>` : ""}
         ${item.text}
       </span>
     </label>
@@ -611,6 +612,7 @@ function applyChecklistConfig(config) {
     DAILY_CHECKLISTS[type].items = items
       .filter((item) => item?.text)
       .map((item) => ({
+        group: item.group || "",
         text: item.text,
         important: Boolean(item.important)
       }));
