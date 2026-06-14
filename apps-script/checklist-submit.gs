@@ -4,6 +4,7 @@ const ADMIN_EMAILS = [
 ];
 const SHEET_NAME = "체크리스트 제출 기록";
 const CONFIG_SHEET_NAME = "체크리스트 항목 관리";
+const TODAY_NOTICE_SHEET_NAME = "오늘의 필수확인 관리";
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -21,6 +22,16 @@ const DEFAULT_CHECKLIST_ITEMS = [
   ["마감", "인수인계", 6, "특이사항이 있으면 메모 또는 직원에게 공유했습니다.", "", "Y"]
 ];
 
+const DEFAULT_TODAY_NOTICE_ITEMS = [
+  ["체크", "필수", 1, "고객 응대", "고객이 매장에 있을 때 사적 잡담을 줄입니다.", "Y", "Y", ""],
+  ["체크", "필수", 2, "휴대폰 사용", "제조 공간에서는 업무 외 휴대폰 사용을 자제합니다.", "Y", "Y", ""],
+  ["체크", "위생", 3, "데코 재료", "데코 재료는 맨손 사용을 피하고 장갑 또는 집게를 사용합니다.", "Y", "Y", ""],
+  ["체크", "제조", 4, "제조 순서", "스무디와 따뜻한 음료가 함께 들어오면 스무디를 먼저 진행합니다.", "Y", "Y", ""],
+  ["체크", "재고", 5, "베이스 공유", "베이스통이 거의 비었거나 모두 사용된 경우 직원에게 공유합니다.", "", "Y", ""],
+  ["카드", "필독", 6, "근무 중 기본 태도", "할 일이 없을 때는 주변 정리와 청소를 계속 신경씁니다.\n매장 전화는 놓치지 않도록 확인합니다.", "Y", "Y", ""],
+  ["사진공지", "오픈", 7, "북카페 에어컨 번호 확인", "사진이 필요한 공지는 사진URL 칸에 Google Drive 링크를 넣으면 표시됩니다.", "", "N", ""]
+];
+
 function doGet(e) {
   const action = e && e.parameter ? e.parameter.action : "";
   const callback = e && e.parameter ? e.parameter.callback : "";
@@ -28,7 +39,8 @@ function doGet(e) {
   if (action === "config") {
     const data = {
       ok: true,
-      checklists: getChecklistConfig()
+      checklists: getChecklistConfig(),
+      notices: getTodayNoticeConfig()
     };
     return callback ? jsonpResponse(callback, data) : jsonResponse(data);
   }
@@ -134,6 +146,23 @@ function getOrCreateConfigSheet() {
   return sheet;
 }
 
+function getOrCreateTodayNoticeSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(TODAY_NOTICE_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(TODAY_NOTICE_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["구분", "분류", "순서", "제목", "내용", "중요", "사용", "사진URL"]);
+    sheet.getRange(2, 1, DEFAULT_TODAY_NOTICE_ITEMS.length, DEFAULT_TODAY_NOTICE_ITEMS[0].length)
+      .setValues(DEFAULT_TODAY_NOTICE_ITEMS);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
 function findSheetWithChecklistHeaders(spreadsheet) {
   return spreadsheet.getSheets().find((sheet) => {
     const values = sheet.getDataRange().getValues();
@@ -184,12 +213,80 @@ function getChecklistConfig() {
   return checklists;
 }
 
+function getTodayNoticeConfig() {
+  const sheet = getOrCreateTodayNoticeSheet();
+  const values = sheet.getDataRange().getValues();
+  const headerRowIndex = findTodayNoticeHeaderRowIndex(values);
+  const headers = values[headerRowIndex] || [];
+  const rows = values.slice(headerRowIndex + 1);
+  const headerMap = headers.reduce((map, header, index) => {
+    const key = String(header || "").trim().replace(/\s+/g, "");
+    if (key) map[key] = index;
+    return map;
+  }, {});
+  const checks = [];
+  const groups = [];
+
+  rows.forEach((row) => {
+    const typeText = getConfigCell(row, headerMap, ["구분", "타입", "종류"], 0);
+    const label = getConfigCell(row, headerMap, ["분류", "라벨", "구역"], 1);
+    const order = Number(getConfigCell(row, headerMap, ["순서", "번호"], 2)) || 999;
+    const title = getConfigCell(row, headerMap, ["제목", "타이틀"], 3);
+    const text = getConfigCell(row, headerMap, ["내용", "항목", "본문"], 4);
+    const important = toBoolean(getConfigCell(row, headerMap, ["중요", "주의", "필수"], 5));
+    const activeValue = getConfigCell(row, headerMap, ["사용", "노출", "활성"], 6);
+    const imageUrl = getConfigCell(row, headerMap, ["사진URL", "이미지URL", "사진", "이미지"], 7);
+    const active = activeValue === "" ? true : toBoolean(activeValue);
+    const type = String(typeText || "").trim();
+
+    if (!active || (!text && !title && !imageUrl)) return;
+
+    if (type === "체크" || type.toLowerCase() === "check") {
+      checks.push({
+        order,
+        label,
+        title,
+        text: text || title,
+        important,
+        imageUrl
+      });
+      return;
+    }
+
+    groups.push({
+      order,
+      label: label || (important ? "중요" : "공지"),
+      title: title || label || "공지",
+      items: text ? String(text).split(/\n+/).map((item) => item.trim()).filter(Boolean) : [],
+      important,
+      imageUrl
+    });
+  });
+
+  return {
+    checks: checks
+      .sort((a, b) => a.order - b.order)
+      .map(({ label, title, text, important, imageUrl }) => ({ label, title, text, important, imageUrl })),
+    groups: groups
+      .sort((a, b) => a.order - b.order)
+      .map(({ label, title, items, important, imageUrl }) => ({ label, title, items, important, imageUrl }))
+  };
+}
+
 function findConfigHeaderRowIndex(values) {
   const headerIndex = values.findIndex((row) => {
     const keys = row.map((cell) => String(cell || "").trim().replace(/\s+/g, ""));
     return keys.includes("구분") && keys.some((key) => ["항목", "체크항목", "내용"].includes(key));
   });
   return headerIndex;
+}
+
+function findTodayNoticeHeaderRowIndex(values) {
+  const headerIndex = values.findIndex((row) => {
+    const keys = row.map((cell) => String(cell || "").trim().replace(/\s+/g, ""));
+    return keys.includes("구분") && keys.some((key) => ["내용", "항목", "제목"].includes(key));
+  });
+  return headerIndex >= 0 ? headerIndex : 0;
 }
 
 function getConfigCell(row, headerMap, names, fallbackIndex) {

@@ -13,6 +13,7 @@ const dailyCheckNoteEl = document.querySelector("#daily-check-note");
 const dailyCheckStatusEl = document.querySelector("#daily-check-status");
 const dailyCheckTypeButtons = [...document.querySelectorAll("[data-daily-check-type]")];
 const dailyManageLinkEl = document.querySelector("#daily-manage-link");
+const noticeManageLinkEl = document.querySelector("#notice-manage-link");
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -32,6 +33,7 @@ let activeCategory = "all";
 let activeArticleId = MANUALS[0]?.id;
 let selectedScheduleDateKey = null;
 let activeDailyCheckType = "open";
+let todayNoticeConfig = null;
 
 const DAILY_CHECKLISTS = {
   open: {
@@ -81,6 +83,32 @@ function createSearchText(parts) {
   const source = Array.isArray(parts) ? parts.join(" ") : parts;
   const normalized = normalize(source);
   return `${normalized} ${getKoreanInitials(normalized)}`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function toDisplayImageUrl(url) {
+  const value = String(url || "").trim();
+  if (!value) return "";
+
+  const fileMatch = value.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (fileMatch) {
+    return `https://drive.google.com/thumbnail?id=${fileMatch[1]}&sz=w1000`;
+  }
+
+  const idMatch = value.match(/[?&]id=([^&]+)/);
+  if (value.includes("drive.google.com") && idMatch) {
+    return `https://drive.google.com/thumbnail?id=${idMatch[1]}&sz=w1000`;
+  }
+
+  return value;
 }
 
 function parseCsv(text) {
@@ -476,24 +504,46 @@ function renderCounts() {
 }
 
 function renderNotices() {
-  todayChecksEl.innerHTML = TODAY_CHECKS.map((item) => `
+  const checks = todayNoticeConfig?.checks?.length
+    ? todayNoticeConfig.checks
+    : TODAY_CHECKS.map((text) => ({ text }));
+  const groups = todayNoticeConfig?.groups?.length
+    ? todayNoticeConfig.groups
+    : NOTICE_GROUPS;
+
+  todayChecksEl.innerHTML = checks.map((item) => `
     <label>
       <input type="checkbox">
-      <span>${item}</span>
+      <span>${escapeHtml(item.text || item)}</span>
     </label>
   `).join("");
 
-  noticeGroupsEl.innerHTML = NOTICE_GROUPS.map((group) => `
-    <section class="notice-card">
+  noticeGroupsEl.innerHTML = groups.map((group) => {
+    const imageUrl = toDisplayImageUrl(group.imageUrl);
+    const title = escapeHtml(group.title || group.label || "공지");
+    const label = escapeHtml(group.label || (group.important ? "중요" : "공지"));
+    const items = Array.isArray(group.items) ? group.items : [group.text || group.content || ""].filter(Boolean);
+
+    return `
+    <section class="notice-card ${imageUrl ? "notice-photo-card" : ""}">
       <div class="notice-card-head">
-        <span>${group.label}</span>
-        <h3>${group.title}</h3>
+        <span>${label}</span>
+        <h3>${title}</h3>
       </div>
-      <ul>
-        ${group.items.map((item) => `<li>${item}</li>`).join("")}
-      </ul>
+      ${imageUrl ? `
+        <a class="notice-photo-link" href="${escapeHtml(group.imageUrl)}" target="_blank" rel="noopener">
+          <img src="${escapeHtml(imageUrl)}" alt="${title}">
+          <span>사진 크게 보기</span>
+        </a>
+      ` : ""}
+      ${items.length ? `
+        <ul>
+          ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        </ul>
+      ` : ""}
     </section>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function dailyCheckStorageKey(type = activeDailyCheckType) {
@@ -604,21 +654,29 @@ function loadJsonp(url) {
 }
 
 function applyChecklistConfig(config) {
-  if (!config?.checklists) return false;
+  let changed = false;
 
-  ["open", "close"].forEach((type) => {
-    const items = config.checklists[type];
-    if (!Array.isArray(items) || !items.length) return;
-    DAILY_CHECKLISTS[type].items = items
-      .filter((item) => item?.text)
-      .map((item) => ({
-        group: item.group || "",
-        text: item.text,
-        important: Boolean(item.important)
-      }));
-  });
+  if (config?.checklists) {
+    ["open", "close"].forEach((type) => {
+      const items = config.checklists[type];
+      if (!Array.isArray(items) || !items.length) return;
+      DAILY_CHECKLISTS[type].items = items
+        .filter((item) => item?.text)
+        .map((item) => ({
+          group: item.group || "",
+          text: item.text,
+          important: Boolean(item.important)
+        }));
+      changed = true;
+    });
+  }
 
-  return true;
+  if (config?.notices) {
+    todayNoticeConfig = config.notices;
+    changed = true;
+  }
+
+  return changed;
 }
 
 async function loadDailyChecklistConfig() {
@@ -628,6 +686,7 @@ async function loadDailyChecklistConfig() {
   try {
     const config = await loadJsonp(submitUrl);
     if (config?.ok && applyChecklistConfig(config)) {
+      renderNotices();
       renderDailyChecklist();
     }
   } catch (error) {
@@ -944,6 +1003,10 @@ renderDetail();
 
 if (dailyManageLinkEl && window.CHECKLIST_MANAGE_URL) {
   dailyManageLinkEl.href = window.CHECKLIST_MANAGE_URL;
+}
+
+if (noticeManageLinkEl && window.TODAY_NOTICE_MANAGE_URL) {
+  noticeManageLinkEl.href = window.TODAY_NOTICE_MANAGE_URL;
 }
 
 // ── Sticky offset: sidebar 높이를 CSS 변수로 전달 ──
