@@ -186,10 +186,10 @@ function getChecklistConfig() {
     close: []
   };
 
-  rows.forEach((row) => {
+  rows.forEach((row, rowIndex) => {
     const typeText = getConfigCell(row, headerMap, ["구분", "타입", "종류"], 0);
     const group = getConfigCell(row, headerMap, ["분류", "구역", "상황"], "");
-    const order = Number(getConfigCell(row, headerMap, ["순서", "번호"], 1)) || 999;
+    const order = parseOrder(getConfigCell(row, headerMap, ["순서", "번호"], 1), rowIndex);
     const text = getConfigCell(row, headerMap, ["항목", "체크항목", "내용"], 2);
     const important = toBoolean(getConfigCell(row, headerMap, ["중요", "주의", "필수"], 3));
     const activeValue = getConfigCell(row, headerMap, ["사용", "노출", "활성"], 4);
@@ -227,10 +227,10 @@ function getTodayNoticeConfig() {
   const checks = [];
   const groups = [];
 
-  rows.forEach((row) => {
+  rows.forEach((row, rowIndex) => {
     const typeText = getConfigCell(row, headerMap, ["구분", "타입", "종류"], 0);
     const label = getConfigCell(row, headerMap, ["분류", "라벨", "구역"], 1);
-    const order = Number(getConfigCell(row, headerMap, ["순서", "번호"], 2)) || 999;
+    const order = parseOrder(getConfigCell(row, headerMap, ["순서", "번호"], 2), rowIndex);
     const title = getConfigCell(row, headerMap, ["제목", "타이틀"], 3);
     const text = getConfigCell(row, headerMap, ["내용", "항목", "본문"], 4);
     const important = toBoolean(getConfigCell(row, headerMap, ["중요", "주의", "필수"], 5));
@@ -293,6 +293,11 @@ function getConfigCell(row, headerMap, names, fallbackIndex) {
   const matchedName = names.find((name) => headerMap[name] !== undefined);
   const index = matchedName ? headerMap[matchedName] : fallbackIndex;
   return String(row[index] || "").trim();
+}
+
+function parseOrder(value, rowIndex) {
+  const order = Number(value);
+  return Number.isFinite(order) && order > 0 ? order : 10000 + rowIndex;
 }
 
 function toBoolean(value) {
