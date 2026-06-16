@@ -276,7 +276,7 @@ function getTodayNoticeConfig() {
 function findConfigHeaderRowIndex(values) {
   const headerIndex = values.findIndex((row) => {
     const keys = row.map((cell) => String(cell || "").trim().replace(/\s+/g, ""));
-    return keys.includes("구분") && keys.some((key) => ["항목", "체크항목", "내용"].includes(key));
+    return keys.includes("구분") && keys.some((key) => ["항목", "체크항목"].includes(key));
   });
   return headerIndex;
 }
