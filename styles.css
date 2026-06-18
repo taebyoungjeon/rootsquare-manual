@@ -732,6 +732,48 @@ h1 {
   padding: 12px;
 }
 
+.manual-photo-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.manual-photo-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  display: grid;
+  font: inherit;
+  gap: 10px;
+  padding: 12px;
+  text-align: left;
+}
+
+.manual-photo-card:hover {
+  border-color: var(--green);
+}
+
+.manual-photo-card img {
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  display: block;
+  object-fit: contain;
+  width: 100%;
+}
+
+.manual-photo-card strong {
+  color: var(--green-strong);
+  font-size: 16px;
+}
+
+.manual-photo-card span {
+  color: #746f66;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .note {
   background: #f8eee7;
   border-left: 4px solid var(--rust);

@@ -143,6 +143,20 @@ function openNoticePhotoDialog(imageUrl, title, originalUrl = "") {
   noticePhotoDialogEl.showModal();
 }
 
+function bindPhotoDialogTriggers(root = document) {
+  root.querySelectorAll("[data-notice-photo]").forEach((button) => {
+    if (button.dataset.photoDialogBound === "true") return;
+    button.dataset.photoDialogBound = "true";
+    button.addEventListener("click", () => {
+      openNoticePhotoDialog(
+        button.dataset.noticePhoto,
+        button.dataset.noticePhotoTitle,
+        button.dataset.noticePhotoOriginal
+      );
+    });
+  });
+}
+
 function parseCsv(text) {
   const rows = [];
   let row = [];
@@ -577,15 +591,7 @@ function renderNotices() {
   `;
   }).join("");
 
-  noticeGroupsEl.querySelectorAll("[data-notice-photo]").forEach((button) => {
-    button.addEventListener("click", () => {
-      openNoticePhotoDialog(
-        button.dataset.noticePhoto,
-        button.dataset.noticePhotoTitle,
-        button.dataset.noticePhotoOriginal
-      );
-    });
-  });
+  bindPhotoDialogTriggers(noticeGroupsEl);
 }
 
 function dailyCheckStorageKey(type = activeDailyCheckType) {
@@ -897,11 +903,33 @@ function renderDetail() {
       </div>
     </section>
 
+    ${Array.isArray(manual.photos) && manual.photos.length ? `
+      <section class="manual-section">
+        <h3>사진 자료</h3>
+        <div class="manual-photo-grid">
+          ${manual.photos.map((photo) => {
+            const imageUrl = toDisplayImageUrl(photo.src);
+            const title = escapeHtml(photo.title || "사진 자료");
+            const caption = photo.caption ? `<span>${escapeHtml(photo.caption)}</span>` : "";
+            return `
+              <button class="manual-photo-card" type="button" data-notice-photo="${escapeHtml(imageUrl)}" data-notice-photo-original="${escapeHtml(photo.src)}" data-notice-photo-title="${title}">
+                <img src="${escapeHtml(imageUrl)}" alt="${title}">
+                <strong>${title}</strong>
+                ${caption}
+              </button>
+            `;
+          }).join("")}
+        </div>
+      </section>
+    ` : ""}
+
     <section class="manual-section">
       <h3>메모</h3>
       <p class="note">${manual.note}</p>
     </section>
   `;
+
+  bindPhotoDialogTriggers(detailEl);
 }
 
 function renderScheduleDetail(manual) {
