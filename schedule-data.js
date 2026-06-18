@@ -1400,7 +1400,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "09:00~09:30",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "건물오픈",
               "isParttimer": false
             },
@@ -1415,7 +1415,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "09:30~10:00",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -1430,7 +1430,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "10:00~10:30",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -1445,7 +1445,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "10:30~11:00",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -1460,7 +1460,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "11:00~11:30",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -1475,7 +1475,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "11:30~12:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -1490,7 +1490,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "12:00~12:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -1670,7 +1670,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:00~16:30",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페",
               "isParttimer": false
             },
@@ -1690,7 +1690,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:30~17:00",
           "assignments": [
             {
-              "name": "김채승",
+              "name": "유송희",
               "role": "카페",
               "isParttimer": false
             },
@@ -1750,7 +1750,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "18:00~18:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -1765,7 +1765,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "18:30~19:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -1780,7 +1780,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "19:00~19:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "인포마감",
               "isParttimer": false
             },
@@ -1795,7 +1795,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "19:30~20:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "인포마감",
               "isParttimer": false
             },
