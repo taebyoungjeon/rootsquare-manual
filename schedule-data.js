@@ -1868,11 +1868,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
               "name": "백창현p",
               "role": "베이커리카페",
               "isParttimer": true
@@ -1886,11 +1881,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "유송희",
               "role": "카페",
               "isParttimer": false
-            },
-            {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
             },
             {
               "name": "백창현p",
@@ -1911,11 +1901,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채승",
               "role": "카페",
               "isParttimer": false
-            },
-            {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -1943,11 +1928,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -1973,11 +1953,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -2001,11 +1976,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채승",
               "role": "카페",
               "isParttimer": false
-            },
-            {
-              "name": "양현의p",
-              "role": "카페",
-              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -3527,6 +3497,16 @@ window.SCHEDULE_SHEET_CONFIG = {
         },
         {
           "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "인포마감",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "20:00~20:30",
           "assignments": [
             {
               "name": "김채승",
