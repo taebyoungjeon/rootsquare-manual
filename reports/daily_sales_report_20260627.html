@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>뤁스퀘어 일일 매출 분석 리포트 | 2026-06-27</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans KR',sans-serif; background:#f4f6f8; color:#1f2933; }
+  .hero { background:linear-gradient(135deg,#1f3a46,#2f7a7b 58%,#8a7a45); color:#fff; padding:38px 28px 34px; }
+  .hero-inner { max-width:1120px; margin:0 auto; }
+  h1 { margin:0 0 8px; font-size:29px; letter-spacing:0; }
+  .meta { color:rgba(255,255,255,.82); font-size:13px; line-height:1.7; }
+  .container { max-width:1120px; margin:0 auto; padding:26px 18px 48px; }
+  .alert { background:#fff8e6; border-left:5px solid #f59e0b; padding:16px 18px; border-radius:6px; margin-bottom:18px; line-height:1.65; font-size:14px; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+  .card { background:#fff; border:1px solid #e5e9ee; border-radius:8px; padding:18px; box-shadow:0 2px 8px rgba(15,23,42,.05); }
+  .k-label { color:#6b7280; font-size:12px; margin-bottom:8px; }
+  .k-value { font-size:23px; font-weight:800; color:#14212b; }
+  .k-sub { margin-top:7px; font-size:12px; color:#76808a; }
+  .badge { display:inline-block; margin-top:10px; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700; }
+  .badge.down { background:#fff1f2; color:#be123c; }
+  .badge.up { background:#ecfdf5; color:#047857; }
+  .badge.neutral { background:#edf2f7; color:#475569; }
+  .section { background:#fff; border:1px solid #e5e9ee; border-radius:8px; padding:22px; margin-bottom:18px; box-shadow:0 2px 8px rgba(15,23,42,.04); }
+  .section-title { font-size:17px; font-weight:800; margin-bottom:15px; padding-bottom:10px; border-bottom:2px solid #2f7a7b; color:#18313a; }
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .three-col { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  .insight { border-left:4px solid #2f7a7b; background:#f7fbfb; padding:14px 16px; border-radius:0 6px 6px 0; margin-bottom:10px; line-height:1.65; font-size:13px; }
+  .insight.warning { border-color:#e11d48; background:#fff7f8; }
+  .insight.success { border-color:#059669; background:#f4fff9; }
+  .insight strong { color:#14212b; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { background:#20313a; color:#fff; text-align:left; padding:9px 10px; font-weight:700; }
+  td { padding:9px 10px; border-bottom:1px solid #edf0f3; vertical-align:middle; }
+  tr:nth-child(even) td { background:#fafbfc; }
+  .up { color:#047857; font-weight:700; }
+  .down { color:#be123c; font-weight:700; }
+  .cat { display:inline-block; padding:2px 7px; border-radius:4px; background:#eef4f4; color:#285b5d; font-size:11px; font-weight:700; }
+  .bar-row { display:grid; grid-template-columns:72px 1fr 86px; gap:10px; align-items:center; margin-bottom:9px; }
+  .bar-label { font-size:12px; font-weight:700; color:#46515a; }
+  .bar-label span { display:inline-block; margin-left:4px; color:#89929c; font-weight:600; }
+  .bar-track { height:26px; background:#edf1f4; border-radius:5px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:5px; }
+  .bar-fill.weekday { background:linear-gradient(90deg,#5b91c9,#2f7a7b); }
+  .bar-fill.weekend { background:linear-gradient(90deg,#f59e0b,#e05d2f); }
+  .bar-value { text-align:right; color:#46515a; font-size:12px; font-weight:700; }
+  .action-list { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+  .action { border:1px solid #e7ecef; border-radius:8px; padding:15px; background:#fcfdfd; }
+  .action .tag { display:inline-block; font-size:11px; font-weight:800; color:#fff; background:#2f7a7b; border-radius:4px; padding:3px 7px; margin-bottom:8px; }
+  .action h3 { font-size:14px; margin:0 0 7px; }
+  .action p { margin:0; color:#59636e; font-size:13px; line-height:1.65; }
+  .foot { text-align:center; color:#8b949e; font-size:12px; margin-top:20px; }
+  @media(max-width:860px) { .grid,.two-col,.three-col,.action-list { grid-template-columns:1fr; } .hero { padding:30px 20px; } }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <h1>뤁스퀘어 일일 매출 분석 리포트</h1>
+    <div class="meta">기준일: 2026-06-27 (토) · 생성일: 2026-06-28 09:01 · 데이터: Google Sheet `일일매출` + `일일상품순위`</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="alert">
+    <strong>핵심 진단:</strong> 최근 7일 카페 매출은 직전 7일 대비 <strong>+8.6%</strong> 상승했습니다.
+    카페 객단가는 15,326원으로 직전 7일 대비 <strong>-8.0%</strong> 하락했고,
+    고객수는 <strong>730명</strong>으로 <strong>+18.1%</strong> 증가했습니다.
+    따라서 현재 흐름의 1차 해석은 <strong>상승 흐름 유지 중</strong>입니다.
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="k-label">최근 7일 카페 매출</div>
+      <div class="k-value">1,119만원</div>
+      <div class="k-sub">직전 7일 1,030만원</div>
+      <div class="badge up">+8.6%</div>
+    </div>
+    <div class="card">
+      <div class="k-label">최근 7일 카페 고객수</div>
+      <div class="k-value">730명</div>
+      <div class="k-sub">직전 7일 618명</div>
+      <div class="badge up">+18.1%</div>
+    </div>
+    <div class="card">
+      <div class="k-label">최근 7일 카페 객단가</div>
+      <div class="k-value">15,326원</div>
+      <div class="k-sub">직전 7일 16,666원</div>
+      <div class="badge down">-8.0%</div>
+    </div>
+    <div class="card">
+      <div class="k-label">최근 30일 주말/평일 배율</div>
+      <div class="k-value">2.09x</div>
+      <div class="k-sub">주말 평균 339만원 · 평일 평균 162만원</div>
+      <div class="badge neutral">주말 의존 구조</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">1. 최근 14일 카페 매출 흐름</div>
+    <div class="two-col">
+      <div>
+        
+            <div class="bar-row">
+              <div class="bar-label">06/14<span>일</span></div>
+              <div class="bar-track"><div class="bar-fill weekend" style="width:100.0%"></div></div>
+              <div class="bar-value">321만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/15<span>월</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:23.1%"></div></div>
+              <div class="bar-value">74만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/16<span>화</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:29.0%"></div></div>
+              <div class="bar-value">93만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/17<span>수</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:33.5%"></div></div>
+              <div class="bar-value">107만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/18<span>목</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:43.6%"></div></div>
+              <div class="bar-value">140만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/19<span>금</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:28.0%"></div></div>
+              <div class="bar-value">90만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/20<span>토</span></div>
+              <div class="bar-track"><div class="bar-fill weekend" style="width:63.9%"></div></div>
+              <div class="bar-value">205만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/21<span>일</span></div>
+              <div class="bar-track"><div class="bar-fill weekend" style="width:98.2%"></div></div>
+              <div class="bar-value">315만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/22<span>월</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:19.3%"></div></div>
+              <div class="bar-value">62만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/23<span>화</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:49.4%"></div></div>
+              <div class="bar-value">158만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/24<span>수</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:26.5%"></div></div>
+              <div class="bar-value">85만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/25<span>목</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:27.1%"></div></div>
+              <div class="bar-value">87만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/26<span>금</span></div>
+              <div class="bar-track"><div class="bar-fill weekday" style="width:33.9%"></div></div>
+              <div class="bar-value">109만원</div>
+            </div>
+            
+
+            <div class="bar-row">
+              <div class="bar-label">06/27<span>토</span></div>
+              <div class="bar-track"><div class="bar-fill weekend" style="width:94.2%"></div></div>
+              <div class="bar-value">302만원</div>
+            </div>
+            
+      </div>
+      <div>
+        <div class="insight warning"><strong>최근 7일 비교:</strong> 카페 매출 888,310원, 고객수 +112명입니다. 객수는 늘었지만 객단가가 낮아져 메뉴 믹스와 업셀 구성이 더 큰 과제입니다.</div>
+        <div class="insight"><strong>주말도 완전히 안전하지 않음:</strong> 6/13(토) 카페 302만원, 6/14(일) 카페 302만원로 5/25주 고점 대비 약해졌습니다.</div>
+        <div class="insight success"><strong>객단가 유지:</strong> 객단가가 무너지지 않았다는 것은 메뉴 가격 저항보다는 방문 동기, 외부 유입, 현장 노출 개선이 우선이라는 뜻입니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">2. 카테고리별 감소 원인</div>
+    <table>
+      <thead><tr><th>카테고리</th><th>최근 7일</th><th>직전 7일</th><th>증감</th><th>증감률</th></tr></thead>
+      <tbody><tr><td>Bakery</td><td>1,413,100원</td><td>1,555,930원</td><td class='down'>-142,830원</td><td class='down'>-9.2%</td></tr>
+<tr><td>병음료</td><td>99,550원</td><td>150,500원</td><td class='down'>-50,950원</td><td class='down'>-33.9%</td></tr>
+<tr><td>샐러딩</td><td>0원</td><td>49,000원</td><td class='down'>-49,000원</td><td class='down'>-100.0%</td></tr>
+<tr><td>기타(대)</td><td>99,100원</td><td>116,500원</td><td class='down'>-17,400원</td><td class='down'>-14.9%</td></tr>
+<tr><td>Dessert</td><td>1,238,260원</td><td>1,110,740원</td><td class='up'>127,520원</td><td class='up'>+11.5%</td></tr>
+<tr><td>Coffee</td><td>4,236,550원</td><td>3,842,300원</td><td class='up'>394,250원</td><td class='up'>+10.3%</td></tr>
+<tr><td>Non-Coffee</td><td>4,003,020원</td><td>3,474,770원</td><td class='up'>528,250원</td><td class='up'>+15.2%</td></tr></tbody>
+    </table>
+    <div style="margin-top:14px;">
+      <div class="insight warning"><strong>가장 큰 하락:</strong> Non-Coffee가 528,250원으로 가장 크게 빠졌습니다. 6월에는 논커피/시원한 음료가 올라와야 하는데 반대로 약화된 것이 핵심 신호입니다.</div>
+      <div class="insight"><strong>Coffee도 동반 하락:</strong> Coffee는 394,250원 감소했습니다. 이는 특정 시즌 메뉴 부진만이 아니라 전체 방문 흐름 자체가 약해졌다는 쪽에 무게를 둡니다.</div>
+      <div class="insight"><strong>Dessert:</strong> Dessert는 127,520원 감소했습니다. 빙수/과일 디저트는 여전히 상위권이므로, 메뉴 폐기보다 전면 노출과 세트화가 우선입니다.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">3. 최근 30일 상품 TOP 12</div>
+    <table>
+      <thead><tr><th>순위</th><th>상품</th><th>분류</th><th>매출</th><th>수량</th></tr></thead>
+      <tbody><tr><td>1</td><td>아메리카노 ICED</td><td><span class='cat'>Coffee</span></td><td>8,913,538원</td><td>1,780개</td></tr>
+<tr><td>2</td><td>[set]팥빙수+아메리카노</td><td><span class='cat'>Non-Coffee</span></td><td>2,976,250원</td><td>239개</td></tr>
+<tr><td>3</td><td>쌀크림라떼</td><td><span class='cat'>Coffee</span></td><td>2,535,800원</td><td>413개</td></tr>
+<tr><td>4</td><td>케키바 주스</td><td><span class='cat'>Non-Coffee</span></td><td>2,318,900원</td><td>379개</td></tr>
+<tr><td>5</td><td>리얼 토마토주스</td><td><span class='cat'>Non-Coffee</span></td><td>2,183,175원</td><td>369개</td></tr>
+<tr><td>6</td><td>아이스크림 라떼</td><td><span class='cat'>Coffee</span></td><td>1,754,180원</td><td>262개</td></tr>
+<tr><td>7</td><td>제철과일 크레이프 롤</td><td><span class='cat'>Dessert</span></td><td>1,721,550원</td><td>268개</td></tr>
+<tr><td>8</td><td>눈꽃 팥빙수</td><td><span class='cat'>Non-Coffee</span></td><td>1,666,720원</td><td>209개</td></tr>
+<tr><td>9</td><td>딸기라떼</td><td><span class='cat'>Non-Coffee</span></td><td>1,659,375원</td><td>277개</td></tr>
+<tr><td>10</td><td>아메리카노 HOT</td><td><span class='cat'>Coffee</span></td><td>1,210,000원</td><td>224개</td></tr>
+<tr><td>11</td><td>소금빵</td><td><span class='cat'>Bakery</span></td><td>1,054,120원</td><td>281개</td></tr>
+<tr><td>12</td><td>쑥절미갸또</td><td><span class='cat'>Bakery</span></td><td>945,990원</td><td>150개</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">4. 최근 7일 하락 상품과 방어 상품</div>
+    <div class="two-col">
+      <div>
+        <h3 style="font-size:14px;margin:0 0 10px;color:#be123c;">하락폭 상위</h3>
+        <table>
+          <thead><tr><th>상품</th><th>분류</th><th>최근 7일</th><th>직전 7일</th><th>증감</th></tr></thead>
+          <tbody><tr><td>리얼 토마토주스</td><td><span class='cat'>Non-Coffee</span></td><td>438,750원</td><td>626,600원</td><td class='down'>-187,850원</td></tr><tr><td>콘치즈 트위스트 치아바타</td><td><span class='cat'>Bakery</span></td><td>142,600원</td><td>233,220원</td><td class='down'>-90,620원</td></tr><tr><td>게릴라케이크</td><td><span class='cat'>Dessert</span></td><td>49,600원</td><td>117,800원</td><td class='down'>-68,200원</td></tr><tr><td>콜드브루</td><td><span class='cat'>Coffee</span></td><td>47,200원</td><td>112,100원</td><td class='down'>-64,900원</td></tr><tr><td>방울토마토</td><td><span class='cat'>기타(대)</span></td><td>35,250원</td><td>88,500원</td><td class='down'>-53,250원</td></tr><tr><td>완숙토마토1.5kg</td><td><span class='cat'>샐러딩</span></td><td>0원</td><td>49,000원</td><td class='down'>-49,000원</td></tr><tr><td>피스타치오 크림치즈 샌드위치</td><td><span class='cat'>Bakery</span></td><td>54,600원</td><td>102,180원</td><td class='down'>-47,580원</td></tr><tr><td>뽀로로 딸기맛</td><td><span class='cat'>병음료</span></td><td>15,000원</td><td>55,000원</td><td class='down'>-40,000원</td></tr><tr><td>아포카토</td><td><span class='cat'>Coffee</span></td><td>7,200원</td><td>43,200원</td><td class='down'>-36,000원</td></tr><tr><td>(D) 아메리카노 ICED</td><td><span class='cat'>Coffee</span></td><td>96,800원</td><td>130,350원</td><td class='down'>-33,550원</td></tr></tbody>
+        </table>
+      </div>
+      <div>
+        <h3 style="font-size:14px;margin:0 0 10px;color:#047857;">상승/방어 상품</h3>
+        <table>
+          <thead><tr><th>상품</th><th>분류</th><th>최근 7일</th><th>직전 7일</th><th>증감</th></tr></thead>
+          <tbody><tr><td>[set]팥빙수+아메리카노</td><td><span class='cat'>Non-Coffee</span></td><td>783,750원</td><td>575,000원</td><td class='up'>208,750원</td></tr><tr><td>아메리카노 ICED</td><td><span class='cat'>Coffee</span></td><td>1,972,300원</td><td>1,763,850원</td><td class='up'>208,450원</td></tr><tr><td>눈꽃 팥빙수</td><td><span class='cat'>Non-Coffee</span></td><td>422,400원</td><td>234,960원</td><td class='up'>187,440원</td></tr><tr><td>아이스크림 라떼</td><td><span class='cat'>Coffee</span></td><td>453,600원</td><td>295,200원</td><td class='up'>158,400원</td></tr><tr><td>딸기라떼</td><td><span class='cat'>Non-Coffee</span></td><td>428,250원</td><td>322,500원</td><td class='up'>105,750원</td></tr><tr><td>아메리카노 HOT</td><td><span class='cat'>Coffee</span></td><td>319,000원</td><td>220,000원</td><td class='up'>99,000원</td></tr><tr><td>쌀크림라떼</td><td><span class='cat'>Coffee</span></td><td>690,900원</td><td>595,000원</td><td class='up'>95,900원</td></tr><tr><td>애플레몬에이드</td><td><span class='cat'>Non-Coffee</span></td><td>198,720원</td><td>117,300원</td><td class='up'>81,420원</td></tr><tr><td>과일 타르트</td><td><span class='cat'>Dessert</span></td><td>135,200원</td><td>67,600원</td><td class='up'>67,600원</td></tr><tr><td>말차라떼 ICED</td><td><span class='cat'>Non-Coffee</span></td><td>169,000원</td><td>110,500원</td><td class='up'>58,500원</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">5. 요일별 구조</div>
+    <table>
+      <thead><tr><th>요일</th><th>일수</th><th>총매출</th><th>카페 매출</th><th>카페 고객수</th><th>카페 객단가</th></tr></thead>
+      <tbody><tr><td>월</td><td>4</td><td>3,291,560원</td><td>2,877,860원</td><td>190명</td><td>15,147원</td></tr><tr><td>화</td><td>4</td><td>8,048,290원</td><td>4,298,090원</td><td>237명</td><td>18,135원</td></tr><tr><td>수</td><td>4</td><td>6,958,280원</td><td>6,682,780원</td><td>400명</td><td>16,707원</td></tr><tr><td>목</td><td>4</td><td>7,018,300원</td><td>3,642,200원</td><td>241명</td><td>15,113원</td></tr><tr><td>금</td><td>5</td><td>8,714,860원</td><td>4,706,260원</td><td>299명</td><td>15,740원</td></tr><tr><td>토</td><td>5</td><td>17,820,725원</td><td>15,882,775원</td><td>909명</td><td>17,473원</td></tr><tr><td>일</td><td>4</td><td>12,651,890원</td><td>12,030,090원</td><td>698명</td><td>17,235원</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title">6. 이번 주 실행 제안</div>
+    <div class="action-list">
+      <div class="action"><span class="tag">주말</span><h3>빙수 세트 전면화</h3><p>`팥빙수+아메리카노`는 최근 30일 235만원으로 시즌 메뉴 중 1위입니다. 주말에는 키오스크 첫 화면, 입구 POP, 네이버 메뉴 대표 이미지에 먼저 노출하세요.</p></div>
+      <div class="action"><span class="tag">평일</span><h3>1인 여름 음료 방어</h3><p>방문수가 적은 평일은 공유형 빙수보다 `리얼 토마토주스`, `케키바 주스`, `아이스크림 라떼`, `콜드브루` 중심으로 객단가를 방어하는 구성이 맞습니다.</p></div>
+      <div class="action"><span class="tag">노출</span><h3>Non-Coffee 회복 캠페인</h3><p>Non-Coffee가 최근 7일 -24.8%로 가장 크게 빠졌습니다. 토마토/케키바/스무디/에이드 메뉴 사진과 메뉴명을 매장 동선에 반복 노출해야 합니다.</p></div>
+      <div class="action"><span class="tag">진단</span><h3>객수 지표 매일 추적</h3><p>이번 하락은 객단가보다 객수 문제입니다. 매일 오전 리포트에서 전일 카페 고객수, 최근 7일 평균 고객수, 주말 예약/검색 유입을 같이 확인하세요.</p></div>
+    </div>
+  </div>
+
+  <div class="foot">뤁스퀘어 일일 매출 분석 리포트 · 기준 데이터 2026-05-29 ~ 2026-06-27</div>
+</div>
+</body>
+</html>
