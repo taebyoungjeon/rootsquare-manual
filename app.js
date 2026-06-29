@@ -21,6 +21,7 @@ const inventoryCheckNameEl = document.querySelector("#inventory-check-name");
 const inventoryCheckNoteEl = document.querySelector("#inventory-check-note");
 const inventoryCheckStatusEl = document.querySelector("#inventory-check-status");
 const inventoryManageLinkEl = document.querySelector("#inventory-manage-link");
+const inventoryCollapseToggleEl = document.querySelector("#inventory-collapse-toggle");
 let noticePhotoDialogEl = null;
 
 const categoryLabels = {
@@ -44,6 +45,7 @@ let activeDailyCheckType = "open";
 let todayNoticeConfig = null;
 let inventoryItems = [];
 let isNoticeExpanded = false;
+let isInventoryExpanded = false;
 
 const DAILY_CHECKLISTS = {
   open: {
@@ -825,6 +827,16 @@ function renderInventoryChecklist() {
   } else {
     updateInventoryBadges();
   }
+
+  renderInventoryCollapseState();
+}
+
+function renderInventoryCollapseState() {
+  if (!inventoryCheckFormEl || !inventoryCollapseToggleEl) return;
+
+  inventoryCheckFormEl.hidden = !isInventoryExpanded;
+  inventoryCollapseToggleEl.setAttribute("aria-expanded", String(isInventoryExpanded));
+  inventoryCollapseToggleEl.textContent = isInventoryExpanded ? "재고 체크 접기" : "재고 체크 열기";
 }
 
 function renderDailyChecklist() {
@@ -1353,6 +1365,11 @@ dailyCheckTypeButtons.forEach((button) => {
 noticeExpandToggleEl?.addEventListener("click", () => {
   isNoticeExpanded = !isNoticeExpanded;
   renderNotices();
+});
+
+inventoryCollapseToggleEl?.addEventListener("click", () => {
+  isInventoryExpanded = !isInventoryExpanded;
+  renderInventoryCollapseState();
 });
 
 dailyCheckItemsEl?.addEventListener("change", () => writeDailyCheckState());

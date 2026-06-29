@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>루트스퀘어 운영 매뉴얼</title>
-  <link rel="stylesheet" href="styles.css?v=20260629-collapse-notices">
+  <link rel="stylesheet" href="styles.css?v=20260629-collapse-inventory">
 </head>
 <body>
   <header class="topbar">
@@ -112,9 +112,10 @@
             <p class="notice-label">CLOSING STOCK</p>
             <h2>재고·베이스 체크</h2>
           </div>
-          <a class="daily-manage-link" id="inventory-manage-link" href="https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0" target="_blank" rel="noopener">재고 기준 관리</a>
+          <button class="inventory-collapse-toggle" id="inventory-collapse-toggle" type="button" aria-expanded="false" aria-controls="inventory-check-form">재고 체크 열기</button>
         </div>
-        <form id="inventory-check-form" class="inventory-check-form">
+        <a class="daily-manage-link" id="inventory-manage-link" href="https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0" target="_blank" rel="noopener">재고 기준 관리</a>
+        <form id="inventory-check-form" class="inventory-check-form" hidden>
           <label class="daily-name-field">
             <span>담당자 이름</span>
             <input id="inventory-check-name" name="staffName" type="text" placeholder="예: 김루트" autocomplete="name" required>
@@ -189,6 +190,6 @@
     window.TODAY_NOTICE_MANAGE_URL = "https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0";
     window.INVENTORY_MANAGE_URL = "https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0";
   </script>
-  <script src="app.js?v=20260629-collapse-notices"></script>
+  <script src="app.js?v=20260629-collapse-inventory"></script>
 </body>
 </html>

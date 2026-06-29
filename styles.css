@@ -393,6 +393,25 @@ h1 {
   box-shadow: 0 2px 8px rgba(35, 31, 24, 0.08);
 }
 
+.inventory-collapse-toggle {
+  background: var(--green-strong);
+  border: 0;
+  border-radius: 999px;
+  color: #fffdf8;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  min-height: 38px;
+  padding: 0 14px;
+  white-space: nowrap;
+}
+
+.inventory-collapse-toggle[aria-expanded="true"] {
+  background: #e8ddca;
+  color: var(--green-strong);
+}
+
 .daily-manage-link {
   align-self: flex-start;
   background: #edf1e7;
@@ -417,6 +436,10 @@ h1 {
 .inventory-check-form {
   display: grid;
   gap: 12px;
+}
+
+.inventory-check-form[hidden] {
+  display: none;
 }
 
 .daily-name-field,
