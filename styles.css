@@ -169,6 +169,29 @@ h1 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.notice-groups[hidden],
+.notice-expand-toggle[hidden] {
+  display: none;
+}
+
+.notice-expand-toggle {
+  align-self: flex-start;
+  background: rgba(255, 253, 248, 0.12);
+  border: 1px solid rgba(255, 253, 248, 0.24);
+  border-radius: 999px;
+  color: #fffdf8;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  justify-self: flex-start;
+  padding: 8px 12px;
+}
+
+.notice-expand-toggle:hover {
+  background: rgba(255, 253, 248, 0.18);
+}
+
 .notice-card {
   background: rgba(255, 253, 248, 0.08);
   border: 1px solid rgba(255, 253, 248, 0.14);

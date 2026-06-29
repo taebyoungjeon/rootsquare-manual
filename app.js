@@ -6,6 +6,7 @@ const resultCountEl = document.querySelector("#result-count");
 const shortcutButtons = [...document.querySelectorAll("[data-shortcut]")];
 const todayChecksEl = document.querySelector("#today-checks");
 const noticeGroupsEl = document.querySelector("#notice-groups");
+const noticeExpandToggleEl = document.querySelector("#notice-expand-toggle");
 const dailyCheckFormEl = document.querySelector("#daily-check-form");
 const dailyCheckItemsEl = document.querySelector("#daily-check-items");
 const dailyCheckNameEl = document.querySelector("#daily-check-name");
@@ -42,6 +43,7 @@ let selectedScheduleDateKey = null;
 let activeDailyCheckType = "open";
 let todayNoticeConfig = null;
 let inventoryItems = [];
+let isNoticeExpanded = false;
 
 const DAILY_CHECKLISTS = {
   open: {
@@ -593,15 +595,19 @@ function renderNotices() {
   const groups = todayNoticeConfig?.groups?.length
     ? todayNoticeConfig.groups
     : NOTICE_GROUPS;
+  const visibleCheckLimit = 4;
+  const visibleChecks = isNoticeExpanded ? checks : checks.slice(0, visibleCheckLimit);
+  const hiddenCheckCount = Math.max(0, checks.length - visibleCheckLimit);
 
-  todayChecksEl.innerHTML = checks.map((item) => `
+  todayChecksEl.innerHTML = visibleChecks.map((item) => `
     <label>
       <input type="checkbox">
       <span>${escapeHtml(item.text || item)}</span>
     </label>
   `).join("");
 
-  noticeGroupsEl.innerHTML = groups.map((group) => {
+  noticeGroupsEl.hidden = !isNoticeExpanded;
+  noticeGroupsEl.innerHTML = isNoticeExpanded ? groups.map((group) => {
     const imageUrl = shouldShowNoticeImage(group) ? toDisplayImageUrl(group.imageUrl) : "";
     const title = escapeHtml(group.title || group.label || "공지");
     const label = escapeHtml(group.label || (group.important ? "중요" : "공지"));
@@ -626,7 +632,16 @@ function renderNotices() {
       ` : ""}
     </section>
   `;
-  }).join("");
+  }).join("") : "";
+
+  if (noticeExpandToggleEl) {
+    const hasExtra = hiddenCheckCount > 0 || groups.length > 0;
+    noticeExpandToggleEl.hidden = !hasExtra;
+    noticeExpandToggleEl.setAttribute("aria-expanded", String(isNoticeExpanded));
+    noticeExpandToggleEl.textContent = isNoticeExpanded
+      ? "접기"
+      : `나머지 ${hiddenCheckCount + groups.length}개 보기`;
+  }
 
   bindPhotoDialogTriggers(noticeGroupsEl);
 }
@@ -1333,6 +1348,11 @@ dailyCheckTypeButtons.forEach((button) => {
     activeDailyCheckType = button.dataset.dailyCheckType;
     renderDailyChecklist();
   });
+});
+
+noticeExpandToggleEl?.addEventListener("click", () => {
+  isNoticeExpanded = !isNoticeExpanded;
+  renderNotices();
 });
 
 dailyCheckItemsEl?.addEventListener("change", () => writeDailyCheckState());
