@@ -5,6 +5,8 @@ const ADMIN_EMAILS = [
 const SHEET_NAME = "체크리스트 제출 기록";
 const CONFIG_SHEET_NAME = "체크리스트 항목 관리";
 const TODAY_NOTICE_SHEET_NAME = "오늘의 필수확인 관리";
+const INVENTORY_LOG_SHEET_NAME = "재고 체크 기록";
+const INVENTORY_CONFIG_SHEET_NAME = "재고 기준 관리";
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -32,6 +34,25 @@ const DEFAULT_TODAY_NOTICE_ITEMS = [
   ["사진공지", "오픈", 7, "북카페 에어컨 번호 확인", "사진이 필요한 공지는 사진URL 칸에 Google Drive 링크를 넣으면 표시됩니다.", "", "N", ""]
 ];
 
+const DEFAULT_INVENTORY_ITEMS = [
+  ["빙수", 1, "라떼빙수", "잔", 3, 6, "Y", ""],
+  ["유제품", 2, "아이스크림", "팩", 1, 2, "Y", "1팩 기준 아이스크림 약 8개"],
+  ["베이스", 3, "쌀크림", "통", 1, 2, "Y", ""],
+  ["과일", 4, "딸기", "kg", 1, 2, "Y", ""],
+  ["베이스", 5, "말차", "통", 1, 2, "Y", ""],
+  ["과일", 6, "토마토", "통", 1, 2, "Y", ""],
+  ["베이스", 7, "케일키위바나나", "통", 1, 2, "Y", ""],
+  ["과일", 8, "복숭아", "팩", 1, 2, "Y", ""],
+  ["베이스", 9, "블루베리요거트", "통", 1, 2, "Y", ""],
+  ["베이스", 10, "초콜릿밀크", "통", 1, 2, "Y", ""],
+  ["베이스", 11, "감귤생강", "통", 1, 2, "Y", ""],
+  ["베이스", 12, "허니자몽", "통", 1, 2, "Y", ""],
+  ["베이스", 13, "애플레몬", "통", 1, 2, "Y", ""],
+  ["베이스", 14, "패션후르츠", "통", 1, 2, "Y", ""],
+  ["베이스", 15, "청포도", "통", 1, 2, "Y", ""],
+  ["베이스", 16, "얼그레이", "통", 1, 2, "Y", ""]
+];
+
 function doGet(e) {
   const action = e && e.parameter ? e.parameter.action : "";
   const callback = e && e.parameter ? e.parameter.callback : "";
@@ -40,7 +61,8 @@ function doGet(e) {
     const data = {
       ok: true,
       checklists: getChecklistConfig(),
-      notices: getTodayNoticeConfig()
+      notices: getTodayNoticeConfig(),
+      inventory: getInventoryConfig()
     };
     return callback ? jsonpResponse(callback, data) : jsonResponse(data);
   }
@@ -65,6 +87,22 @@ function doPost(e) {
 
     if (!staffName) {
       return jsonResponse({ ok: false, error: "담당자 이름이 없습니다." });
+    }
+
+    if (payload.kind === "inventory" || payload.type === "inventory") {
+      saveInventorySubmission({
+        dateText,
+        timeText,
+        typeLabel,
+        staffName,
+        inventoryItems: Array.isArray(payload.inventoryItems) ? payload.inventoryItems : [],
+        lowItems: Array.isArray(payload.lowItems) ? payload.lowItems : [],
+        watchItems: Array.isArray(payload.watchItems) ? payload.watchItems : [],
+        missingItems: Array.isArray(payload.missingItems) ? payload.missingItems : [],
+        note,
+        page: payload.page || ""
+      });
+      return jsonResponse({ ok: true });
     }
 
     const sheet = getOrCreateSheet();
@@ -163,11 +201,97 @@ function getOrCreateTodayNoticeSheet() {
   return sheet;
 }
 
+function getOrCreateInventoryConfigSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(INVENTORY_CONFIG_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(INVENTORY_CONFIG_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["분류", "순서", "품목", "단위", "최소보유량", "주말안전재고", "사용", "메모"]);
+    sheet.getRange(2, 1, DEFAULT_INVENTORY_ITEMS.length, DEFAULT_INVENTORY_ITEMS[0].length)
+      .setValues(DEFAULT_INVENTORY_ITEMS);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
+function getOrCreateInventoryLogSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(INVENTORY_LOG_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(INVENTORY_LOG_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "날짜",
+      "시간",
+      "담당자",
+      "품목",
+      "분류",
+      "현재재고",
+      "단위",
+      "최소보유량",
+      "주말안전재고",
+      "상태",
+      "품목메모",
+      "전체메모",
+      "제출 페이지"
+    ]);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
 function findSheetWithChecklistHeaders(spreadsheet) {
   return spreadsheet.getSheets().find((sheet) => {
     const values = sheet.getDataRange().getValues();
     return findConfigHeaderRowIndex(values) >= 0;
   });
+}
+
+function getInventoryConfig() {
+  const sheet = getOrCreateInventoryConfigSheet();
+  const values = sheet.getDataRange().getValues();
+  const headers = values[0] || [];
+  const rows = values.slice(1);
+  const headerMap = headers.reduce((map, header, index) => {
+    const key = String(header || "").trim().replace(/\s+/g, "");
+    if (key) map[key] = index;
+    return map;
+  }, {});
+  const items = [];
+
+  rows.forEach((row, rowIndex) => {
+    const category = getConfigCell(row, headerMap, ["분류", "카테고리", "구분"], 0);
+    const order = parseOrder(getConfigCell(row, headerMap, ["순서", "번호"], 1), rowIndex);
+    const name = getConfigCell(row, headerMap, ["품목", "품목명", "이름"], 2);
+    const unit = getConfigCell(row, headerMap, ["단위"], 3) || "개";
+    const min = parseInventoryNumber(getConfigCell(row, headerMap, ["최소보유량", "최소", "기준"], 4));
+    const weekendMin = parseInventoryNumber(getConfigCell(row, headerMap, ["주말안전재고", "주말", "안전재고"], 5));
+    const activeValue = getConfigCell(row, headerMap, ["사용", "노출", "활성"], 6);
+    const note = getConfigCell(row, headerMap, ["메모", "비고"], 7);
+    const active = activeValue === "" ? true : toBoolean(activeValue);
+
+    if (!active || !name) return;
+    items.push({
+      order,
+      category,
+      name,
+      unit,
+      min,
+      weekendMin: Number.isFinite(weekendMin) ? weekendMin : min,
+      note
+    });
+  });
+
+  return items
+    .sort((a, b) => a.order - b.order)
+    .map(({ category, name, unit, min, weekendMin, note }) => ({ category, name, unit, min, weekendMin, note }));
 }
 
 function getChecklistConfig() {
@@ -300,6 +424,12 @@ function parseOrder(value, rowIndex) {
   return Number.isFinite(order) && order > 0 ? order : 10000 + rowIndex;
 }
 
+function parseInventoryNumber(value) {
+  const normalized = String(value || "").replace(/[^0-9.]/g, "");
+  const number = Number(normalized);
+  return Number.isFinite(number) ? number : 0;
+}
+
 function toBoolean(value) {
   const normalized = String(value || "").trim().toLowerCase();
   return ["y", "yes", "true", "1", "예", "사용", "중요", "주의"].includes(normalized);
@@ -322,6 +452,97 @@ function sendChecklistEmail(data) {
     "",
     "[미체크]",
     data.uncheckedItems.length ? data.uncheckedItems.map((item) => `- ${item}`).join("\n") : "- 없음",
+    "",
+    "[특이사항]",
+    data.note || "- 없음"
+  ].join("\n");
+
+  MailApp.sendEmail({
+    to: ADMIN_EMAILS.join(","),
+    subject,
+    body
+  });
+}
+
+function saveInventorySubmission(data) {
+  const sheet = getOrCreateInventoryLogSheet();
+  const rows = data.inventoryItems.length
+    ? data.inventoryItems
+    : [...data.lowItems, ...data.watchItems, ...data.missingItems];
+
+  if (!rows.length) {
+    sheet.appendRow([
+      data.dateText,
+      data.timeText,
+      data.staffName,
+      "입력 품목 없음",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "미입력",
+      "",
+      data.note,
+      data.page
+    ]);
+  } else {
+    rows.forEach((item) => {
+      sheet.appendRow([
+        data.dateText,
+        data.timeText,
+        data.staffName,
+        item.name || "",
+        item.category || "",
+        item.quantity === "" || item.quantity === undefined ? "" : item.quantity,
+        item.unit || "",
+        item.min === undefined ? "" : item.min,
+        item.weekendMin === undefined ? "" : item.weekendMin,
+        item.statusLabel || item.status || "",
+        item.memo || "",
+        data.note,
+        data.page
+      ]);
+    });
+  }
+
+  sendInventoryEmail(data);
+}
+
+function formatInventoryItem(item) {
+  const quantity = item.quantity === "" || item.quantity === undefined
+    ? "미입력"
+    : `${item.quantity}${item.unit || ""}`;
+  const min = item.min === undefined ? "-" : `${item.min}${item.unit || ""}`;
+  const weekendMin = item.weekendMin === undefined ? "-" : `${item.weekendMin}${item.unit || ""}`;
+  const memo = item.memo ? ` / ${item.memo}` : "";
+  return `- ${item.name || "품목명 없음"}: ${quantity} (${item.statusLabel || item.status || "-"}, 기준 ${min}, 주말 ${weekendMin})${memo}`;
+}
+
+function sendInventoryEmail(data) {
+  if (!ADMIN_EMAILS.length || ADMIN_EMAILS[0] === "manager@example.com") return;
+
+  const lowCount = data.lowItems.length;
+  const watchCount = data.watchItems.length;
+  const missingCount = data.missingItems.length;
+  const subjectPrefix = lowCount || missingCount ? "[재고부족]" : watchCount ? "[재고주의]" : "[재고확인]";
+  const subject = `${subjectPrefix} [뤁스퀘어] 마감 재고 체크 - ${data.staffName}`;
+  const body = [
+    `날짜: ${data.dateText}`,
+    `시간: ${data.timeText}`,
+    `담당자: ${data.staffName}`,
+    "",
+    "[부족]",
+    lowCount ? data.lowItems.map(formatInventoryItem).join("\n") : "- 없음",
+    "",
+    "[주의]",
+    watchCount ? data.watchItems.map(formatInventoryItem).join("\n") : "- 없음",
+    "",
+    "[미입력]",
+    missingCount ? data.missingItems.map(formatInventoryItem).join("\n") : "- 없음",
+    "",
+    "[전체 입력]",
+    data.inventoryItems.length ? data.inventoryItems.map(formatInventoryItem).join("\n") : "- 없음",
     "",
     "[특이사항]",
     data.note || "- 없음"

@@ -14,6 +14,12 @@ const dailyCheckStatusEl = document.querySelector("#daily-check-status");
 const dailyCheckTypeButtons = [...document.querySelectorAll("[data-daily-check-type]")];
 const dailyManageLinkEl = document.querySelector("#daily-manage-link");
 const noticeManageLinkEl = document.querySelector("#notice-manage-link");
+const inventoryCheckFormEl = document.querySelector("#inventory-check-form");
+const inventoryCheckItemsEl = document.querySelector("#inventory-check-items");
+const inventoryCheckNameEl = document.querySelector("#inventory-check-name");
+const inventoryCheckNoteEl = document.querySelector("#inventory-check-note");
+const inventoryCheckStatusEl = document.querySelector("#inventory-check-status");
+const inventoryManageLinkEl = document.querySelector("#inventory-manage-link");
 let noticePhotoDialogEl = null;
 
 const categoryLabels = {
@@ -35,6 +41,7 @@ let activeArticleId = MANUALS[0]?.id;
 let selectedScheduleDateKey = null;
 let activeDailyCheckType = "open";
 let todayNoticeConfig = null;
+let inventoryItems = [];
 
 const DAILY_CHECKLISTS = {
   open: {
@@ -60,6 +67,27 @@ const DAILY_CHECKLISTS = {
     ]
   }
 };
+
+const DEFAULT_INVENTORY_ITEMS = [
+  { name: "라떼빙수", category: "빙수", unit: "잔", min: 3, weekendMin: 6 },
+  { name: "아이스크림", category: "유제품", unit: "팩", min: 1, weekendMin: 2, note: "1팩 기준 아이스크림 약 8개" },
+  { name: "쌀크림", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "딸기", category: "과일", unit: "kg", min: 1, weekendMin: 2 },
+  { name: "말차", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "토마토", category: "과일", unit: "통", min: 1, weekendMin: 2 },
+  { name: "케일키위바나나", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "복숭아", category: "과일", unit: "팩", min: 1, weekendMin: 2 },
+  { name: "블루베리요거트", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "초콜릿밀크", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "감귤생강", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "허니자몽", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "애플레몬", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "패션후르츠", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "청포도", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
+  { name: "얼그레이", category: "베이스", unit: "통", min: 1, weekendMin: 2 }
+];
+
+inventoryItems = DEFAULT_INVENTORY_ITEMS;
 
 const koreanInitials = [
   "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
@@ -598,6 +626,10 @@ function dailyCheckStorageKey(type = activeDailyCheckType) {
   return `rootsquare-daily-check:${formatLocalDate(new Date())}:${type}`;
 }
 
+function inventoryStorageKey() {
+  return `rootsquare-inventory-check:${formatLocalDate(new Date())}`;
+}
+
 function setDailyCheckStatus(message, tone = "") {
   if (!dailyCheckStatusEl) return;
   dailyCheckStatusEl.textContent = message;
@@ -625,6 +657,150 @@ function writeDailyCheckState(type = activeDailyCheckType) {
     savedAt: new Date().toISOString()
   };
   localStorage.setItem(dailyCheckStorageKey(type), JSON.stringify(state));
+}
+
+function setInventoryCheckStatus(message, tone = "") {
+  if (!inventoryCheckStatusEl) return;
+  inventoryCheckStatusEl.textContent = message;
+  inventoryCheckStatusEl.dataset.tone = tone;
+}
+
+function readInventoryState() {
+  try {
+    return JSON.parse(localStorage.getItem(inventoryStorageKey()) || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function getInventoryStatus(item, value) {
+  if (value === "" || value === null || value === undefined) return { key: "empty", label: "미입력" };
+  const quantity = Number(value);
+  if (!Number.isFinite(quantity)) return { key: "empty", label: "미입력" };
+  if (Number.isFinite(item.min) && quantity < item.min) return { key: "low", label: "부족" };
+  if (Number.isFinite(item.weekendMin) && quantity < item.weekendMin) return { key: "watch", label: "주의" };
+  return { key: "ok", label: "충분" };
+}
+
+function collectInventoryEntries() {
+  if (!inventoryCheckItemsEl) return [];
+
+  return [...inventoryCheckItemsEl.querySelectorAll("[data-inventory-index]")].map((row) => {
+    const index = Number(row.dataset.inventoryIndex);
+    const item = inventoryItems[index];
+    const input = row.querySelector("input[type='number']");
+    const memo = row.querySelector("input[type='text']");
+    const rawQuantity = input?.value ?? "";
+    const quantity = rawQuantity === "" ? "" : Number(rawQuantity);
+    const status = getInventoryStatus(item, rawQuantity);
+    return {
+      name: item.name,
+      category: item.category || "",
+      unit: item.unit || "",
+      min: item.min ?? "",
+      weekendMin: item.weekendMin ?? "",
+      quantity,
+      status: status.key,
+      statusLabel: status.label,
+      memo: memo?.value.trim() || ""
+    };
+  });
+}
+
+function writeInventoryState() {
+  if (!inventoryCheckItemsEl) return;
+
+  const entries = collectInventoryEntries();
+  const state = {
+    staffName: inventoryCheckNameEl?.value.trim() || "",
+    note: inventoryCheckNoteEl?.value.trim() || "",
+    values: entries.reduce((map, entry) => {
+      map[entry.name] = {
+        quantity: entry.quantity,
+        memo: entry.memo
+      };
+      return map;
+    }, {}),
+    savedAt: new Date().toISOString()
+  };
+  localStorage.setItem(inventoryStorageKey(), JSON.stringify(state));
+}
+
+function updateInventoryBadges() {
+  if (!inventoryCheckItemsEl) return;
+
+  let lowCount = 0;
+  let watchCount = 0;
+  let missingCount = 0;
+  inventoryCheckItemsEl.querySelectorAll("[data-inventory-index]").forEach((row) => {
+    const index = Number(row.dataset.inventoryIndex);
+    const item = inventoryItems[index];
+    const input = row.querySelector("input[type='number']");
+    const badge = row.querySelector("[data-inventory-status]");
+    const status = getInventoryStatus(item, input?.value ?? "");
+    row.dataset.status = status.key;
+    if (badge) badge.textContent = status.label;
+    if (status.key === "low") lowCount += 1;
+    if (status.key === "watch") watchCount += 1;
+    if (status.key === "empty") missingCount += 1;
+  });
+
+  if (lowCount > 0 || missingCount > 0) {
+    setInventoryCheckStatus(`부족 ${lowCount}개, 미입력 ${missingCount}개, 주의 ${watchCount}개 품목이 있습니다. 제출하면 관리자 이메일에 표시됩니다.`, "error");
+  } else if (watchCount > 0) {
+    setInventoryCheckStatus(`주의 ${watchCount}개 품목이 있습니다. 주말 전 보충 여부를 확인해주세요.`, "warning");
+  } else {
+    setInventoryCheckStatus("기준 이하 품목은 제출 시 관리자 이메일에 표시됩니다.", "");
+  }
+}
+
+function renderInventoryChecklist() {
+  if (!inventoryCheckItemsEl) return;
+
+  const state = readInventoryState();
+  const submitButton = inventoryCheckFormEl?.querySelector("button[type='submit']");
+  const isConnected = Boolean((window.CHECKLIST_SUBMIT_URL || "").trim());
+
+  if (submitButton) {
+    submitButton.disabled = !isConnected;
+    submitButton.textContent = isConnected ? "재고 제출" : "연결 대기";
+  }
+
+  if (inventoryCheckNameEl) inventoryCheckNameEl.value = state.staffName || "";
+  if (inventoryCheckNoteEl) inventoryCheckNoteEl.value = state.note || "";
+
+  inventoryCheckItemsEl.innerHTML = inventoryItems.map((item, index) => {
+    const saved = state.values?.[item.name] || {};
+    const quantity = saved.quantity ?? "";
+    const memo = saved.memo || "";
+    const status = getInventoryStatus(item, quantity);
+    return `
+      <article class="inventory-item" data-inventory-index="${index}" data-status="${status.key}">
+        <div class="inventory-item-head">
+          <div>
+            <strong>${escapeHtml(item.name)}</strong>
+            <span>${escapeHtml(item.category || "재고")} · 기준 ${escapeHtml(item.min)}${escapeHtml(item.unit)} / 주말 ${escapeHtml(item.weekendMin)}${escapeHtml(item.unit)}</span>
+          </div>
+          <em data-inventory-status>${status.label}</em>
+        </div>
+        <label>
+          <span>현재 재고</span>
+          <input type="number" min="0" step="0.1" inputmode="decimal" value="${escapeHtml(quantity)}" placeholder="0">
+          <small>${escapeHtml(item.unit || "단위")}</small>
+        </label>
+        <input type="text" value="${escapeHtml(memo)}" placeholder="${escapeHtml(item.note || "메모 선택 입력")}">
+      </article>
+    `;
+  }).join("");
+
+  const submittedAt = state.submittedAt
+    ? new Date(state.submittedAt).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })
+    : "";
+  if (submittedAt && isConnected) {
+    setInventoryCheckStatus(`오늘 재고 체크를 ${submittedAt}에 제출했습니다.`, "success");
+  } else {
+    updateInventoryBadges();
+  }
 }
 
 function renderDailyChecklist() {
@@ -724,6 +900,20 @@ function applyChecklistConfig(config) {
     changed = true;
   }
 
+  if (Array.isArray(config?.inventory) && config.inventory.length) {
+    inventoryItems = config.inventory
+      .filter((item) => item?.name)
+      .map((item) => ({
+        name: item.name,
+        category: item.category || "재고",
+        unit: item.unit || "개",
+        min: Number(item.min),
+        weekendMin: Number(item.weekendMin),
+        note: item.note || ""
+      }));
+    changed = true;
+  }
+
   return changed;
 }
 
@@ -736,6 +926,7 @@ async function loadDailyChecklistConfig() {
     if (config?.ok && applyChecklistConfig(config)) {
       renderNotices();
       renderDailyChecklist();
+      renderInventoryChecklist();
     }
   } catch (error) {
     console.warn("체크리스트 관리 데이터를 불러오지 못했습니다.", error);
@@ -802,6 +993,81 @@ async function submitDailyChecklist(event) {
   } catch (error) {
     console.warn("데일리 체크 제출 실패", error);
     setDailyCheckStatus("제출에 실패했습니다. 네트워크 상태를 확인한 뒤 다시 시도해주세요.", "error");
+  }
+}
+
+async function submitInventoryChecklist(event) {
+  event.preventDefault();
+
+  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
+  const staffName = inventoryCheckNameEl.value.trim();
+  const note = inventoryCheckNoteEl.value.trim();
+  const entries = collectInventoryEntries();
+  const lowItems = entries.filter((entry) => entry.status === "low");
+  const watchItems = entries.filter((entry) => entry.status === "watch");
+  const missingItems = entries.filter((entry) => entry.status === "empty");
+  const normalItems = entries.filter((entry) => entry.status === "ok");
+
+  if (!staffName) {
+    inventoryCheckNameEl.focus();
+    setInventoryCheckStatus("담당자 이름을 입력해주세요.", "error");
+    return;
+  }
+
+  if (!submitUrl) {
+    setInventoryCheckStatus("Google Apps Script 웹앱 URL 연결 후 제출할 수 있습니다.", "error");
+    return;
+  }
+
+  const formatEntry = (entry) => {
+    const quantity = entry.quantity === "" ? "미입력" : `${entry.quantity}${entry.unit}`;
+    const memo = entry.memo ? ` / ${entry.memo}` : "";
+    return `${entry.name}: ${quantity} (${entry.statusLabel}, 기준 ${entry.min}${entry.unit}, 주말 ${entry.weekendMin}${entry.unit})${memo}`;
+  };
+
+  const payload = {
+    kind: "inventory",
+    submittedAt: new Date().toISOString(),
+    localDate: formatLocalDate(new Date()),
+    type: "inventory",
+    typeLabel: "마감 재고 체크",
+    staffName,
+    inventoryItems: entries,
+    lowItems,
+    watchItems,
+    missingItems,
+    normalItems,
+    checkedItems: [...normalItems, ...watchItems].map(formatEntry),
+    uncheckedItems: [...lowItems, ...missingItems].map(formatEntry),
+    note,
+    page: location.href
+  };
+
+  setInventoryCheckStatus("재고 체크를 제출 중입니다...", "");
+
+  try {
+    await fetch(submitUrl, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    writeInventoryState();
+    const state = readInventoryState();
+    state.submittedAt = payload.submittedAt;
+    localStorage.setItem(inventoryStorageKey(), JSON.stringify(state));
+    setInventoryCheckStatus(
+      lowItems.length
+        ? `제출했습니다. 부족 ${lowItems.length}개 품목이 관리자 이메일에 표시됩니다.`
+        : "제출했습니다. 재고 기록과 관리자 이메일 발송 요청이 전송되었습니다.",
+      lowItems.length ? "error" : "success"
+    );
+  } catch (error) {
+    console.warn("재고 체크 제출 실패", error);
+    setInventoryCheckStatus("제출에 실패했습니다. 네트워크 상태를 확인한 뒤 다시 시도해주세요.", "error");
   }
 }
 
@@ -1064,10 +1330,18 @@ dailyCheckItemsEl?.addEventListener("change", () => writeDailyCheckState());
 dailyCheckNameEl?.addEventListener("input", () => writeDailyCheckState());
 dailyCheckNoteEl?.addEventListener("input", () => writeDailyCheckState());
 dailyCheckFormEl?.addEventListener("submit", submitDailyChecklist);
+inventoryCheckItemsEl?.addEventListener("input", () => {
+  updateInventoryBadges();
+  writeInventoryState();
+});
+inventoryCheckNameEl?.addEventListener("input", () => writeInventoryState());
+inventoryCheckNoteEl?.addEventListener("input", () => writeInventoryState());
+inventoryCheckFormEl?.addEventListener("submit", submitInventoryChecklist);
 
 renderCounts();
 renderNotices();
 renderDailyChecklist();
+renderInventoryChecklist();
 renderArticles();
 renderDetail();
 
@@ -1077,6 +1351,10 @@ if (dailyManageLinkEl && window.CHECKLIST_MANAGE_URL) {
 
 if (noticeManageLinkEl && window.TODAY_NOTICE_MANAGE_URL) {
   noticeManageLinkEl.href = window.TODAY_NOTICE_MANAGE_URL;
+}
+
+if (inventoryManageLinkEl && window.INVENTORY_MANAGE_URL) {
+  inventoryManageLinkEl.href = window.INVENTORY_MANAGE_URL;
 }
 
 // ── Sticky offset: sidebar 높이를 CSS 변수로 전달 ──

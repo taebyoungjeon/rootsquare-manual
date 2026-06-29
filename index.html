@@ -105,6 +105,31 @@
         </form>
       </section>
 
+      <section class="inventory-check-panel" aria-label="마감 재고 체크">
+        <div class="daily-check-head">
+          <div>
+            <p class="notice-label">CLOSING STOCK</p>
+            <h2>재고·베이스 체크</h2>
+          </div>
+          <a class="daily-manage-link" id="inventory-manage-link" href="https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0" target="_blank" rel="noopener">재고 기준 관리</a>
+        </div>
+        <form id="inventory-check-form" class="inventory-check-form">
+          <label class="daily-name-field">
+            <span>담당자 이름</span>
+            <input id="inventory-check-name" name="staffName" type="text" placeholder="예: 김루트" autocomplete="name" required>
+          </label>
+          <div class="inventory-items" id="inventory-check-items"></div>
+          <label class="daily-note-field">
+            <span>재고 특이사항</span>
+            <textarea id="inventory-check-note" name="note" rows="3" placeholder="상태가 좋지 않은 재료, 내일 제조가 필요한 베이스 등을 적어주세요."></textarea>
+          </label>
+          <div class="daily-check-actions">
+            <p id="inventory-check-status" aria-live="polite">기준 이하 품목은 제출 시 관리자 이메일에 표시됩니다.</p>
+            <button type="submit">재고 제출</button>
+          </div>
+        </form>
+      </section>
+
       <div class="search-panel">
         <label for="manual-search">검색</label>
         <input id="manual-search" type="search" placeholder="예: 오픈, 품절, 티라미수, ㅌㅁㅌ, ㅂㄴㄹㄹㄸ">
@@ -161,7 +186,8 @@
     window.CHECKLIST_SUBMIT_URL = "https://script.google.com/macros/s/AKfycbwVgNBEpgcVsUT230nKVxXMLpXKrxpu5gNKyUnZw8DXwSdFreBXrr1tgUOb42yUjKTmJg/exec";
     window.CHECKLIST_MANAGE_URL = "https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit?gid=1897809790#gid=1897809790";
     window.TODAY_NOTICE_MANAGE_URL = "https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0";
+    window.INVENTORY_MANAGE_URL = "https://docs.google.com/spreadsheets/d/1PDUafhnQVo9Mour8NO37KApuAreHvZLYaLrZlh8gnuw/edit#gid=0";
   </script>
-  <script src="app.js?v=20260618-equipment-photo"></script>
+  <script src="app.js?v=20260629-inventory-check"></script>
 </body>
 </html>
