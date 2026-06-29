@@ -140,6 +140,15 @@ function toDisplayImageUrl(url) {
   return value;
 }
 
+function shouldShowNoticeImage(group) {
+  const title = String(group?.title || "").trim();
+  const label = String(group?.label || "").trim();
+  const blockedTitles = new Set(["인포 근무 지원"]);
+
+  if (blockedTitles.has(title) || blockedTitles.has(label)) return false;
+  return Boolean(String(group?.imageUrl || "").trim());
+}
+
 function openNoticePhotoDialog(imageUrl, title, originalUrl = "") {
   if (!noticePhotoDialogEl) {
     noticePhotoDialogEl = document.createElement("dialog");
@@ -593,7 +602,7 @@ function renderNotices() {
   `).join("");
 
   noticeGroupsEl.innerHTML = groups.map((group) => {
-    const imageUrl = toDisplayImageUrl(group.imageUrl);
+    const imageUrl = shouldShowNoticeImage(group) ? toDisplayImageUrl(group.imageUrl) : "";
     const title = escapeHtml(group.title || group.label || "공지");
     const label = escapeHtml(group.label || (group.important ? "중요" : "공지"));
     const items = Array.isArray(group.items) ? group.items : [group.text || group.content || ""].filter(Boolean);
