@@ -73,22 +73,23 @@ const DAILY_CHECKLISTS = {
 };
 
 const DEFAULT_INVENTORY_ITEMS = [
-  { name: "라떼빙수", category: "빙수", unit: "잔", min: 3, weekendMin: 6 },
-  { name: "아이스크림", category: "유제품", unit: "팩", min: 1, weekendMin: 2, note: "1팩 기준 아이스크림 약 8개" },
-  { name: "쌀크림", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "딸기", category: "과일", unit: "kg", min: 1, weekendMin: 2 },
-  { name: "말차", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "토마토", category: "과일", unit: "통", min: 1, weekendMin: 2 },
-  { name: "케일키위바나나", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "복숭아", category: "과일", unit: "팩", min: 1, weekendMin: 2 },
-  { name: "블루베리요거트", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "초콜릿밀크", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "감귤생강", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "허니자몽", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "애플레몬", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "패션후르츠", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "청포도", category: "베이스", unit: "통", min: 1, weekendMin: 2 },
-  { name: "얼그레이", category: "베이스", unit: "통", min: 1, weekendMin: 2 }
+  { name: "아이스크림", category: "유제품", unit: "팩", min: 6, weekendMin: 15, note: "새 제품 재고수량 기준. 기계 안 수량은 제외" },
+  { name: "눈꽃 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 3 },
+  { name: "쌀크림 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 4 },
+  { name: "딸기 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 4 },
+  { name: "말차 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 1 },
+  { name: "토마토 과일", category: "과일", unit: "컵", min: 15, weekendMin: 30 },
+  { name: "케일키위바나나 과일", category: "과일", unit: "통", min: 4, weekendMin: 8, note: "케일 0통, 키위 0통, 바나나 0통" },
+  { name: "복숭아 베이스 (농축액)", category: "베이스", unit: "통", min: 2, weekendMin: 4 },
+  { name: "복숭아 과일 (냉동)", category: "과일", unit: "팩", min: 4, weekendMin: 6 },
+  { name: "블루베리 베이스 (리플잼)", category: "베이스", unit: "팩", min: 2, weekendMin: 4 },
+  { name: "요거트 파우더", category: "파우더", unit: "팩", min: 2, weekendMin: 4 },
+  { name: "청포도 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
+  { name: "초콜렛밀크 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 1 },
+  { name: "감귤생강 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
+  { name: "허니자몽 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
+  { name: "애플레몬 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
+  { name: "패션후르츠 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 }
 ];
 
 inventoryItems = DEFAULT_INVENTORY_ITEMS;
@@ -699,9 +700,24 @@ function readInventoryState() {
   }
 }
 
+function parseInventoryQuantity(value) {
+  const text = String(value ?? "").trim();
+  if (!text) return NaN;
+
+  const fractionMatch = text.match(/^(\d+(?:\.\d+)?)\s*\/\s*(\d+(?:\.\d+)?)/);
+  if (fractionMatch) {
+    const numerator = Number(fractionMatch[1]);
+    const denominator = Number(fractionMatch[2]);
+    return denominator ? numerator / denominator : NaN;
+  }
+
+  const numberMatch = text.match(/\d+(?:\.\d+)?/);
+  return numberMatch ? Number(numberMatch[0]) : NaN;
+}
+
 function getInventoryStatus(item, value) {
   if (value === "" || value === null || value === undefined) return { key: "empty", label: "미입력" };
-  const quantity = Number(value);
+  const quantity = parseInventoryQuantity(value);
   if (!Number.isFinite(quantity)) return { key: "empty", label: "미입력" };
   if (Number.isFinite(item.min) && quantity < item.min) return { key: "low", label: "부족" };
   if (Number.isFinite(item.weekendMin) && quantity < item.weekendMin) return { key: "watch", label: "주의" };
@@ -714,10 +730,9 @@ function collectInventoryEntries() {
   return [...inventoryCheckItemsEl.querySelectorAll("[data-inventory-index]")].map((row) => {
     const index = Number(row.dataset.inventoryIndex);
     const item = inventoryItems[index];
-    const input = row.querySelector("input[type='number']");
-    const memo = row.querySelector("input[type='text']");
+    const input = row.querySelector("[data-inventory-quantity]");
+    const memo = row.querySelector("[data-inventory-memo]");
     const rawQuantity = input?.value ?? "";
-    const quantity = rawQuantity === "" ? "" : Number(rawQuantity);
     const status = getInventoryStatus(item, rawQuantity);
     return {
       name: item.name,
@@ -725,7 +740,7 @@ function collectInventoryEntries() {
       unit: item.unit || "",
       min: item.min ?? "",
       weekendMin: item.weekendMin ?? "",
-      quantity,
+      quantity: rawQuantity.trim(),
       status: status.key,
       statusLabel: status.label,
       memo: memo?.value.trim() || ""
@@ -761,7 +776,7 @@ function updateInventoryBadges() {
   inventoryCheckItemsEl.querySelectorAll("[data-inventory-index]").forEach((row) => {
     const index = Number(row.dataset.inventoryIndex);
     const item = inventoryItems[index];
-    const input = row.querySelector("input[type='number']");
+    const input = row.querySelector("[data-inventory-quantity]");
     const badge = row.querySelector("[data-inventory-status]");
     const status = getInventoryStatus(item, input?.value ?? "");
     row.dataset.status = status.key;
@@ -811,10 +826,10 @@ function renderInventoryChecklist() {
         </div>
         <label>
           <span>현재 재고</span>
-          <input type="number" min="0" step="0.1" inputmode="decimal" value="${escapeHtml(quantity)}" placeholder="0">
+          <input data-inventory-quantity type="text" inputmode="decimal" value="${escapeHtml(quantity)}" placeholder="0 또는 1/2">
           <small>${escapeHtml(item.unit || "단위")}</small>
         </label>
-        <input type="text" value="${escapeHtml(memo)}" placeholder="${escapeHtml(item.note || "메모 선택 입력")}">
+        <input data-inventory-memo type="text" value="${escapeHtml(memo)}" placeholder="${escapeHtml(item.note || "메모 선택 입력")}">
       </article>
     `;
   }).join("");
