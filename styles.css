@@ -931,6 +931,27 @@ h1 {
   line-height: 1.45;
 }
 
+.manual-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.manual-links a {
+  background: #eef4e8;
+  border: 1px solid #dce8d2;
+  border-radius: 999px;
+  color: var(--green-strong);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 8px 12px;
+  text-decoration: none;
+}
+
+.manual-links a:hover {
+  border-color: var(--green);
+}
+
 .note {
   background: #f8eee7;
   border-left: 4px solid var(--rust);

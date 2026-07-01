@@ -35,7 +35,8 @@ const categoryLabels = {
   schedule: "근무 시간표",
   clean: "위생·청소",
   stock: "재고·발주",
-  equipment: "장비 유지보수"
+  equipment: "장비 유지보수",
+  stayHistory: "스테이 운영 히스토리"
 };
 
 let activeCategory = "all";
@@ -46,6 +47,7 @@ let todayNoticeConfig = null;
 let inventoryItems = [];
 let isNoticeExpanded = false;
 let isInventoryExpanded = false;
+const STAY_HISTORY_MANUAL_PREFIX = "stay-history-";
 
 const DAILY_CHECKLISTS = {
   open: {
@@ -117,6 +119,79 @@ function createSearchText(parts) {
   const source = Array.isArray(parts) ? parts.join(" ") : parts;
   const normalized = normalize(source);
   return `${normalized} ${getKoreanInitials(normalized)}`;
+}
+
+function splitLines(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item || "").trim()).filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(/\n+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function sanitizePlainText(value) {
+  return escapeHtml(String(value || "").trim());
+}
+
+function createStayHistoryManual(item, index) {
+  const rawId = item.id || item.fileId || `${item.eventDate || "event"}-${index}`;
+  const id = `${STAY_HISTORY_MANUAL_PREFIX}${String(rawId).replace(/[^\w-]+/g, "-")}`;
+  const title = sanitizePlainText(item.title || item.fileName || "스테이 운영 이슈");
+  const category = sanitizePlainText(item.category || "운영 이슈");
+  const summary = sanitizePlainText(item.summary || "Drive 캡처에서 자동 정리된 운영 히스토리입니다.");
+  const facts = splitLines(item.facts).map(sanitizePlainText);
+  const issues = splitLines(item.issues).map(sanitizePlainText);
+  const suggestions = splitLines(item.manualSuggestions || item.suggestions).map(sanitizePlainText);
+  const steps = [
+    ...(item.eventDate ? [`발생/기준일: ${sanitizePlainText(item.eventDate)}`] : []),
+    ...(facts.length ? facts.map((text) => `사실: ${text}`) : []),
+    ...(issues.length ? issues.map((text) => `이슈: ${text}`) : []),
+    ...(suggestions.length ? suggestions.map((text) => `제안: ${text}`) : [])
+  ];
+  const checklist = [
+    item.manualNeeded === "Y" || item.manualNeeded === true
+      ? "매뉴얼 반영 필요 여부를 관리자가 확인합니다."
+      : "운영 히스토리로 보관하고 반복 여부를 확인합니다.",
+    "유사 이슈가 반복되면 체크리스트나 오늘의 필수확인 항목으로 승격합니다."
+  ];
+
+  return {
+    id,
+    category: "stayHistory",
+    title,
+    summary,
+    owner: "운영 관리자",
+    updated: sanitizePlainText(item.processedAt || item.eventDate || ""),
+    tags: [
+      "스테이",
+      "운영 히스토리",
+      category,
+      item.manualNeeded === "Y" || item.manualNeeded === true ? "매뉴얼 검토" : "기록"
+    ].filter(Boolean),
+    steps: steps.length ? steps : ["Drive 캡처가 등록되었고 세부 분석을 기다리고 있습니다."],
+    checklist,
+    links: item.fileUrl ? [{ label: "원본 캡처 열기", url: item.fileUrl }] : [],
+    note: sanitizePlainText(item.status || "검토대기"),
+    isStayHistory: true
+  };
+}
+
+function syncStayHistoryManuals(items) {
+  for (let index = MANUALS.length - 1; index >= 0; index -= 1) {
+    if (MANUALS[index]?.isStayHistory) {
+      MANUALS.splice(index, 1);
+    }
+  }
+
+  if (!Array.isArray(items) || !items.length) return;
+
+  items
+    .filter((item) => item && (item.title || item.summary || item.fileName))
+    .map(createStayHistoryManual)
+    .forEach((manual) => MANUALS.push(manual));
 }
 
 function escapeHtml(value) {
@@ -965,6 +1040,11 @@ function applyChecklistConfig(config) {
     changed = true;
   }
 
+  if (Array.isArray(config?.stayHistory)) {
+    syncStayHistoryManuals(config.stayHistory);
+    changed = true;
+  }
+
   return changed;
 }
 
@@ -978,6 +1058,9 @@ async function loadDailyChecklistConfig() {
       renderNotices();
       renderDailyChecklist();
       renderInventoryChecklist();
+      renderCounts();
+      renderArticles();
+      renderDetail();
     }
   } catch (error) {
     console.warn("체크리스트 관리 데이터를 불러오지 못했습니다.", error);
@@ -1236,6 +1319,17 @@ function renderDetail() {
               </button>
             `;
           }).join("")}
+        </div>
+      </section>
+    ` : ""}
+
+    ${Array.isArray(manual.links) && manual.links.length ? `
+      <section class="manual-section">
+        <h3>관련 링크</h3>
+        <div class="manual-links">
+          ${manual.links.map((link) => `
+            <a href="${escapeHtml(link.url)}" target="_blank" rel="noopener">${escapeHtml(link.label || "링크 열기")}</a>
+          `).join("")}
         </div>
       </section>
     ` : ""}

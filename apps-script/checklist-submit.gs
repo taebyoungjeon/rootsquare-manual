@@ -7,6 +7,9 @@ const CONFIG_SHEET_NAME = "체크리스트 항목 관리";
 const TODAY_NOTICE_SHEET_NAME = "오늘의 필수확인 관리";
 const INVENTORY_LOG_SHEET_NAME = "재고 체크 기록";
 const INVENTORY_CONFIG_SHEET_NAME = "재고 기준 관리";
+const STAY_HISTORY_SHEET_NAME = "스테이 운영 히스토리";
+const STAY_HISTORY_FILES_SHEET_NAME = "스테이 운영 파일 처리";
+const STAY_HISTORY_FOLDER_ID = "1UmB77py6fV54HMioIIezNiCDx8A_vSBV";
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -63,7 +66,8 @@ function doGet(e) {
       ok: true,
       checklists: getChecklistConfig(),
       notices: getTodayNoticeConfig(),
-      inventory: getInventoryConfig()
+      inventory: getInventoryConfig(),
+      stayHistory: getStayHistoryConfig()
     };
     return callback ? jsonpResponse(callback, data) : jsonResponse(data);
   }
@@ -554,6 +558,387 @@ function sendInventoryEmail(data) {
     subject,
     body
   });
+}
+
+function getOrCreateStayHistorySheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(STAY_HISTORY_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(STAY_HISTORY_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "처리일시",
+      "이벤트일자",
+      "파일ID",
+      "파일명",
+      "파일URL",
+      "분류",
+      "제목",
+      "요약",
+      "사실기록",
+      "운영이슈",
+      "매뉴얼반영필요",
+      "매뉴얼제안",
+      "상태",
+      "처리메모"
+    ]);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
+function getOrCreateStayHistoryFilesSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(STAY_HISTORY_FILES_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(STAY_HISTORY_FILES_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "파일ID",
+      "파일명",
+      "파일URL",
+      "처리일시",
+      "상태",
+      "메시지"
+    ]);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
+function getStayHistoryConfig() {
+  const sheet = getOrCreateStayHistorySheet();
+  const values = sheet.getDataRange().getValues();
+  if (values.length <= 1) return [];
+
+  const headers = values[0] || [];
+  const headerMap = headers.reduce((map, header, index) => {
+    const key = String(header || "").trim().replace(/\s+/g, "");
+    if (key) map[key] = index;
+    return map;
+  }, {});
+
+  return values
+    .slice(1)
+    .map((row, rowIndex) => {
+      const status = getConfigCell(row, headerMap, ["상태"], 12);
+      if (String(status || "").trim() === "숨김") return null;
+
+      return {
+        id: getConfigCell(row, headerMap, ["파일ID"], 2) || `row-${rowIndex + 2}`,
+        processedAt: getConfigCell(row, headerMap, ["처리일시"], 0),
+        eventDate: getConfigCell(row, headerMap, ["이벤트일자"], 1),
+        fileId: getConfigCell(row, headerMap, ["파일ID"], 2),
+        fileName: getConfigCell(row, headerMap, ["파일명"], 3),
+        fileUrl: getConfigCell(row, headerMap, ["파일URL"], 4),
+        category: getConfigCell(row, headerMap, ["분류"], 5),
+        title: getConfigCell(row, headerMap, ["제목"], 6),
+        summary: getConfigCell(row, headerMap, ["요약"], 7),
+        facts: getConfigCell(row, headerMap, ["사실기록"], 8),
+        issues: getConfigCell(row, headerMap, ["운영이슈"], 9),
+        manualNeeded: getConfigCell(row, headerMap, ["매뉴얼반영필요"], 10),
+        manualSuggestions: getConfigCell(row, headerMap, ["매뉴얼제안"], 11),
+        status,
+        memo: getConfigCell(row, headerMap, ["처리메모"], 13)
+      };
+    })
+    .filter((item) => item && (item.title || item.summary || item.fileName))
+    .reverse()
+    .slice(0, 80);
+}
+
+function setupDailyStayHistoryTrigger() {
+  ScriptApp.getProjectTriggers().forEach((trigger) => {
+    if (trigger.getHandlerFunction() === "runDailyStayHistoryImport") {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+
+  ScriptApp.newTrigger("runDailyStayHistoryImport")
+    .timeBased()
+    .everyDays(1)
+    .atHour(7)
+    .create();
+}
+
+function runDailyStayHistoryImport() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const folder = DriveApp.getFolderById(STAY_HISTORY_FOLDER_ID);
+    const processedIds = getProcessedStayHistoryFileIds();
+    const files = folder.getFiles();
+    const imported = [];
+    const skipped = [];
+    const maxImportsPerRun = 30;
+
+    while (files.hasNext() && imported.length + skipped.length < maxImportsPerRun) {
+      const file = files.next();
+      const fileId = file.getId();
+
+      if (processedIds.has(fileId)) {
+        continue;
+      }
+
+      const result = importStayHistoryFile(file);
+      if (result.ok) {
+        imported.push(result.event);
+      } else {
+        skipped.push(result.message);
+      }
+    }
+
+    if (imported.length) {
+      sendStayHistoryDigestEmail(imported);
+    }
+
+    return {
+      ok: true,
+      imported: imported.length,
+      skipped: skipped.length,
+      messages: skipped
+    };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function getProcessedStayHistoryFileIds() {
+  const sheet = getOrCreateStayHistoryFilesSheet();
+  const values = sheet.getDataRange().getValues();
+  return new Set(values.slice(1).map((row) => String(row[0] || "").trim()).filter(Boolean));
+}
+
+function importStayHistoryFile(file) {
+  const fileId = file.getId();
+  const fileName = file.getName();
+  const fileUrl = file.getUrl();
+  const processedAt = Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm:ss");
+
+  try {
+    const mimeType = file.getMimeType();
+    if (!String(mimeType || "").startsWith("image/")) {
+      const message = `지원하지 않는 파일 형식: ${mimeType || "알 수 없음"}`;
+      markStayHistoryFileProcessed(file, processedAt, "건너뜀", message);
+      return { ok: false, message };
+    }
+
+    const analysis = analyzeStayHistoryImage(file);
+    const event = appendStayHistoryEvent({
+      processedAt,
+      eventDate: analysis.eventDate || Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd"),
+      fileId,
+      fileName,
+      fileUrl,
+      category: analysis.category || "운영 이슈",
+      title: analysis.title || fileName,
+      summary: analysis.summary || "Drive 캡처에서 자동 수집된 운영 히스토리입니다.",
+      facts: toMultilineText(analysis.facts),
+      issues: toMultilineText(analysis.issues),
+      manualNeeded: normalizeYesNo(analysis.manualNeeded),
+      manualSuggestions: toMultilineText(analysis.manualSuggestions || analysis.suggestions),
+      status: analysis.status || "검토대기",
+      memo: analysis.memo || ""
+    });
+
+    markStayHistoryFileProcessed(file, processedAt, "완료", event.title);
+    return { ok: true, event };
+  } catch (error) {
+    const message = error && error.message ? error.message : String(error);
+    markStayHistoryFileProcessed(file, processedAt, "오류", message);
+    return { ok: false, message };
+  }
+}
+
+function markStayHistoryFileProcessed(file, processedAt, status, message) {
+  const sheet = getOrCreateStayHistoryFilesSheet();
+  sheet.appendRow([
+    file.getId(),
+    file.getName(),
+    file.getUrl(),
+    processedAt,
+    status,
+    message || ""
+  ]);
+}
+
+function analyzeStayHistoryImage(file) {
+  const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
+  if (!apiKey) {
+    return {
+      category: "분석 대기",
+      title: file.getName(),
+      summary: "GEMINI_API_KEY Script Property를 설정하면 캡처 내용을 자동 분석합니다.",
+      facts: ["파일이 Drive 폴더에 새로 추가되었습니다."],
+      issues: [],
+      manualNeeded: "N",
+      manualSuggestions: [],
+      status: "분석대기",
+      memo: "Apps Script 프로젝트 설정 > 스크립트 속성에 GEMINI_API_KEY를 추가해주세요."
+    };
+  }
+
+  const blob = file.getBlob();
+  const model = PropertiesService.getScriptProperties().getProperty("GEMINI_MODEL") || "gemini-1.5-flash";
+  const prompt = [
+    "너는 루트스퀘어/만나씨이에이의 운영 매뉴얼 관리자다.",
+    "첨부된 카카오톡/메신저/현장 캡처를 읽고, 운영 히스토리로 남길 사건만 정리한다.",
+    "확인되지 않은 내용은 추측하지 말고, '확인 필요'라고 쓴다.",
+    "직원 개인 비난 표현은 줄이고, 운영 개선 관점으로 정리한다.",
+    "반드시 아래 JSON 형식 하나만 반환한다.",
+    "{",
+    '  "eventDate": "YYYY-MM-DD 또는 확인 필요",',
+    '  "category": "스테이 정비|스테이 고객응대|장비 유지보수|청소/위생|근무관리|기타 중 하나",',
+    '  "title": "짧은 제목",',
+    '  "summary": "2문장 이내 요약",',
+    '  "facts": ["캡처에서 확인되는 사실"],',
+    '  "issues": ["운영상 문제가 된 점"],',
+    '  "manualNeeded": "Y 또는 N",',
+    '  "manualSuggestions": ["매뉴얼 또는 체크리스트에 반영할 제안"],',
+    '  "status": "검토대기",',
+    '  "memo": "확인 필요 사항"',
+    "}"
+  ].join("\n");
+  const payload = {
+    contents: [{
+      role: "user",
+      parts: [
+        { text: prompt },
+        {
+          inlineData: {
+            mimeType: blob.getContentType(),
+            data: Utilities.base64Encode(blob.getBytes())
+          }
+        }
+      ]
+    }],
+    generationConfig: {
+      temperature: 0.2,
+      responseMimeType: "application/json"
+    }
+  };
+  const response = UrlFetchApp.fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: "post",
+      contentType: "application/json",
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    }
+  );
+  const statusCode = response.getResponseCode();
+  const responseText = response.getContentText();
+
+  if (statusCode < 200 || statusCode >= 300) {
+    return {
+      category: "분석 오류",
+      title: file.getName(),
+      summary: `Gemini API 오류 ${statusCode}로 자동 분석하지 못했습니다.`,
+      facts: ["파일이 Drive 폴더에 새로 추가되었습니다."],
+      issues: [],
+      manualNeeded: "N",
+      manualSuggestions: ["Apps Script 실행 로그에서 Gemini API 응답을 확인합니다."],
+      status: "분석오류",
+      memo: responseText.slice(0, 500)
+    };
+  }
+
+  const parsed = JSON.parse(responseText);
+  const text = parsed.candidates && parsed.candidates[0] && parsed.candidates[0].content
+    ? parsed.candidates[0].content.parts.map((part) => part.text || "").join("\n")
+    : "";
+  return parseJsonObjectText(text);
+}
+
+function parseJsonObjectText(text) {
+  const cleaned = String(text || "")
+    .replace(/^```json\s*/i, "")
+    .replace(/^```\s*/i, "")
+    .replace(/```$/i, "")
+    .trim();
+
+  try {
+    return JSON.parse(cleaned);
+  } catch (error) {
+    const match = cleaned.match(/\{[\s\S]*\}/);
+    if (match) {
+      return JSON.parse(match[0]);
+    }
+    throw error;
+  }
+}
+
+function appendStayHistoryEvent(event) {
+  const sheet = getOrCreateStayHistorySheet();
+  sheet.appendRow([
+    event.processedAt,
+    event.eventDate,
+    event.fileId,
+    event.fileName,
+    event.fileUrl,
+    event.category,
+    event.title,
+    event.summary,
+    event.facts,
+    event.issues,
+    event.manualNeeded,
+    event.manualSuggestions,
+    event.status,
+    event.memo
+  ]);
+  return event;
+}
+
+function sendStayHistoryDigestEmail(events) {
+  if (!ADMIN_EMAILS.length || ADMIN_EMAILS[0] === "manager@example.com") return;
+
+  const subject = `[뤁스퀘어] 스테이 운영 히스토리 ${events.length}건 자동 기록`;
+  const body = [
+    `처리일시: ${Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm:ss")}`,
+    "",
+    events.map((event, index) => [
+      `${index + 1}. ${event.title}`,
+      `- 분류: ${event.category}`,
+      `- 기준일: ${event.eventDate}`,
+      `- 요약: ${event.summary}`,
+      `- 매뉴얼 반영 필요: ${event.manualNeeded}`,
+      event.manualSuggestions ? `- 제안:\n${prefixLines(event.manualSuggestions, "  · ")}` : "",
+      `- 원본: ${event.fileUrl}`
+    ].filter(Boolean).join("\n")).join("\n\n")
+  ].join("\n");
+
+  MailApp.sendEmail({
+    to: ADMIN_EMAILS.join(","),
+    subject,
+    body
+  });
+}
+
+function toMultilineText(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item || "").trim()).filter(Boolean).join("\n");
+  }
+  return String(value || "").trim();
+}
+
+function normalizeYesNo(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+  return ["y", "yes", "true", "1", "필요"].includes(normalized) ? "Y" : "N";
+}
+
+function prefixLines(value, prefix) {
+  return String(value || "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .map((line) => `${prefix}${line}`)
+    .join("\n");
 }
 
 function jsonResponse(data) {
