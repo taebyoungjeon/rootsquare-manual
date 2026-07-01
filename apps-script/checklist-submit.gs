@@ -10,6 +10,7 @@ const INVENTORY_CONFIG_SHEET_NAME = "재고 기준 관리";
 const STAY_HISTORY_SHEET_NAME = "스테이 운영 히스토리";
 const STAY_HISTORY_FILES_SHEET_NAME = "스테이 운영 파일 처리";
 const STAY_HISTORY_FOLDER_ID = "1UmB77py6fV54HMioIIezNiCDx8A_vSBV";
+const STAY_HISTORY_RETRY_HOURS = [7, 13, 19];
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -665,11 +666,13 @@ function setupDailyStayHistoryTrigger() {
     }
   });
 
-  ScriptApp.newTrigger("runDailyStayHistoryImport")
-    .timeBased()
-    .everyDays(1)
-    .atHour(7)
-    .create();
+  STAY_HISTORY_RETRY_HOURS.forEach((hour) => {
+    ScriptApp.newTrigger("runDailyStayHistoryImport")
+      .timeBased()
+      .everyDays(1)
+      .atHour(hour)
+      .create();
+  });
 }
 
 function authorizeStayHistoryExternalRequest() {
@@ -718,14 +721,17 @@ function runDailyStayHistoryImport() {
       }
     }
 
+    const remaining = countPendingStayHistoryFiles();
+
     if (imported.length) {
-      sendStayHistoryDigestEmail(imported);
+      sendStayHistoryDigestEmail(imported, remaining);
     }
 
     return {
       ok: true,
       imported: imported.length,
       skipped: skipped.length,
+      remaining,
       messages: skipped
     };
   } finally {
@@ -757,6 +763,20 @@ function getSuccessfulStayHistoryFileIds() {
       return fileId && status !== "숨김" && status !== "분석오류" && status !== "분석대기";
     })
     .map((row) => String(row[2] || "").trim()));
+}
+
+function countPendingStayHistoryFiles() {
+  const folder = DriveApp.getFolderById(STAY_HISTORY_FOLDER_ID);
+  const processedIds = getProcessedStayHistoryFileIds();
+  const files = folder.getFiles();
+  let count = 0;
+
+  while (files.hasNext()) {
+    const file = files.next();
+    if (!processedIds.has(file.getId())) count += 1;
+  }
+
+  return count;
 }
 
 function importStayHistoryFile(file) {
@@ -1008,12 +1028,18 @@ function appendStayHistoryEvent(event) {
   return event;
 }
 
-function sendStayHistoryDigestEmail(events) {
+function sendStayHistoryDigestEmail(events, remainingCount) {
   if (!ADMIN_EMAILS.length || ADMIN_EMAILS[0] === "manager@example.com") return;
 
-  const subject = `[뤁스퀘어] 스테이 운영 히스토리 ${events.length}건 자동 기록`;
+  const remaining = Number(remainingCount || 0);
+  const subject = remaining > 0
+    ? `[뤁스퀘어] 스테이 운영 히스토리 ${events.length}건 자동 기록 · ${remaining}건 대기`
+    : `[뤁스퀘어] 스테이 운영 히스토리 ${events.length}건 자동 기록 완료`;
   const body = [
     `처리일시: ${Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm:ss")}`,
+    remaining > 0
+      ? `상태: ${events.length}건을 기록했고, 아직 ${remaining}건은 다음 자동 실행에서 다시 시도합니다.`
+      : "상태: 현재 Drive 폴더의 새 캡처 분석을 모두 완료했습니다.",
     "",
     events.map((event, index) => [
       `${index + 1}. ${event.title}`,
