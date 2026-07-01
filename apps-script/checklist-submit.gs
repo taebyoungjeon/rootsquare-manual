@@ -671,6 +671,16 @@ function runDailyStayHistoryImport() {
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
+    const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
+    if (!apiKey) {
+      return {
+        ok: false,
+        imported: 0,
+        skipped: 0,
+        messages: ["GEMINI_API_KEY가 없어 새 파일을 처리하지 않았습니다."]
+      };
+    }
+
     const folder = DriveApp.getFolderById(STAY_HISTORY_FOLDER_ID);
     const processedIds = getProcessedStayHistoryFileIds();
     const files = folder.getFiles();
