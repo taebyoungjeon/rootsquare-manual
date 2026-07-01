@@ -72,6 +72,10 @@ function doGet(e) {
     return callback ? jsonpResponse(callback, data) : jsonResponse(data);
   }
 
+  if (action === "stayHistoryStatus") {
+    return jsonResponse(getStayHistoryStatus());
+  }
+
   return jsonResponse({
     ok: true,
     message: "Rootsquare checklist endpoint is ready."
@@ -628,7 +632,8 @@ function getStayHistoryConfig() {
     .slice(1)
     .map((row, rowIndex) => {
       const status = getConfigCell(row, headerMap, ["상태"], 12);
-      if (String(status || "").trim() === "숨김") return null;
+      const normalizedStatus = String(status || "").trim();
+      if (normalizedStatus === "숨김" || normalizedStatus === "분석오류" || normalizedStatus === "분석대기") return null;
 
       return {
         id: getConfigCell(row, headerMap, ["파일ID"], 2) || `row-${rowIndex + 2}`,
@@ -644,7 +649,7 @@ function getStayHistoryConfig() {
         issues: getConfigCell(row, headerMap, ["운영이슈"], 9),
         manualNeeded: getConfigCell(row, headerMap, ["매뉴얼반영필요"], 10),
         manualSuggestions: getConfigCell(row, headerMap, ["매뉴얼제안"], 11),
-        status,
+        status: normalizedStatus,
         memo: getConfigCell(row, headerMap, ["처리메모"], 13)
       };
     })
@@ -665,6 +670,14 @@ function setupDailyStayHistoryTrigger() {
     .everyDays(1)
     .atHour(7)
     .create();
+}
+
+function authorizeStayHistoryExternalRequest() {
+  const response = UrlFetchApp.fetch("https://generativelanguage.googleapis.com", {
+    method: "get",
+    muteHttpExceptions: true
+  });
+  return response.getResponseCode();
 }
 
 function runDailyStayHistoryImport() {
@@ -701,6 +714,7 @@ function runDailyStayHistoryImport() {
         imported.push(result.event);
       } else {
         skipped.push(result.message);
+        if (result.retryable) break;
       }
     }
 
@@ -722,7 +736,27 @@ function runDailyStayHistoryImport() {
 function getProcessedStayHistoryFileIds() {
   const sheet = getOrCreateStayHistoryFilesSheet();
   const values = sheet.getDataRange().getValues();
-  return new Set(values.slice(1).map((row) => String(row[0] || "").trim()).filter(Boolean));
+  const successfulHistoryIds = getSuccessfulStayHistoryFileIds();
+  return new Set(values.slice(1)
+    .filter((row) => {
+      const fileId = String(row[0] || "").trim();
+      const status = String(row[4] || "").trim();
+      return status === "건너뜀" || (status === "완료" && successfulHistoryIds.has(fileId));
+    })
+    .map((row) => String(row[0] || "").trim())
+    .filter(Boolean));
+}
+
+function getSuccessfulStayHistoryFileIds() {
+  const sheet = getOrCreateStayHistorySheet();
+  const values = sheet.getDataRange().getValues();
+  return new Set(values.slice(1)
+    .filter((row) => {
+      const fileId = String(row[2] || "").trim();
+      const status = String(row[12] || "").trim();
+      return fileId && status !== "숨김" && status !== "분석오류" && status !== "분석대기";
+    })
+    .map((row) => String(row[2] || "").trim()));
 }
 
 function importStayHistoryFile(file) {
@@ -757,13 +791,78 @@ function importStayHistoryFile(file) {
       memo: analysis.memo || ""
     });
 
+    if (analysis.retryable) {
+      markStayHistoryFileProcessed(file, processedAt, "재시도대기", event.memo || event.summary);
+      return {
+        ok: false,
+        retryable: true,
+        message: event.memo || event.summary || "일시적인 API 오류로 다음 실행 때 재시도합니다."
+      };
+    }
+
     markStayHistoryFileProcessed(file, processedAt, "완료", event.title);
     return { ok: true, event };
   } catch (error) {
     const message = error && error.message ? error.message : String(error);
+    appendStayHistoryEvent({
+      processedAt,
+      eventDate: Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd"),
+      fileId,
+      fileName,
+      fileUrl,
+      category: "분석 오류",
+      title: fileName,
+      summary: "자동 분석 중 오류가 발생해 원본 캡처 확인이 필요합니다.",
+      facts: "파일이 Drive 폴더에 새로 추가되었습니다.",
+      issues: "",
+      manualNeeded: "N",
+      manualSuggestions: "Apps Script 실행 로그와 Gemini API 키/응답 상태를 확인합니다.",
+      status: "분석오류",
+      memo: message.slice(0, 500)
+    });
     markStayHistoryFileProcessed(file, processedAt, "오류", message);
     return { ok: false, message };
   }
+}
+
+function getStayHistoryStatus() {
+  const props = PropertiesService.getScriptProperties();
+  const apiKey = props.getProperty("GEMINI_API_KEY") || "";
+  const model = props.getProperty("GEMINI_MODEL") || "gemini-2.0-flash";
+  const historySheet = getOrCreateStayHistorySheet();
+  const filesSheet = getOrCreateStayHistoryFilesSheet();
+  const historyRows = historySheet.getDataRange().getValues();
+  const fileRows = filesSheet.getDataRange().getValues();
+  const counts = fileRows.slice(1).reduce((map, row) => {
+    const status = String(row[4] || "미상").trim() || "미상";
+    map[status] = (map[status] || 0) + 1;
+    return map;
+  }, {});
+
+  return {
+    ok: true,
+    hasGeminiKey: Boolean(apiKey),
+    geminiKeyLooksLikeAiStudio: /^AIza/.test(apiKey),
+    model,
+    historyCount: Math.max(0, historyRows.length - 1),
+    processedFileCount: Math.max(0, fileRows.length - 1),
+    processedStatusCounts: counts,
+    recentHistory: historyRows.slice(Math.max(1, historyRows.length - 6)).map((row) => ({
+      processedAt: row[0],
+      eventDate: row[1],
+      fileName: row[3],
+      category: row[5],
+      title: row[6],
+      status: row[12],
+      memo: row[13]
+    })),
+    recentFiles: fileRows.slice(Math.max(1, fileRows.length - 10)).map((row) => ({
+      fileName: row[1],
+      processedAt: row[3],
+      status: row[4],
+      message: row[5]
+    }))
+  };
 }
 
 function markStayHistoryFileProcessed(file, processedAt, status, message) {
@@ -795,7 +894,7 @@ function analyzeStayHistoryImage(file) {
   }
 
   const blob = file.getBlob();
-  const model = PropertiesService.getScriptProperties().getProperty("GEMINI_MODEL") || "gemini-1.5-flash";
+  const model = PropertiesService.getScriptProperties().getProperty("GEMINI_MODEL") || "gemini-2.0-flash";
   const prompt = [
     "너는 루트스퀘어/만나씨이에이의 운영 매뉴얼 관리자다.",
     "첨부된 카카오톡/메신저/현장 캡처를 읽고, 운영 히스토리로 남길 사건만 정리한다.",
@@ -846,15 +945,19 @@ function analyzeStayHistoryImage(file) {
   const responseText = response.getContentText();
 
   if (statusCode < 200 || statusCode >= 300) {
+    const retryable = statusCode === 429 || statusCode === 503;
     return {
-      category: "분석 오류",
+      category: retryable ? "분석 대기" : "분석 오류",
       title: file.getName(),
       summary: `Gemini API 오류 ${statusCode}로 자동 분석하지 못했습니다.`,
       facts: ["파일이 Drive 폴더에 새로 추가되었습니다."],
       issues: [],
       manualNeeded: "N",
-      manualSuggestions: ["Apps Script 실행 로그에서 Gemini API 응답을 확인합니다."],
-      status: "분석오류",
+      manualSuggestions: retryable
+        ? ["Gemini API 쿼터 또는 일시 장애가 해소된 뒤 다시 자동 분석합니다."]
+        : ["Apps Script 실행 로그에서 Gemini API 응답을 확인합니다."],
+      status: retryable ? "분석대기" : "분석오류",
+      retryable,
       memo: responseText.slice(0, 500)
     };
   }
