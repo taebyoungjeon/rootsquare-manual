@@ -961,6 +961,82 @@ h1 {
   padding: 14px 16px;
 }
 
+.history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.history-entry {
+  background: #fffdf8;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.history-entry summary {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  list-style: none;
+  padding: 14px 16px;
+}
+
+.history-entry summary::-webkit-details-marker {
+  display: none;
+}
+
+.history-entry summary::after {
+  color: var(--green);
+  content: "열기";
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.history-entry[open] summary::after {
+  content: "닫기";
+}
+
+.history-entry summary span {
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.history-entry summary strong {
+  color: var(--ink);
+  flex: 1;
+  font-size: 16px;
+  min-width: 0;
+}
+
+.history-body {
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  line-height: 1.6;
+  padding: 14px 16px 16px;
+}
+
+.history-body p {
+  margin: 0 0 10px;
+}
+
+.history-source {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.history-body ul {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 20px;
+}
+
 .schedule-hero {
   align-items: flex-start;
   background: #2f3d29;

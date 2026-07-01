@@ -643,7 +643,17 @@ function getFilteredManuals() {
       categoryLabels[manual.category],
       ...manual.tags,
       ...manual.steps,
-      ...manual.checklist
+      ...manual.checklist,
+      manual.note || "",
+      ...(Array.isArray(manual.history)
+        ? manual.history.flatMap((history) => [
+          history.date,
+          history.title,
+          history.source,
+          history.summary,
+          ...(history.records || [])
+        ])
+        : [])
     ]);
 
     if (terms.length) {
@@ -1338,9 +1348,40 @@ function renderDetail() {
       <h3>메모</h3>
       <p class="note">${manual.note}</p>
     </section>
+
+    ${renderHistorySection(manual)}
   `;
 
   bindPhotoDialogTriggers(detailEl);
+}
+
+function renderHistorySection(manual) {
+  if (!Array.isArray(manual.history) || !manual.history.length) return "";
+
+  return `
+    <section class="manual-section">
+      <h3>히스토리</h3>
+      <div class="history-list">
+        ${manual.history.map((history) => `
+          <details class="history-entry">
+            <summary>
+              <span>${escapeHtml(history.date || "날짜 미상")}</span>
+              <strong>${escapeHtml(history.title || "운영 히스토리")}</strong>
+            </summary>
+            <div class="history-body">
+              ${history.source ? `<p class="history-source">${escapeHtml(history.source)}</p>` : ""}
+              ${history.summary ? `<p>${escapeHtml(history.summary)}</p>` : ""}
+              ${Array.isArray(history.records) && history.records.length ? `
+                <ul>
+                  ${history.records.map((record) => `<li>${escapeHtml(record)}</li>`).join("")}
+                </ul>
+              ` : ""}
+            </div>
+          </details>
+        `).join("")}
+      </div>
+    </section>
+  `;
 }
 
 function renderScheduleDetail(manual) {
