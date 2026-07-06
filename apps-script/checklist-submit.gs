@@ -93,7 +93,7 @@ function getExperienceCalendarConfig() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const end = new Date(today);
-  end.setDate(end.getDate() + 30);
+  end.setDate(end.getDate() + 7);
 
   try {
     const calendar = CalendarApp.getCalendarById(EXPERIENCE_CALENDAR_ID);
@@ -107,7 +107,7 @@ function getExperienceCalendarConfig() {
 
     const events = calendar.getEvents(today, end)
       .sort((a, b) => a.getStartTime().getTime() - b.getStartTime().getTime())
-      .slice(0, 40)
+      .slice(0, 10)
       .map((event) => {
         const start = event.getStartTime();
         const finish = event.getEndTime();

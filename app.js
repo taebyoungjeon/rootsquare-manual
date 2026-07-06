@@ -1406,8 +1406,8 @@ function renderExperienceCalendarSection() {
     : state.status === "error"
       ? (state.error || "일정을 불러오지 못했습니다.")
       : hasEvents
-        ? `${state.rangeLabel || "향후 30일"} · ${events.length}건`
-        : "향후 30일 등록된 체험 예약 일정이 없습니다.";
+        ? `${state.rangeLabel || "향후 7일"} · ${events.length}건`
+        : "향후 7일 등록된 체험 예약 일정이 없습니다.";
 
   return `
     <section class="manual-section experience-calendar-section">
