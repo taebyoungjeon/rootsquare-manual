@@ -1202,7 +1202,7 @@ h1 {
 }
 
 .manual-section-head {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   gap: 12px;
   justify-content: space-between;
@@ -1210,14 +1210,31 @@ h1 {
 }
 
 .manual-section-head h3 {
+  margin-bottom: 5px;
+}
+
+.manual-section-head p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
   margin-bottom: 0;
 }
 
-.manual-section-head a {
+.manual-section-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.manual-section-actions a,
+.manual-section-actions button {
   background: #edf1e7;
+  border: 0;
   border-radius: 999px;
   color: var(--green-strong);
-  flex: 0 0 auto;
+  cursor: pointer;
   font-size: 13px;
   font-weight: 800;
   padding: 8px 12px;
@@ -1228,19 +1245,61 @@ h1 {
   margin-bottom: 24px;
 }
 
-.experience-calendar-frame {
+.experience-calendar-list {
+  display: grid;
+  gap: 10px;
+}
+
+.experience-calendar-list.is-empty {
   background: #fff;
   border: 1px solid var(--line);
   border-radius: 8px;
-  height: 420px;
-  overflow: hidden;
+  padding: 16px;
 }
 
-.experience-calendar-frame iframe {
-  border: 0;
-  display: block;
-  height: 100%;
-  width: 100%;
+.experience-calendar-message {
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.experience-calendar-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 92px minmax(0, 1fr);
+  padding: 14px;
+}
+
+.experience-calendar-card > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.experience-calendar-card span {
+  color: var(--green-strong);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.experience-calendar-card strong {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.experience-calendar-card h4 {
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0 0 5px;
+}
+
+.experience-calendar-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+  margin-bottom: 4px;
 }
 
 .week-strip {
@@ -1429,8 +1488,12 @@ h1 {
     flex-direction: column;
   }
 
-  .experience-calendar-frame {
-    height: 360px;
+  .manual-section-actions {
+    justify-content: flex-start;
+  }
+
+  .experience-calendar-card {
+    grid-template-columns: 1fr;
   }
 
   .week-strip {

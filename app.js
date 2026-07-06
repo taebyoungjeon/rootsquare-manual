@@ -23,8 +23,14 @@ const inventoryCheckStatusEl = document.querySelector("#inventory-check-status")
 const inventoryManageLinkEl = document.querySelector("#inventory-manage-link");
 const inventoryCollapseToggleEl = document.querySelector("#inventory-collapse-toggle");
 let noticePhotoDialogEl = null;
+let experienceCalendarState = {
+  status: "idle",
+  events: [],
+  updatedAt: "",
+  rangeLabel: "",
+  error: ""
+};
 
-const EXPERIENCE_CALENDAR_EMBED_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul&mode=AGENDA&showTitle=0&showPrint=0&showCalendars=0";
 const EXPERIENCE_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul";
 
 const categoryLabels = {
@@ -986,7 +992,7 @@ function renderDailyChecklist() {
   );
 }
 
-function loadJsonp(url) {
+function loadJsonp(url, action = "config") {
   return new Promise((resolve, reject) => {
     const callbackName = `rootsquareChecklistCallback_${Date.now()}_${Math.random().toString(36).slice(2)}`;
     const script = document.createElement("script");
@@ -994,7 +1000,7 @@ function loadJsonp(url) {
     const timeoutId = window.setTimeout(() => {
       delete window[callbackName];
       script.remove();
-      reject(new Error("체크리스트 관리 데이터 응답 시간이 초과되었습니다."));
+      reject(new Error("관리 데이터 응답 시간이 초과되었습니다."));
     }, 5000);
 
     window[callbackName] = (data) => {
@@ -1008,10 +1014,10 @@ function loadJsonp(url) {
       window.clearTimeout(timeoutId);
       delete window[callbackName];
       script.remove();
-      reject(new Error("체크리스트 관리 데이터를 불러오지 못했습니다."));
+      reject(new Error("관리 데이터를 불러오지 못했습니다."));
     };
 
-    script.src = `${url}${separator}action=config&callback=${encodeURIComponent(callbackName)}&v=${Date.now()}`;
+    script.src = `${url}${separator}action=${encodeURIComponent(action)}&callback=${encodeURIComponent(callbackName)}&v=${Date.now()}`;
     document.head.appendChild(script);
   });
 }
@@ -1387,6 +1393,107 @@ function renderHistorySection(manual) {
   `;
 }
 
+function renderExperienceCalendarSection() {
+  const state = experienceCalendarState;
+  const events = Array.isArray(state.events) ? state.events : [];
+  const hasEvents = events.length > 0;
+  const statusText = state.status === "loading"
+    ? "일정을 불러오는 중입니다."
+    : state.status === "error"
+      ? (state.error || "일정을 불러오지 못했습니다.")
+      : hasEvents
+        ? `${state.rangeLabel || "향후 30일"} · ${events.length}건`
+        : "향후 30일 등록된 체험 예약 일정이 없습니다.";
+
+  return `
+    <section class="manual-section experience-calendar-section">
+      <div class="manual-section-head">
+        <div>
+          <h3>뤁스퀘어 체험 프로그램 예약 현황</h3>
+          <p>${escapeHtml(statusText)}</p>
+        </div>
+        <div class="manual-section-actions">
+          <button type="button" data-refresh-experience-calendar>새로고침</button>
+          <a href="${EXPERIENCE_CALENDAR_OPEN_URL}" target="_blank" rel="noopener">캘린더 크게 보기</a>
+        </div>
+      </div>
+      <div class="experience-calendar-list ${hasEvents ? "" : "is-empty"}">
+        ${state.status === "loading" ? `
+          <p class="experience-calendar-message">Google Calendar에서 일정을 불러오고 있습니다.</p>
+        ` : hasEvents ? events.map((event) => `
+          <article class="experience-calendar-card">
+            <div>
+              <span>${escapeHtml(event.date || "")}</span>
+              <strong>${escapeHtml(event.time || "")}</strong>
+            </div>
+            <div>
+              <h4>${escapeHtml(event.title || "체험 프로그램 예약")}</h4>
+              ${event.location ? `<p>${escapeHtml(event.location)}</p>` : ""}
+              ${event.description ? `<p>${escapeHtml(event.description)}</p>` : ""}
+            </div>
+          </article>
+        `).join("") : `
+          <p class="experience-calendar-message">${escapeHtml(statusText)}</p>
+        `}
+      </div>
+      <p class="note">직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다.</p>
+    </section>
+  `;
+}
+
+function updateExperienceCalendarSection() {
+  const section = detailEl?.querySelector(".experience-calendar-section");
+  if (!section) return;
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = renderExperienceCalendarSection().trim();
+  section.replaceWith(wrapper.firstElementChild);
+  bindExperienceCalendarActions();
+}
+
+function bindExperienceCalendarActions() {
+  detailEl?.querySelector("[data-refresh-experience-calendar]")?.addEventListener("click", () => {
+    loadExperienceCalendar(true);
+  });
+}
+
+async function loadExperienceCalendar(force = false) {
+  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
+  if (!submitUrl) return;
+  if (experienceCalendarState.status === "loading") return;
+  if (!force && experienceCalendarState.status === "loaded") return;
+
+  experienceCalendarState = {
+    ...experienceCalendarState,
+    status: "loading",
+    error: ""
+  };
+  updateExperienceCalendarSection();
+
+  try {
+    const data = await loadJsonp(submitUrl, "experienceCalendar");
+    if (!data?.ok) {
+      throw new Error(data?.error || "체험 프로그램 일정을 불러오지 못했습니다.");
+    }
+    experienceCalendarState = {
+      status: "loaded",
+      events: Array.isArray(data.events) ? data.events : [],
+      updatedAt: data.updatedAt || "",
+      rangeLabel: data.rangeLabel || "",
+      error: ""
+    };
+  } catch (error) {
+    experienceCalendarState = {
+      status: "error",
+      events: [],
+      updatedAt: "",
+      rangeLabel: "",
+      error: error && error.message ? error.message : String(error)
+    };
+  }
+
+  updateExperienceCalendarSection();
+}
+
 function renderScheduleDetail(manual) {
   const schedule = manual.schedule.days
     ? buildScheduleView(manual.schedule.days, selectedScheduleDateKey || manual.schedule.selectedDateKey)
@@ -1420,20 +1527,7 @@ function renderScheduleDetail(manual) {
       `).join("")}
     </section>
 
-    <section class="manual-section experience-calendar-section">
-      <div class="manual-section-head">
-        <h3>뤁스퀘어 체험 프로그램 예약 현황</h3>
-        <a href="${EXPERIENCE_CALENDAR_OPEN_URL}" target="_blank" rel="noopener">캘린더 크게 보기</a>
-      </div>
-      <div class="experience-calendar-frame">
-        <iframe
-          src="${EXPERIENCE_CALENDAR_EMBED_URL}"
-          title="뤁스퀘어 체험 프로그램 예약 현황"
-          loading="lazy"
-        ></iframe>
-      </div>
-      <p class="note">Google Calendar에 등록된 체험 프로그램 예약 일정입니다. 캘린더 공유 권한이 없으면 일정이 보이지 않을 수 있습니다.</p>
-    </section>
+    ${renderExperienceCalendarSection()}
 
     <section class="manual-section">
       <h3>시간대별 근무</h3>
@@ -1483,6 +1577,9 @@ function renderScheduleDetail(manual) {
       scrollToDetail();
     });
   });
+
+  bindExperienceCalendarActions();
+  loadExperienceCalendar();
 }
 
 function setCategory(category) {

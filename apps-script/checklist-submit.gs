@@ -11,6 +11,7 @@ const STAY_HISTORY_SHEET_NAME = "스테이 운영 히스토리";
 const STAY_HISTORY_FILES_SHEET_NAME = "스테이 운영 파일 처리";
 const STAY_HISTORY_FOLDER_ID = "1UmB77py6fV54HMioIIezNiCDx8A_vSBV";
 const STAY_HISTORY_RETRY_HOURS = [7, 13, 19];
+const EXPERIENCE_CALENDAR_ID = "d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7@group.calendar.google.com";
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -77,10 +78,74 @@ function doGet(e) {
     return jsonResponse(getStayHistoryStatus());
   }
 
+  if (action === "experienceCalendar") {
+    const data = getExperienceCalendarConfig();
+    return callback ? jsonpResponse(callback, data) : jsonResponse(data);
+  }
+
   return jsonResponse({
     ok: true,
     message: "Rootsquare checklist endpoint is ready."
   });
+}
+
+function getExperienceCalendarConfig() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const end = new Date(today);
+  end.setDate(end.getDate() + 30);
+
+  try {
+    const calendar = CalendarApp.getCalendarById(EXPERIENCE_CALENDAR_ID);
+    if (!calendar) {
+      return {
+        ok: false,
+        error: "체험 프로그램 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요.",
+        events: []
+      };
+    }
+
+    const events = calendar.getEvents(today, end)
+      .sort((a, b) => a.getStartTime().getTime() - b.getStartTime().getTime())
+      .slice(0, 40)
+      .map((event) => {
+        const start = event.getStartTime();
+        const finish = event.getEndTime();
+        const isAllDay = event.isAllDayEvent();
+        return {
+          id: event.getId(),
+          title: event.getTitle(),
+          date: Utilities.formatDate(start, TIMEZONE, "M/d E"),
+          dateKey: Utilities.formatDate(start, TIMEZONE, "yyyy-MM-dd"),
+          time: isAllDay
+            ? "종일"
+            : `${Utilities.formatDate(start, TIMEZONE, "HH:mm")}~${Utilities.formatDate(finish, TIMEZONE, "HH:mm")}`,
+          location: event.getLocation() || "",
+          description: shortenCalendarDescription(event.getDescription() || "")
+        };
+      });
+
+    return {
+      ok: true,
+      updatedAt: Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm"),
+      rangeLabel: `${Utilities.formatDate(today, TIMEZONE, "M/d")}~${Utilities.formatDate(end, TIMEZONE, "M/d")}`,
+      events
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error && error.message ? error.message : String(error),
+      events: []
+    };
+  }
+}
+
+function shortenCalendarDescription(value) {
+  return String(value || "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 140);
 }
 
 function doPost(e) {
