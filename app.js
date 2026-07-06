@@ -1491,6 +1491,7 @@ function setCategory(category) {
     button.classList.toggle("is-active", button.dataset.category === category);
   });
   renderArticles();
+  renderDetail();
 }
 
 categoryButtons.forEach((button) => {

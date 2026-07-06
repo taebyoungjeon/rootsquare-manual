@@ -1358,6 +1358,10 @@ h1 {
     width: 100%;
   }
 
+  .article-list {
+    min-height: auto;
+  }
+
   .article-detail.is-schedule-detail {
     max-width: 100%;
     min-width: 0;
