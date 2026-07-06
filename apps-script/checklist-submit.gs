@@ -143,9 +143,16 @@ function getExperienceCalendarConfig() {
 function shortenCalendarDescription(value) {
   return String(value || "")
     .replace(/<[^>]+>/g, " ")
+    .replace(/\b01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}\b/g, "")
+    .replace(/\b0\d{1,2}[-\s.]?\d{3,4}[-\s.]?\d{4}\b/g, "")
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, 140);
+}
+
+function authorizeExperienceCalendar() {
+  const calendar = CalendarApp.getCalendarById(EXPERIENCE_CALENDAR_ID);
+  return calendar ? calendar.getName() : "calendar not found";
 }
 
 function doPost(e) {
