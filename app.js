@@ -28,7 +28,8 @@ let experienceCalendarState = {
   events: [],
   updatedAt: "",
   rangeLabel: "",
-  error: ""
+  error: "",
+  expanded: false
 };
 
 const EXPERIENCE_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul";
@@ -1397,6 +1398,9 @@ function renderExperienceCalendarSection() {
   const state = experienceCalendarState;
   const events = Array.isArray(state.events) ? state.events : [];
   const hasEvents = events.length > 0;
+  const shouldCollapse = hasEvents && events.length > 2;
+  const visibleEvents = state.expanded || !shouldCollapse ? events : events.slice(0, 2);
+  const hiddenCount = Math.max(events.length - visibleEvents.length, 0);
   const statusText = state.status === "loading"
     ? "일정을 불러오는 중입니다."
     : state.status === "error"
@@ -1420,7 +1424,7 @@ function renderExperienceCalendarSection() {
       <div class="experience-calendar-list ${hasEvents ? "" : "is-empty"}">
         ${state.status === "loading" ? `
           <p class="experience-calendar-message">Google Calendar에서 일정을 불러오고 있습니다.</p>
-        ` : hasEvents ? events.map((event) => `
+        ` : hasEvents ? visibleEvents.map((event) => `
           <article class="experience-calendar-card">
             <div>
               <span>${escapeHtml(event.date || "")}</span>
@@ -1436,6 +1440,11 @@ function renderExperienceCalendarSection() {
           <p class="experience-calendar-message">${escapeHtml(statusText)}</p>
         `}
       </div>
+      ${shouldCollapse ? `
+        <button type="button" class="experience-calendar-toggle" data-toggle-experience-calendar>
+          ${state.expanded ? "예약 일정 접기" : `예약 일정 ${hiddenCount}건 더 보기`}
+        </button>
+      ` : ""}
       <p class="note">직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다.</p>
     </section>
   `;
@@ -1454,6 +1463,13 @@ function bindExperienceCalendarActions() {
   detailEl?.querySelector("[data-refresh-experience-calendar]")?.addEventListener("click", () => {
     loadExperienceCalendar(true);
   });
+  detailEl?.querySelector("[data-toggle-experience-calendar]")?.addEventListener("click", () => {
+    experienceCalendarState = {
+      ...experienceCalendarState,
+      expanded: !experienceCalendarState.expanded
+    };
+    updateExperienceCalendarSection();
+  });
 }
 
 async function loadExperienceCalendar(force = false) {
@@ -1465,7 +1481,8 @@ async function loadExperienceCalendar(force = false) {
   experienceCalendarState = {
     ...experienceCalendarState,
     status: "loading",
-    error: ""
+    error: "",
+    expanded: force ? false : experienceCalendarState.expanded
   };
   updateExperienceCalendarSection();
 
@@ -1479,7 +1496,8 @@ async function loadExperienceCalendar(force = false) {
       events: Array.isArray(data.events) ? data.events : [],
       updatedAt: data.updatedAt || "",
       rangeLabel: data.rangeLabel || "",
-      error: ""
+      error: "",
+      expanded: false
     };
   } catch (error) {
     experienceCalendarState = {
@@ -1487,7 +1505,8 @@ async function loadExperienceCalendar(force = false) {
       events: [],
       updatedAt: "",
       rangeLabel: "",
-      error: error && error.message ? error.message : String(error)
+      error: error && error.message ? error.message : String(error),
+      expanded: false
     };
   }
 
