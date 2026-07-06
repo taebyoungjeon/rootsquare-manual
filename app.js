@@ -24,6 +24,9 @@ const inventoryManageLinkEl = document.querySelector("#inventory-manage-link");
 const inventoryCollapseToggleEl = document.querySelector("#inventory-collapse-toggle");
 let noticePhotoDialogEl = null;
 
+const EXPERIENCE_CALENDAR_EMBED_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul&mode=AGENDA&showTitle=0&showPrint=0&showCalendars=0";
+const EXPERIENCE_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul";
+
 const categoryLabels = {
   drink: "음료 제조",
   drinkRecipe: "음료 레시피",
@@ -1415,6 +1418,21 @@ function renderScheduleDetail(manual) {
           </div>
         </article>
       `).join("")}
+    </section>
+
+    <section class="manual-section experience-calendar-section">
+      <div class="manual-section-head">
+        <h3>뤁스퀘어 체험 프로그램 예약 현황</h3>
+        <a href="${EXPERIENCE_CALENDAR_OPEN_URL}" target="_blank" rel="noopener">캘린더 크게 보기</a>
+      </div>
+      <div class="experience-calendar-frame">
+        <iframe
+          src="${EXPERIENCE_CALENDAR_EMBED_URL}"
+          title="뤁스퀘어 체험 프로그램 예약 현황"
+          loading="lazy"
+        ></iframe>
+      </div>
+      <p class="note">Google Calendar에 등록된 체험 프로그램 예약 일정입니다. 캘린더 공유 권한이 없으면 일정이 보이지 않을 수 있습니다.</p>
     </section>
 
     <section class="manual-section">
