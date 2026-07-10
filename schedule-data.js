@@ -7,6 +7,10 @@ window.SCHEDULE_SHEET_CONFIG = {
     {
       label: "26년7월2주",
       url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=876648005&single=true&output=csv"
+    },
+    {
+      label: "26년7월3주",
+      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=266811600&single=true&output=csv"
     }
   ],
   parsedLabel: "26년7월1주, 26년7월2주",
