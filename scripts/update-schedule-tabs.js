@@ -68,8 +68,29 @@ function getWeekLabel(date) {
   const monday = getMonday(date);
   const yy = String(monday.getFullYear()).slice(2);
   const month = monday.getMonth() + 1;
-  const week = Math.floor((monday.getDate() - 1) / 7) + 1;
+  const firstOfMonth = new Date(monday.getFullYear(), monday.getMonth(), 1);
+  const firstDayOffset = (firstOfMonth.getDay() + 6) % 7;
+  const week = Math.floor((firstDayOffset + monday.getDate() - 1) / 7) + 1;
   return `${yy}년${month}월${week}주`;
+}
+
+function parseWeekLabel(label) {
+  const match = label.match(/^(\d{2})년(\d{1,2})월(\d{1,2})주$/);
+  if (!match) return null;
+  return {
+    year: 2000 + Number(match[1]),
+    month: Number(match[2]),
+    week: Number(match[3])
+  };
+}
+
+function compareWeekLabels(left, right) {
+  const leftValue = parseWeekLabel(left);
+  const rightValue = parseWeekLabel(right);
+  if (!leftValue || !rightValue) return 0;
+  if (leftValue.year !== rightValue.year) return leftValue.year - rightValue.year;
+  if (leftValue.month !== rightValue.month) return leftValue.month - rightValue.month;
+  return leftValue.week - rightValue.week;
 }
 
 function pickActiveTabs(tabs, date = new Date()) {
@@ -78,6 +99,11 @@ function pickActiveTabs(tabs, date = new Date()) {
 
   if (currentIndex >= 0) {
     return tabs.slice(currentIndex, currentIndex + 2);
+  }
+
+  const nextPublishedIndex = tabs.findIndex((tab) => compareWeekLabels(tab.label, currentLabel) >= 0);
+  if (nextPublishedIndex >= 0) {
+    return tabs.slice(nextPublishedIndex, nextPublishedIndex + 2);
   }
 
   return tabs.slice(-2);
