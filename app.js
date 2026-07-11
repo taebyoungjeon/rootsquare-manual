@@ -1454,7 +1454,6 @@ function renderCalendarSection(options) {
           ${state.expanded ? "예약 일정 접기" : `예약 일정 ${hiddenCount}건 더 보기`}
         </button>
       ` : ""}
-      <p class="note">${escapeHtml(options.note)}</p>
     </section>
   `;
 }
@@ -1469,8 +1468,7 @@ function getCalendarOptions(key) {
       openUrl: STAY_CALENDAR_OPEN_URL,
       emptyText: "향후 7일 등록된 스테이 예약 일정이 없습니다.",
       errorText: "스테이 예약 일정을 불러오지 못했습니다.",
-      defaultTitle: "스테이 예약",
-      note: "직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다."
+      defaultTitle: "스테이 예약"
     };
   }
 
@@ -1482,8 +1480,7 @@ function getCalendarOptions(key) {
     openUrl: EXPERIENCE_CALENDAR_OPEN_URL,
     emptyText: "향후 7일 등록된 체험 예약 일정이 없습니다.",
     errorText: "체험 프로그램 일정을 불러오지 못했습니다.",
-    defaultTitle: "체험 프로그램 예약",
-    note: "직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다."
+    defaultTitle: "체험 프로그램 예약"
   };
 }
 
