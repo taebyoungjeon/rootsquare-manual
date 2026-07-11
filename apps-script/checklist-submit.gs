@@ -12,6 +12,7 @@ const STAY_HISTORY_FILES_SHEET_NAME = "스테이 운영 파일 처리";
 const STAY_HISTORY_FOLDER_ID = "1UmB77py6fV54HMioIIezNiCDx8A_vSBV";
 const STAY_HISTORY_RETRY_HOURS = [7, 13, 19];
 const EXPERIENCE_CALENDAR_ID = "d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7@group.calendar.google.com";
+const STAY_CALENDAR_ID = "rj9pk11r8jcl6nndpjfbg0jdg8@group.calendar.google.com";
 const TIMEZONE = "Asia/Seoul";
 
 const DEFAULT_CHECKLIST_ITEMS = [
@@ -83,6 +84,11 @@ function doGet(e) {
     return callback ? jsonpResponse(callback, data) : jsonResponse(data);
   }
 
+  if (action === "stayCalendar") {
+    const data = getStayCalendarConfig();
+    return callback ? jsonpResponse(callback, data) : jsonResponse(data);
+  }
+
   return jsonResponse({
     ok: true,
     message: "Rootsquare checklist endpoint is ready."
@@ -90,17 +96,31 @@ function doGet(e) {
 }
 
 function getExperienceCalendarConfig() {
+  return getCalendarConfig({
+    calendarId: EXPERIENCE_CALENDAR_ID,
+    missingMessage: "체험 프로그램 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요."
+  });
+}
+
+function getStayCalendarConfig() {
+  return getCalendarConfig({
+    calendarId: STAY_CALENDAR_ID,
+    missingMessage: "스테이 예약 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요."
+  });
+}
+
+function getCalendarConfig(options) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const end = new Date(today);
   end.setDate(end.getDate() + 7);
 
   try {
-    const calendar = CalendarApp.getCalendarById(EXPERIENCE_CALENDAR_ID);
+    const calendar = CalendarApp.getCalendarById(options.calendarId);
     if (!calendar) {
       return {
         ok: false,
-        error: "체험 프로그램 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요.",
+        error: options.missingMessage,
         events: []
       };
     }
@@ -152,6 +172,11 @@ function shortenCalendarDescription(value) {
 
 function authorizeExperienceCalendar() {
   const calendar = CalendarApp.getCalendarById(EXPERIENCE_CALENDAR_ID);
+  return calendar ? calendar.getName() : "calendar not found";
+}
+
+function authorizeStayCalendar() {
+  const calendar = CalendarApp.getCalendarById(STAY_CALENDAR_ID);
   return calendar ? calendar.getName() : "calendar not found";
 }
 

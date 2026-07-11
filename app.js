@@ -31,8 +31,17 @@ let experienceCalendarState = {
   error: "",
   expanded: false
 };
+let stayCalendarState = {
+  status: "idle",
+  events: [],
+  updatedAt: "",
+  rangeLabel: "",
+  error: "",
+  expanded: false
+};
 
 const EXPERIENCE_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul";
+const STAY_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/u/0/r/month?cid=cmo5cGsxMXI4amNsNm5uZHBqZmJnMGpkZzhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ";
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -1394,8 +1403,8 @@ function renderHistorySection(manual) {
   `;
 }
 
-function renderExperienceCalendarSection() {
-  const state = experienceCalendarState;
+function renderCalendarSection(options) {
+  const state = options.state;
   const events = Array.isArray(state.events) ? state.events : [];
   const hasEvents = events.length > 0;
   const shouldCollapse = hasEvents && events.length > 2;
@@ -1404,21 +1413,21 @@ function renderExperienceCalendarSection() {
   const statusText = state.status === "loading"
     ? "일정을 불러오는 중입니다."
     : state.status === "error"
-      ? (state.error || "일정을 불러오지 못했습니다.")
+      ? (state.error || options.errorText)
       : hasEvents
         ? `${state.rangeLabel || "향후 7일"} · ${events.length}건`
-        : "향후 7일 등록된 체험 예약 일정이 없습니다.";
+        : options.emptyText;
 
   return `
-    <section class="manual-section experience-calendar-section">
+    <section class="manual-section experience-calendar-section ${options.sectionClass}">
       <div class="manual-section-head">
         <div>
-          <h3>뤁스퀘어 체험 프로그램 예약 현황</h3>
+          <h3>${escapeHtml(options.heading)}</h3>
           <p>${escapeHtml(statusText)}</p>
         </div>
         <div class="manual-section-actions">
-          <button type="button" data-refresh-experience-calendar>새로고침</button>
-          <a href="${EXPERIENCE_CALENDAR_OPEN_URL}" target="_blank" rel="noopener">캘린더 크게 보기</a>
+          <button type="button" data-refresh-calendar="${options.key}">새로고침</button>
+          <a href="${options.openUrl}" target="_blank" rel="noopener">캘린더 크게 보기</a>
         </div>
       </div>
       <div class="experience-calendar-list ${hasEvents ? "" : "is-empty"}">
@@ -1431,7 +1440,7 @@ function renderExperienceCalendarSection() {
               <strong>${escapeHtml(event.time || "")}</strong>
             </div>
             <div>
-              <h4>${escapeHtml(event.title || "체험 프로그램 예약")}</h4>
+              <h4>${escapeHtml(event.title || options.defaultTitle)}</h4>
               ${event.location ? `<p>${escapeHtml(event.location)}</p>` : ""}
               ${event.description ? `<p>${escapeHtml(event.description)}</p>` : ""}
             </div>
@@ -1441,57 +1450,147 @@ function renderExperienceCalendarSection() {
         `}
       </div>
       ${shouldCollapse ? `
-        <button type="button" class="experience-calendar-toggle" data-toggle-experience-calendar>
+        <button type="button" class="experience-calendar-toggle" data-toggle-calendar="${options.key}">
           ${state.expanded ? "예약 일정 접기" : `예약 일정 ${hiddenCount}건 더 보기`}
         </button>
       ` : ""}
-      <p class="note">직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다.</p>
+      <p class="note">${escapeHtml(options.note)}</p>
     </section>
   `;
 }
 
+function getCalendarOptions(key) {
+  if (key === "stay") {
+    return {
+      key: "stay",
+      state: stayCalendarState,
+      sectionClass: "stay-calendar-section",
+      heading: "뤁스퀘어 스테이 예약 현황",
+      openUrl: STAY_CALENDAR_OPEN_URL,
+      emptyText: "향후 7일 등록된 스테이 예약 일정이 없습니다.",
+      errorText: "스테이 예약 일정을 불러오지 못했습니다.",
+      defaultTitle: "스테이 예약",
+      note: "직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다."
+    };
+  }
+
+  return {
+    key: "experience",
+    state: experienceCalendarState,
+    sectionClass: "experience-program-calendar-section",
+    heading: "뤁스퀘어 체험 프로그램 예약 현황",
+    openUrl: EXPERIENCE_CALENDAR_OPEN_URL,
+    emptyText: "향후 7일 등록된 체험 예약 일정이 없습니다.",
+    errorText: "체험 프로그램 일정을 불러오지 못했습니다.",
+    defaultTitle: "체험 프로그램 예약",
+    note: "직원 계정 권한과 관계없이 Apps Script가 캘린더를 읽어 표시합니다. 일정 수정은 Google Calendar에서 진행합니다."
+  };
+}
+
+function renderExperienceCalendarSection() {
+  return renderCalendarSection(getCalendarOptions("experience"));
+}
+
+function renderStayCalendarSection() {
+  return renderCalendarSection(getCalendarOptions("stay"));
+}
+
 function updateExperienceCalendarSection() {
-  const section = detailEl?.querySelector(".experience-calendar-section");
+  updateCalendarSection("experience");
+}
+
+function updateStayCalendarSection() {
+  updateCalendarSection("stay");
+}
+
+function updateCalendarSection(key) {
+  const options = getCalendarOptions(key);
+  const section = detailEl?.querySelector(`.${options.sectionClass}`);
   if (!section) return;
   const wrapper = document.createElement("div");
-  wrapper.innerHTML = renderExperienceCalendarSection().trim();
+  wrapper.innerHTML = renderCalendarSection(options).trim();
   section.replaceWith(wrapper.firstElementChild);
-  bindExperienceCalendarActions();
+  bindCalendarActions();
 }
 
 function bindExperienceCalendarActions() {
-  detailEl?.querySelector("[data-refresh-experience-calendar]")?.addEventListener("click", () => {
-    loadExperienceCalendar(true);
+  bindCalendarActions();
+}
+
+function bindStayCalendarActions() {
+  bindCalendarActions();
+}
+
+function bindCalendarActions() {
+  detailEl?.querySelectorAll("[data-refresh-calendar]").forEach((button) => {
+    if (button.dataset.calendarBound === "true") return;
+    button.dataset.calendarBound = "true";
+    button.addEventListener("click", () => {
+      loadCalendar(button.dataset.refreshCalendar, true);
+    });
   });
-  detailEl?.querySelector("[data-toggle-experience-calendar]")?.addEventListener("click", () => {
-    experienceCalendarState = {
-      ...experienceCalendarState,
-      expanded: !experienceCalendarState.expanded
-    };
-    updateExperienceCalendarSection();
+  detailEl?.querySelectorAll("[data-toggle-calendar]").forEach((button) => {
+    if (button.dataset.calendarBound === "true") return;
+    button.dataset.calendarBound = "true";
+    const key = button.dataset.toggleCalendar;
+    button.addEventListener("click", () => {
+      if (key === "stay") {
+        stayCalendarState = {
+          ...stayCalendarState,
+          expanded: !stayCalendarState.expanded
+        };
+        updateStayCalendarSection();
+        return;
+      }
+
+      experienceCalendarState = {
+        ...experienceCalendarState,
+        expanded: !experienceCalendarState.expanded
+      };
+      updateExperienceCalendarSection();
+    });
   });
 }
 
 async function loadExperienceCalendar(force = false) {
-  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
-  if (!submitUrl) return;
-  if (experienceCalendarState.status === "loading") return;
-  if (!force && experienceCalendarState.status === "loaded") return;
+  return loadCalendar("experience", force);
+}
 
-  experienceCalendarState = {
-    ...experienceCalendarState,
+async function loadStayCalendar(force = false) {
+  return loadCalendar("stay", force);
+}
+
+async function loadCalendar(key, force = false) {
+  const submitUrl = (window.CHECKLIST_SUBMIT_URL || "").trim();
+  const isStay = key === "stay";
+  const state = isStay ? stayCalendarState : experienceCalendarState;
+  const action = isStay ? "stayCalendar" : "experienceCalendar";
+  const updateSection = isStay ? updateStayCalendarSection : updateExperienceCalendarSection;
+  const errorText = isStay ? "스테이 예약 일정을 불러오지 못했습니다." : "체험 프로그램 일정을 불러오지 못했습니다.";
+
+  if (!submitUrl) return;
+  if (state.status === "loading") return;
+  if (!force && state.status === "loaded") return;
+
+  const nextState = {
+    ...state,
     status: "loading",
     error: "",
-    expanded: force ? false : experienceCalendarState.expanded
+    expanded: force ? false : state.expanded
   };
-  updateExperienceCalendarSection();
+  if (isStay) {
+    stayCalendarState = nextState;
+  } else {
+    experienceCalendarState = nextState;
+  }
+  updateSection();
 
   try {
-    const data = await loadJsonp(submitUrl, "experienceCalendar");
+    const data = await loadJsonp(submitUrl, action);
     if (!data?.ok) {
-      throw new Error(data?.error || "체험 프로그램 일정을 불러오지 못했습니다.");
+      throw new Error(data?.error || errorText);
     }
-    experienceCalendarState = {
+    const loadedState = {
       status: "loaded",
       events: Array.isArray(data.events) ? data.events : [],
       updatedAt: data.updatedAt || "",
@@ -1499,8 +1598,13 @@ async function loadExperienceCalendar(force = false) {
       error: "",
       expanded: false
     };
+    if (isStay) {
+      stayCalendarState = loadedState;
+    } else {
+      experienceCalendarState = loadedState;
+    }
   } catch (error) {
-    experienceCalendarState = {
+    const errorState = {
       status: "error",
       events: [],
       updatedAt: "",
@@ -1508,9 +1612,14 @@ async function loadExperienceCalendar(force = false) {
       error: error && error.message ? error.message : String(error),
       expanded: false
     };
+    if (isStay) {
+      stayCalendarState = errorState;
+    } else {
+      experienceCalendarState = errorState;
+    }
   }
 
-  updateExperienceCalendarSection();
+  updateSection();
 }
 
 function renderScheduleDetail(manual) {
@@ -1547,6 +1656,7 @@ function renderScheduleDetail(manual) {
     </section>
 
     ${renderExperienceCalendarSection()}
+    ${renderStayCalendarSection()}
 
     <section class="manual-section">
       <h3>시간대별 근무</h3>
@@ -1597,8 +1707,9 @@ function renderScheduleDetail(manual) {
     });
   });
 
-  bindExperienceCalendarActions();
+  bindCalendarActions();
   loadExperienceCalendar();
+  loadStayCalendar();
 }
 
 function setCategory(category) {
