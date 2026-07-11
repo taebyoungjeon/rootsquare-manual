@@ -105,7 +105,8 @@ function getExperienceCalendarConfig() {
 function getStayCalendarConfig() {
   return getCalendarConfig({
     calendarId: STAY_CALENDAR_ID,
-    missingMessage: "스테이 예약 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요."
+    missingMessage: "스테이 예약 캘린더를 찾을 수 없습니다. Apps Script 실행 계정의 캘린더 접근 권한을 확인해주세요.",
+    privacyMode: "stay"
   });
 }
 
@@ -132,16 +133,17 @@ function getCalendarConfig(options) {
         const start = event.getStartTime();
         const finish = event.getEndTime();
         const isAllDay = event.isAllDayEvent();
+        const location = event.getLocation() || "";
         return {
           id: event.getId(),
-          title: event.getTitle(),
+          title: formatCalendarTitle(event, location, options),
           date: Utilities.formatDate(start, TIMEZONE, "M/d E"),
           dateKey: Utilities.formatDate(start, TIMEZONE, "yyyy-MM-dd"),
           time: isAllDay
             ? "종일"
             : `${Utilities.formatDate(start, TIMEZONE, "HH:mm")}~${Utilities.formatDate(finish, TIMEZONE, "HH:mm")}`,
-          location: event.getLocation() || "",
-          description: shortenCalendarDescription(event.getDescription() || "")
+          location,
+          description: formatCalendarDescription(event, options)
         };
       });
 
@@ -158,6 +160,24 @@ function getCalendarConfig(options) {
       events: []
     };
   }
+}
+
+function formatCalendarTitle(event, location, options) {
+  const title = event.getTitle() || "";
+  if (options.privacyMode !== "stay") return title;
+
+  const peopleMatch = title.match(/^\s*\(([^)]+)\)/);
+  const peopleText = peopleMatch ? `(${peopleMatch[1]}) ` : "";
+  const roomText = location || "스테이";
+  return `${peopleText}${roomText} 예약`;
+}
+
+function formatCalendarDescription(event, options) {
+  if (options.privacyMode === "stay") {
+    return "상세 예약 정보는 관리자용 Google Calendar에서 확인합니다.";
+  }
+
+  return shortenCalendarDescription(event.getDescription() || "");
 }
 
 function shortenCalendarDescription(value) {
