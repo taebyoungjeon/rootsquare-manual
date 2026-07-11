@@ -774,6 +774,26 @@ h1 {
   margin-bottom: 10px;
 }
 
+.article-list-toggle {
+  background: #edf1e7;
+  border: 1px solid rgba(82, 108, 69, 0.18);
+  border-radius: 999px;
+  color: var(--green-strong);
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  margin: 14px auto 2px;
+  padding: 12px 18px;
+  transition: 0.2s ease;
+  width: min(100%, 260px);
+}
+
+.article-list-toggle:hover {
+  background: #e3ebdc;
+  border-color: var(--green);
+}
+
 .tag-row {
   display: flex;
   flex-wrap: wrap;

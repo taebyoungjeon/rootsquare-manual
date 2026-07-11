@@ -42,6 +42,7 @@ let stayCalendarState = {
 
 const EXPERIENCE_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/embed?src=d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7%40group.calendar.google.com&ctz=Asia%2FSeoul";
 const STAY_CALENDAR_OPEN_URL = "https://calendar.google.com/calendar/u/0/r/month?cid=cmo5cGsxMXI4amNsNm5uZHBqZmJnMGpkZzhAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ";
+const ARTICLE_LIST_INITIAL_LIMIT = 8;
 
 const categoryLabels = {
   drink: "음료 제조",
@@ -66,6 +67,7 @@ let todayNoticeConfig = null;
 let inventoryItems = [];
 let isNoticeExpanded = false;
 let isInventoryExpanded = false;
+let isArticleListExpanded = false;
 const STAY_HISTORY_MANUAL_PREFIX = "stay-history-";
 
 const DAILY_CHECKLISTS = {
@@ -1236,9 +1238,26 @@ async function submitInventoryChecklist(event) {
 
 function renderArticles() {
   const manuals = getFilteredManuals();
+  const hasSearchTerm = Boolean(searchEl.value.trim());
+  const shouldCollapse = !hasSearchTerm && manuals.length > ARTICLE_LIST_INITIAL_LIMIT;
+  const previousActiveArticleId = activeArticleId;
+  const activeIndex = manuals.findIndex((manual) => manual.id === activeArticleId);
+
+  if (activeIndex === -1) {
+    activeArticleId = manuals[0]?.id;
+  } else if (shouldCollapse && !isArticleListExpanded && activeIndex >= ARTICLE_LIST_INITIAL_LIMIT) {
+    activeArticleId = manuals[0]?.id;
+  }
+
+  const visibleManuals = shouldCollapse && !isArticleListExpanded
+    ? manuals.slice(0, ARTICLE_LIST_INITIAL_LIMIT)
+    : manuals;
+  const hiddenCount = Math.max(manuals.length - visibleManuals.length, 0);
+
   resultCountEl.textContent = `${manuals.length}개`;
 
-  articlesEl.innerHTML = manuals.map((manual) => `
+  articlesEl.innerHTML = `
+    ${visibleManuals.map((manual) => `
     <button class="article-card ${manual.id === activeArticleId ? "is-active" : ""}" data-article-id="${manual.id}">
       <h3>${manual.title}</h3>
       <p>${manual.summary}</p>
@@ -1247,9 +1266,15 @@ function renderArticles() {
         ${manual.tags.slice(0, 2).map((tag) => `<span class="tag">${tag}</span>`).join("")}
       </div>
     </button>
-  `).join("");
+  `).join("")}
+    ${shouldCollapse ? `
+      <button class="article-list-toggle" type="button" data-article-list-toggle aria-expanded="${isArticleListExpanded}">
+        ${isArticleListExpanded ? "항목 접기" : `항목 ${hiddenCount}개 더 보기`}
+      </button>
+    ` : ""}
+  `;
 
-  document.querySelectorAll("[data-article-id]").forEach((button) => {
+  articlesEl.querySelectorAll("[data-article-id]").forEach((button) => {
     button.addEventListener("click", () => {
       activeArticleId = button.dataset.articleId;
       renderArticles();
@@ -1258,8 +1283,15 @@ function renderArticles() {
     });
   });
 
-  if (!manuals.some((manual) => manual.id === activeArticleId)) {
-    activeArticleId = manuals[0]?.id;
+  const toggleButton = articlesEl.querySelector("[data-article-list-toggle]");
+  if (toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      isArticleListExpanded = !isArticleListExpanded;
+      renderArticles();
+    });
+  }
+
+  if (previousActiveArticleId !== activeArticleId) {
     renderDetail();
   }
 }
@@ -1711,6 +1743,7 @@ function renderScheduleDetail(manual) {
 
 function setCategory(category) {
   activeCategory = category;
+  isArticleListExpanded = false;
   categoryButtons.forEach((button) => {
     button.classList.toggle("is-active", button.dataset.category === category);
   });
@@ -1725,7 +1758,10 @@ categoryButtons.forEach((button) => {
   });
 });
 
-searchEl.addEventListener("input", renderArticles);
+searchEl.addEventListener("input", () => {
+  isArticleListExpanded = false;
+  renderArticles();
+});
 
 shortcutButtons.forEach((button) => {
   button.addEventListener("click", () => {
