@@ -115,6 +115,17 @@ const DEFAULT_INVENTORY_ITEMS = [
   { name: "패션후르츠 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 }
 ];
 
+const SCHEDULED_TODAY_NOTICES = [
+  {
+    startDate: "2026-10-14",
+    endDate: "2026-10-20",
+    label: "장비",
+    title: "정수기 필터 교체 예정",
+    text: "워터디스펜서 정수 필터 교체 예정일입니다. 새 필터를 준비해 교체 여부를 확인합니다.",
+    important: true
+  }
+];
+
 inventoryItems = DEFAULT_INVENTORY_ITEMS;
 
 const koreanInitials = [
@@ -348,6 +359,13 @@ function formatLocalDate(date) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+function getScheduledTodayNotices(date = new Date()) {
+  const today = formatLocalDate(date);
+  return SCHEDULED_TODAY_NOTICES
+    .filter((notice) => notice.startDate <= today && today <= notice.endDate)
+    .map(({ label, title, text, important }) => ({ label, title, text, important }));
 }
 
 function getDayName(dateText) {
@@ -698,9 +716,10 @@ function renderCounts() {
 }
 
 function renderNotices() {
-  const checks = todayNoticeConfig?.checks?.length
+  const configuredChecks = todayNoticeConfig?.checks?.length
     ? todayNoticeConfig.checks
     : TODAY_CHECKS.map((text) => ({ text }));
+  const checks = [...getScheduledTodayNotices(), ...configuredChecks];
   const groups = todayNoticeConfig?.groups?.length
     ? todayNoticeConfig.groups
     : NOTICE_GROUPS;
