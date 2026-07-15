@@ -117,6 +117,14 @@ const DEFAULT_INVENTORY_ITEMS = [
 
 const SCHEDULED_TODAY_NOTICES = [
   {
+    startDate: "2026-07-15",
+    endDate: "2026-07-15",
+    label: "운영",
+    title: "하절기 평일 북카페 이용 제한 공지",
+    text: "하절기 평일 북카페 일시 운영 중단 안내문을 게시하고, 주말·공휴일 정상 운영 및 스템가든 실내 식물원 카페 대체 이용 안내가 포함됐는지 확인합니다.",
+    important: true
+  },
+  {
     startDate: "2026-10-14",
     endDate: "2026-10-20",
     label: "장비",
