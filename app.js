@@ -115,6 +115,13 @@ const DEFAULT_INVENTORY_ITEMS = [
   { name: "패션후르츠 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 }
 ];
 
+const INVENTORY_THRESHOLD_OVERRIDES = {
+  "쌀크림 베이스": { weekendMin: 3 },
+  "딸기 베이스": { weekendMin: 3 },
+  "복숭아 베이스 (농축액)": { weekendMin: 2 },
+  "블루베리 베이스 (리플잼)": { weekendMin: 2 }
+};
+
 const SCHEDULED_TODAY_NOTICES = [
   {
     startDate: "2026-07-15",
@@ -1087,14 +1094,17 @@ function applyChecklistConfig(config) {
   if (Array.isArray(config?.inventory) && config.inventory.length) {
     inventoryItems = config.inventory
       .filter((item) => item?.name)
-      .map((item) => ({
-        name: item.name,
-        category: item.category || "재고",
-        unit: item.unit || "개",
-        min: Number(item.min),
-        weekendMin: Number(item.weekendMin),
-        note: item.note || ""
-      }));
+      .map((item) => {
+        const override = INVENTORY_THRESHOLD_OVERRIDES[item.name] || {};
+        return {
+          name: item.name,
+          category: item.category || "재고",
+          unit: item.unit || "개",
+          min: Number(override.min ?? item.min),
+          weekendMin: Number(override.weekendMin ?? item.weekendMin),
+          note: item.note || ""
+        };
+      });
     changed = true;
   }
 
