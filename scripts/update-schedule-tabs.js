@@ -7,6 +7,20 @@ const pubhtmlUrl = `${publishedSheetUrl}/pubhtml`;
 const scheduleDataPath = path.join(__dirname, "..", "schedule-data.js");
 const indexPath = path.join(__dirname, "..", "index.html");
 
+function parseCliDate(argv = process.argv.slice(2)) {
+  const rawDateArg = argv.find((arg) => arg.startsWith("--date="));
+  if (!rawDateArg) return new Date();
+
+  const value = rawDateArg.slice("--date=".length);
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) {
+    throw new Error(`Invalid --date value: ${value}. Expected YYYY-MM-DD.`);
+  }
+
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day), 12);
+}
+
 function fetchText(url, redirectCount = 0) {
   return new Promise((resolve, reject) => {
     https.get(url, (response) => {
@@ -413,13 +427,14 @@ function updateIndexVersion(source) {
 }
 
 async function main() {
+  const targetDate = parseCliDate();
   const html = await fetchText(pubhtmlUrl);
   const tabs = parsePublishedWeeklyTabs(html);
   if (!tabs.length) {
     throw new Error("No published weekly tabs were found.");
   }
 
-  const activeTabs = pickActiveTabs(tabs);
+  const activeTabs = pickActiveTabs(tabs, targetDate);
   const parsedDays = mergeDays(await Promise.all(activeTabs.map(async (tab) => {
     const sheetHtml = await fetchText(tab.htmlUrl);
     return parseScheduleHtml(sheetHtml, tab.label);
@@ -434,6 +449,7 @@ async function main() {
     fs.writeFileSync(indexPath, updateIndexVersion(indexSource));
   }
 
+  console.log(`Target date: ${targetDate.toISOString().slice(0, 10)}`);
   console.log(`Selected schedule tabs: ${activeTabs.map((tab) => tab.label).join(", ")}`);
   console.log(`Parsed schedule days: ${parsedDays.length}`);
   console.log(`Schedule config changed: ${scheduleChanged ? "yes" : "no"}`);
