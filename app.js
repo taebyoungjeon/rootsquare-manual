@@ -124,6 +124,14 @@ const INVENTORY_THRESHOLD_OVERRIDES = {
 
 const SCHEDULED_TODAY_NOTICES = [
   {
+    startDate: "2026-08-06",
+    endDate: "2026-08-13",
+    label: "행사",
+    title: "8/13 진천교육지원청 학생오케스트라 가족음악회",
+    text: "8월 13일 목요일 오후 6시 30분 카페 루트스퀘어에서 진행됩니다. 공연 구역과 좌석, 이동 동선, 전원선 안전, 주차 안내 및 카페 운영 변경 여부를 사전에 확인합니다.",
+    important: true
+  },
+  {
     startDate: "2026-07-15",
     endDate: "2026-07-15",
     label: "운영",
