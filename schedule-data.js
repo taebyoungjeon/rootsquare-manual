@@ -2866,6 +2866,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "김수연",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
