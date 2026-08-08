@@ -2459,11 +2459,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "최연재p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2482,7 +2477,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "최연재p",
-              "role": "베이커리 보조",
+              "role": "베이커리카페",
               "isParttimer": true
             }
           ]
