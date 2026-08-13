@@ -980,7 +980,13 @@ function isStayHistoryTextFile(file) {
 function extractStayHistoryText(file) {
   const mimeType = String(file.getMimeType() || "");
   const text = mimeType === MimeType.GOOGLE_DOCS
-    ? DocumentApp.openById(file.getId()).getBody().getText()
+    ? UrlFetchApp.fetch(
+      `https://www.googleapis.com/drive/v3/files/${encodeURIComponent(file.getId())}/export?mimeType=text%2Fplain`,
+      {
+        headers: { Authorization: `Bearer ${ScriptApp.getOAuthToken()}` },
+        muteHttpExceptions: false,
+      },
+    ).getContentText("UTF-8")
     : file.getBlob().getDataAsString("UTF-8");
 
   return String(text || "")
@@ -1053,30 +1059,56 @@ function migrateStayHistoryImageErrorsToArchive() {
   const values = sheet.getDataRange().getValues();
   if (values.length <= 1) return 0;
 
-  let migrated = 0;
-  for (let rowIndex = 1; rowIndex < values.length; rowIndex += 1) {
-    const row = values[rowIndex];
+  const rowsByFileId = new Map();
+  const statusAndMemo = values.slice(1).map((row) => [row[12], row[13]]);
+  values.slice(1).forEach((row, rowIndex) => {
     const fileId = String(row[2] || "").trim();
     const category = String(row[5] || "").trim();
     const status = String(row[12] || "").trim();
-    const isAnalysisFailure = category === "분석 오류"
+    const isAnalysisFailure = status !== "숨김" && (
+      category === "분석 오류"
       || category === "분석 대기"
       || status === "분석오류"
-      || status === "분석대기";
-    if (!fileId || !isAnalysisFailure) continue;
+      || status === "분석대기"
+    );
+    if (!fileId || !isAnalysisFailure) return;
 
+    if (!rowsByFileId.has(fileId)) rowsByFileId.set(fileId, []);
+    rowsByFileId.get(fileId).push(rowIndex);
+  });
+
+  const processedImageIds = new Set(getOrCreateStayHistoryFilesSheet()
+    .getDataRange()
+    .getValues()
+    .slice(1)
+    .filter((row) => String(row[4] || "").trim() === "이미지보관")
+    .map((row) => String(row[0] || "").trim())
+    .filter(Boolean));
+  let migrated = 0;
+  rowsByFileId.forEach((rowIndexes, fileId) => {
     try {
       const file = DriveApp.getFileById(fileId);
-      if (!isStayHistoryImageFile(file)) continue;
+      if (!isStayHistoryImageFile(file)) return;
       const migratedAt = Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm:ss");
       archiveStayHistoryImage(file, migratedAt, "기존 이미지 분석 오류 이력에서 원본 보관으로 전환했습니다.");
-      markStayHistoryFileProcessed(file, migratedAt, "이미지보관", "기존 분석 오류 이력을 숨기고 원본 이미지만 보관");
-      sheet.getRange(rowIndex + 1, 13).setValue("숨김");
-      sheet.getRange(rowIndex + 1, 14).setValue("이미지 자동 분석 중단 정책에 따라 원본 보관 목록으로 전환했습니다.");
+      if (!processedImageIds.has(fileId)) {
+        markStayHistoryFileProcessed(file, migratedAt, "이미지보관", "기존 분석 오류 이력을 숨기고 원본 이미지만 보관");
+        processedImageIds.add(fileId);
+      }
+      rowIndexes.forEach((rowIndex) => {
+        statusAndMemo[rowIndex] = [
+          "숨김",
+          "이미지 자동 분석 중단 정책에 따라 원본 보관 목록으로 전환했습니다."
+        ];
+      });
       migrated += 1;
     } catch (error) {
       console.error(`이미지 보관 전환 실패 (${fileId}): ${error && error.message ? error.message : error}`);
     }
+  });
+
+  if (migrated > 0) {
+    sheet.getRange(2, 13, statusAndMemo.length, 2).setValues(statusAndMemo);
   }
 
   return migrated;
@@ -1088,7 +1120,13 @@ function getStayHistoryStatus() {
   const imageArchiveSheet = getOrCreateStayHistoryImageArchiveSheet();
   const historyRows = historySheet.getDataRange().getValues();
   const fileRows = filesSheet.getDataRange().getValues();
-  const counts = fileRows.slice(1).reduce((map, row) => {
+  const latestFileRows = new Map();
+  fileRows.slice(1).forEach((row) => {
+    const fileId = String(row[0] || "").trim();
+    if (fileId) latestFileRows.set(fileId, row);
+  });
+  const uniqueFileRows = Array.from(latestFileRows.values());
+  const counts = uniqueFileRows.reduce((map, row) => {
     const status = String(row[4] || "미상").trim() || "미상";
     map[status] = (map[status] || 0) + 1;
     return map;
@@ -1100,7 +1138,7 @@ function getStayHistoryStatus() {
     imageAnalysisEnabled: false,
     historyCount: Math.max(0, historyRows.length - 1),
     imageArchiveCount: Math.max(0, imageArchiveSheet.getLastRow() - 1),
-    processedFileCount: Math.max(0, fileRows.length - 1),
+    processedFileCount: uniqueFileRows.length,
     processedStatusCounts: counts,
     recentHistory: historyRows.slice(Math.max(1, historyRows.length - 6)).map((row) => ({
       processedAt: row[0],
@@ -1111,7 +1149,7 @@ function getStayHistoryStatus() {
       status: row[12],
       memo: row[13]
     })),
-    recentFiles: fileRows.slice(Math.max(1, fileRows.length - 10)).map((row) => ({
+    recentFiles: uniqueFileRows.slice(-10).map((row) => ({
       fileName: row[1],
       processedAt: row[3],
       status: row[4],
