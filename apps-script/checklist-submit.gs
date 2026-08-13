@@ -9,8 +9,10 @@ const INVENTORY_LOG_SHEET_NAME = "재고 체크 기록";
 const INVENTORY_CONFIG_SHEET_NAME = "재고 기준 관리";
 const STAY_HISTORY_SHEET_NAME = "스테이 운영 히스토리";
 const STAY_HISTORY_FILES_SHEET_NAME = "스테이 운영 파일 처리";
+const STAY_HISTORY_IMAGE_ARCHIVE_SHEET_NAME = "스테이 이미지 보관";
 const STAY_HISTORY_FOLDER_ID = "1UmB77py6fV54HMioIIezNiCDx8A_vSBV";
 const STAY_HISTORY_RETRY_HOURS = [7, 13, 19];
+const STAY_HISTORY_TEXT_MAX_LENGTH = 12000;
 const EXPERIENCE_CALENDAR_ID = "d6c7726ae5a4132721099e1863c40e85cdaef4f7717972df9d4d78d743d825c7@group.calendar.google.com";
 const STAY_CALENDAR_ID = "rj9pk11r8jcl6nndpjfbg0jdg8@group.calendar.google.com";
 const TIMEZONE = "Asia/Seoul";
@@ -734,6 +736,30 @@ function getOrCreateStayHistoryFilesSheet() {
   return sheet;
 }
 
+function getOrCreateStayHistoryImageArchiveSheet() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = spreadsheet.getSheetByName(STAY_HISTORY_IMAGE_ARCHIVE_SHEET_NAME);
+  if (!sheet) {
+    sheet = spreadsheet.insertSheet(STAY_HISTORY_IMAGE_ARCHIVE_SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow([
+      "보관일시",
+      "파일ID",
+      "파일명",
+      "파일URL",
+      "파일생성일",
+      "MIME유형",
+      "상태",
+      "메모"
+    ]);
+    sheet.setFrozenRows(1);
+  }
+
+  return sheet;
+}
+
 function getStayHistoryConfig() {
   const sheet = getOrCreateStayHistorySheet();
   const values = sheet.getDataRange().getValues();
@@ -792,36 +818,20 @@ function setupDailyStayHistoryTrigger() {
   });
 }
 
-function authorizeStayHistoryExternalRequest() {
-  const response = UrlFetchApp.fetch("https://generativelanguage.googleapis.com", {
-    method: "get",
-    muteHttpExceptions: true
-  });
-  return response.getResponseCode();
-}
-
 function runDailyStayHistoryImport() {
   const lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
-    if (!apiKey) {
-      return {
-        ok: false,
-        imported: 0,
-        skipped: 0,
-        messages: ["GEMINI_API_KEY가 없어 새 파일을 처리하지 않았습니다."]
-      };
-    }
-
+    const migrated = migrateStayHistoryImageErrorsToArchive();
     const folder = DriveApp.getFolderById(STAY_HISTORY_FOLDER_ID);
     const processedIds = getProcessedStayHistoryFileIds();
     const files = folder.getFiles();
     const imported = [];
+    const archived = [];
     const skipped = [];
     const maxImportsPerRun = 30;
 
-    while (files.hasNext() && imported.length + skipped.length < maxImportsPerRun) {
+    while (files.hasNext() && imported.length + archived.length + skipped.length < maxImportsPerRun) {
       const file = files.next();
       const fileId = file.getId();
 
@@ -832,9 +842,10 @@ function runDailyStayHistoryImport() {
       const result = importStayHistoryFile(file);
       if (result.ok) {
         imported.push(result.event);
+      } else if (result.archived) {
+        archived.push(result.archive);
       } else {
         skipped.push(result.message);
-        if (result.retryable) break;
       }
     }
 
@@ -847,6 +858,8 @@ function runDailyStayHistoryImport() {
     return {
       ok: true,
       imported: imported.length,
+      archived: archived.length,
+      migrated,
       skipped: skipped.length,
       remaining,
       messages: skipped
@@ -864,7 +877,9 @@ function getProcessedStayHistoryFileIds() {
     .filter((row) => {
       const fileId = String(row[0] || "").trim();
       const status = String(row[4] || "").trim();
-      return status === "건너뜀" || (status === "완료" && successfulHistoryIds.has(fileId));
+      return status === "건너뜀"
+        || status === "이미지보관"
+        || (status === "완료" && successfulHistoryIds.has(fileId));
     })
     .map((row) => String(row[0] || "").trim())
     .filter(Boolean));
@@ -904,13 +919,26 @@ function importStayHistoryFile(file) {
 
   try {
     const mimeType = file.getMimeType();
-    if (!String(mimeType || "").startsWith("image/")) {
+    if (isStayHistoryImageFile(file)) {
+      const archive = archiveStayHistoryImage(file, processedAt, "이미지 자동 분석을 생략하고 원본 링크만 보관했습니다.");
+      markStayHistoryFileProcessed(file, processedAt, "이미지보관", "이미지 자동 분석 생략 · 원본 Drive 파일 보관");
+      return { ok: false, archived: true, archive };
+    }
+
+    if (!isStayHistoryTextFile(file)) {
       const message = `지원하지 않는 파일 형식: ${mimeType || "알 수 없음"}`;
       markStayHistoryFileProcessed(file, processedAt, "건너뜀", message);
       return { ok: false, message };
     }
 
-    const analysis = analyzeStayHistoryImage(file);
+    const sourceText = extractStayHistoryText(file);
+    if (!sourceText) {
+      const message = "기록할 텍스트가 없는 파일입니다.";
+      markStayHistoryFileProcessed(file, processedAt, "건너뜀", message);
+      return { ok: false, message };
+    }
+
+    const analysis = createStayHistoryTextRecord(file, sourceText);
     const event = appendStayHistoryEvent({
       processedAt,
       eventDate: analysis.eventDate || Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd"),
@@ -928,46 +956,136 @@ function importStayHistoryFile(file) {
       memo: analysis.memo || ""
     });
 
-    if (analysis.retryable) {
-      markStayHistoryFileProcessed(file, processedAt, "재시도대기", event.memo || event.summary);
-      return {
-        ok: false,
-        retryable: true,
-        message: event.memo || event.summary || "일시적인 API 오류로 다음 실행 때 재시도합니다."
-      };
-    }
-
     markStayHistoryFileProcessed(file, processedAt, "완료", event.title);
     return { ok: true, event };
   } catch (error) {
     const message = error && error.message ? error.message : String(error);
-    appendStayHistoryEvent({
-      processedAt,
-      eventDate: Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd"),
-      fileId,
-      fileName,
-      fileUrl,
-      category: "분석 오류",
-      title: fileName,
-      summary: "자동 분석 중 오류가 발생해 원본 캡처 확인이 필요합니다.",
-      facts: "파일이 Drive 폴더에 새로 추가되었습니다.",
-      issues: "",
-      manualNeeded: "N",
-      manualSuggestions: "Apps Script 실행 로그와 Gemini API 키/응답 상태를 확인합니다.",
-      status: "분석오류",
-      memo: message.slice(0, 500)
-    });
     markStayHistoryFileProcessed(file, processedAt, "오류", message);
     return { ok: false, message };
   }
 }
 
+function isStayHistoryImageFile(file) {
+  return String(file.getMimeType() || "").startsWith("image/");
+}
+
+function isStayHistoryTextFile(file) {
+  const mimeType = String(file.getMimeType() || "");
+  return mimeType === MimeType.GOOGLE_DOCS
+    || mimeType.startsWith("text/")
+    || mimeType === "application/json"
+    || mimeType === "application/xml";
+}
+
+function extractStayHistoryText(file) {
+  const mimeType = String(file.getMimeType() || "");
+  const text = mimeType === MimeType.GOOGLE_DOCS
+    ? DocumentApp.openById(file.getId()).getBody().getText()
+    : file.getBlob().getDataAsString("UTF-8");
+
+  return String(text || "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim()
+    .slice(0, STAY_HISTORY_TEXT_MAX_LENGTH);
+}
+
+function createStayHistoryTextRecord(file, sourceText) {
+  const lines = String(sourceText || "")
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const firstLine = lines[0] || file.getName();
+  const summarySource = lines.slice(0, 3).join(" ");
+  const summary = summarySource.length > 300
+    ? `${summarySource.slice(0, 297)}...`
+    : summarySource;
+
+  return {
+    eventDate: Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd"),
+    category: "텍스트 운영 기록",
+    title: firstLine.length > 80 ? `${firstLine.slice(0, 77)}...` : firstLine,
+    summary: summary || "Drive에 등록된 텍스트 원문을 운영 히스토리로 보관했습니다.",
+    facts: [sourceText],
+    issues: [],
+    manualNeeded: "N",
+    manualSuggestions: ["운영 중요도와 매뉴얼 반영 필요 여부를 관리자가 확인합니다."],
+    status: "검토대기",
+    memo: "AI 이미지 분석 없이 텍스트 원문 중심으로 자동 기록했습니다."
+  };
+}
+
+function getArchivedStayHistoryImageFileIds() {
+  const sheet = getOrCreateStayHistoryImageArchiveSheet();
+  const values = sheet.getDataRange().getValues();
+  return new Set(values.slice(1)
+    .map((row) => String(row[1] || "").trim())
+    .filter(Boolean));
+}
+
+function archiveStayHistoryImage(file, archivedAt, memo) {
+  const sheet = getOrCreateStayHistoryImageArchiveSheet();
+  const fileId = file.getId();
+  if (!getArchivedStayHistoryImageFileIds().has(fileId)) {
+    sheet.appendRow([
+      archivedAt,
+      fileId,
+      file.getName(),
+      file.getUrl(),
+      Utilities.formatDate(file.getDateCreated(), TIMEZONE, "yyyy-MM-dd HH:mm:ss"),
+      file.getMimeType(),
+      "원본보관",
+      memo || ""
+    ]);
+  }
+
+  return {
+    fileId,
+    fileName: file.getName(),
+    fileUrl: file.getUrl(),
+    status: "원본보관"
+  };
+}
+
+function migrateStayHistoryImageErrorsToArchive() {
+  const sheet = getOrCreateStayHistorySheet();
+  const values = sheet.getDataRange().getValues();
+  if (values.length <= 1) return 0;
+
+  let migrated = 0;
+  for (let rowIndex = 1; rowIndex < values.length; rowIndex += 1) {
+    const row = values[rowIndex];
+    const fileId = String(row[2] || "").trim();
+    const category = String(row[5] || "").trim();
+    const status = String(row[12] || "").trim();
+    const isAnalysisFailure = category === "분석 오류"
+      || category === "분석 대기"
+      || status === "분석오류"
+      || status === "분석대기";
+    if (!fileId || !isAnalysisFailure) continue;
+
+    try {
+      const file = DriveApp.getFileById(fileId);
+      if (!isStayHistoryImageFile(file)) continue;
+      const migratedAt = Utilities.formatDate(new Date(), TIMEZONE, "yyyy-MM-dd HH:mm:ss");
+      archiveStayHistoryImage(file, migratedAt, "기존 이미지 분석 오류 이력에서 원본 보관으로 전환했습니다.");
+      markStayHistoryFileProcessed(file, migratedAt, "이미지보관", "기존 분석 오류 이력을 숨기고 원본 이미지만 보관");
+      sheet.getRange(rowIndex + 1, 13).setValue("숨김");
+      sheet.getRange(rowIndex + 1, 14).setValue("이미지 자동 분석 중단 정책에 따라 원본 보관 목록으로 전환했습니다.");
+      migrated += 1;
+    } catch (error) {
+      console.error(`이미지 보관 전환 실패 (${fileId}): ${error && error.message ? error.message : error}`);
+    }
+  }
+
+  return migrated;
+}
+
 function getStayHistoryStatus() {
-  const props = PropertiesService.getScriptProperties();
-  const apiKey = props.getProperty("GEMINI_API_KEY") || "";
-  const model = props.getProperty("GEMINI_MODEL") || "gemini-2.0-flash";
   const historySheet = getOrCreateStayHistorySheet();
   const filesSheet = getOrCreateStayHistoryFilesSheet();
+  const imageArchiveSheet = getOrCreateStayHistoryImageArchiveSheet();
   const historyRows = historySheet.getDataRange().getValues();
   const fileRows = filesSheet.getDataRange().getValues();
   const counts = fileRows.slice(1).reduce((map, row) => {
@@ -978,10 +1096,10 @@ function getStayHistoryStatus() {
 
   return {
     ok: true,
-    hasGeminiKey: Boolean(apiKey),
-    geminiKeyLooksLikeAiStudio: /^AIza/.test(apiKey),
-    model,
+    importMode: "text-only",
+    imageAnalysisEnabled: false,
     historyCount: Math.max(0, historyRows.length - 1),
+    imageArchiveCount: Math.max(0, imageArchiveSheet.getLastRow() - 1),
     processedFileCount: Math.max(0, fileRows.length - 1),
     processedStatusCounts: counts,
     recentHistory: historyRows.slice(Math.max(1, historyRows.length - 6)).map((row) => ({
@@ -1012,116 +1130,6 @@ function markStayHistoryFileProcessed(file, processedAt, status, message) {
     status,
     message || ""
   ]);
-}
-
-function analyzeStayHistoryImage(file) {
-  const apiKey = PropertiesService.getScriptProperties().getProperty("GEMINI_API_KEY");
-  if (!apiKey) {
-    return {
-      category: "분석 대기",
-      title: file.getName(),
-      summary: "GEMINI_API_KEY Script Property를 설정하면 캡처 내용을 자동 분석합니다.",
-      facts: ["파일이 Drive 폴더에 새로 추가되었습니다."],
-      issues: [],
-      manualNeeded: "N",
-      manualSuggestions: [],
-      status: "분석대기",
-      memo: "Apps Script 프로젝트 설정 > 스크립트 속성에 GEMINI_API_KEY를 추가해주세요."
-    };
-  }
-
-  const blob = file.getBlob();
-  const model = PropertiesService.getScriptProperties().getProperty("GEMINI_MODEL") || "gemini-2.0-flash";
-  const prompt = [
-    "너는 루트스퀘어/만나씨이에이의 운영 매뉴얼 관리자다.",
-    "첨부된 카카오톡/메신저/현장 캡처를 읽고, 운영 히스토리로 남길 사건만 정리한다.",
-    "확인되지 않은 내용은 추측하지 말고, '확인 필요'라고 쓴다.",
-    "직원 개인 비난 표현은 줄이고, 운영 개선 관점으로 정리한다.",
-    "반드시 아래 JSON 형식 하나만 반환한다.",
-    "{",
-    '  "eventDate": "YYYY-MM-DD 또는 확인 필요",',
-    '  "category": "스테이 정비|스테이 고객응대|장비 유지보수|청소/위생|근무관리|기타 중 하나",',
-    '  "title": "짧은 제목",',
-    '  "summary": "2문장 이내 요약",',
-    '  "facts": ["캡처에서 확인되는 사실"],',
-    '  "issues": ["운영상 문제가 된 점"],',
-    '  "manualNeeded": "Y 또는 N",',
-    '  "manualSuggestions": ["매뉴얼 또는 체크리스트에 반영할 제안"],',
-    '  "status": "검토대기",',
-    '  "memo": "확인 필요 사항"',
-    "}"
-  ].join("\n");
-  const payload = {
-    contents: [{
-      role: "user",
-      parts: [
-        { text: prompt },
-        {
-          inlineData: {
-            mimeType: blob.getContentType(),
-            data: Utilities.base64Encode(blob.getBytes())
-          }
-        }
-      ]
-    }],
-    generationConfig: {
-      temperature: 0.2,
-      responseMimeType: "application/json"
-    }
-  };
-  const response = UrlFetchApp.fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(apiKey)}`,
-    {
-      method: "post",
-      contentType: "application/json",
-      payload: JSON.stringify(payload),
-      muteHttpExceptions: true
-    }
-  );
-  const statusCode = response.getResponseCode();
-  const responseText = response.getContentText();
-
-  if (statusCode < 200 || statusCode >= 300) {
-    const retryable = statusCode === 429 || statusCode === 503;
-    return {
-      category: retryable ? "분석 대기" : "분석 오류",
-      title: file.getName(),
-      summary: `Gemini API 오류 ${statusCode}로 자동 분석하지 못했습니다.`,
-      facts: ["파일이 Drive 폴더에 새로 추가되었습니다."],
-      issues: [],
-      manualNeeded: "N",
-      manualSuggestions: retryable
-        ? ["Gemini API 쿼터 또는 일시 장애가 해소된 뒤 다시 자동 분석합니다."]
-        : ["Apps Script 실행 로그에서 Gemini API 응답을 확인합니다."],
-      status: retryable ? "분석대기" : "분석오류",
-      retryable,
-      memo: responseText.slice(0, 500)
-    };
-  }
-
-  const parsed = JSON.parse(responseText);
-  const text = parsed.candidates && parsed.candidates[0] && parsed.candidates[0].content
-    ? parsed.candidates[0].content.parts.map((part) => part.text || "").join("\n")
-    : "";
-  return parseJsonObjectText(text);
-}
-
-function parseJsonObjectText(text) {
-  const cleaned = String(text || "")
-    .replace(/^```json\s*/i, "")
-    .replace(/^```\s*/i, "")
-    .replace(/```$/i, "")
-    .trim();
-
-  try {
-    return JSON.parse(cleaned);
-  } catch (error) {
-    const match = cleaned.match(/\{[\s\S]*\}/);
-    if (match) {
-      return JSON.parse(match[0]);
-    }
-    throw error;
-  }
 }
 
 function appendStayHistoryEvent(event) {
