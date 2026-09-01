@@ -112,7 +112,8 @@ const DEFAULT_INVENTORY_ITEMS = [
   { name: "감귤생강 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
   { name: "허니자몽 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
   { name: "애플레몬 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
-  { name: "패션후르츠 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 }
+  { name: "패션후르츠 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 },
+  { name: "ABC주스 베이스", category: "베이스", unit: "피처", min: 1, weekendMin: 2 }
 ];
 
 const INVENTORY_THRESHOLD_OVERRIDES = {
