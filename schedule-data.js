@@ -1,3842 +1,16 @@
 window.SCHEDULE_SHEET_CONFIG = {
   csvUrls: [
     {
-      label: "26년9월1주",
-      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=1858911720&single=true&output=csv"
-    },
-    {
       label: "26년9월2주",
       url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=1169581208&single=true&output=csv"
+    },
+    {
+      label: "26년9월3주",
+      url: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwavZryZXcgw2zNyrl7X3rXQtkbpSpgDiDl4oUuuKTOqdxWDIWISCpOdSC2npPHZyGCUjPkpvYeOpJ/pub?gid=1379562302&single=true&output=csv"
     }
   ],
-  parsedLabel: "26년9월1주, 26년9월2주",
+  parsedLabel: "26년9월2주, 26년9월3주",
   parsedDays: [
-    {
-      "date": "8/31",
-      "label": "월",
-      "key": "2026-08-31",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "베이",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "커리",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/1",
-      "label": "화",
-      "key": "2026-09-01",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "20:00~20:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/2",
-      "label": "수",
-      "key": "2026-09-02",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "20:00~20:30",
-          "assignments": [
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/3",
-      "label": "목",
-      "key": "2026-09-03",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/4",
-      "label": "금",
-      "key": "2026-09-04",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "엄윤희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/5",
-      "label": "토",
-      "key": "2026-09-05",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "07:00~07:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "07:30~08:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리 보조",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "이모",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "피크",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "타임",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "청소",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "&",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "정리",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "date": "9/6",
-      "label": "일",
-      "key": "2026-09-06",
-      "sheetLabel": "26년9월1주",
-      "blocks": [
-        {
-          "time": "07:00~07:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "07:30~08:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "08:00~08:30",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리 보조",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "08:30~09:00",
-          "assignments": [
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:00~09:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "건물오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "09:30~10:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:00~10:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "이모",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "10:30~11:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:00~11:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "11:30~12:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "남미현p",
-              "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "농장",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "12:00~12:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "12:30~13:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:00~13:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "13:30~14:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "피크",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:00~14:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "타임",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "14:30~15:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "청소",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "15:00~15:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "&",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "윤예림p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "16:00~16:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "우미덕p",
-              "role": "정리",
-              "isParttimer": true
-            },
-            {
-              "name": "김영훈p",
-              "role": "근무",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "16:30~17:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "17:00~17:30",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "17:30~18:00",
-          "assignments": [
-            {
-              "name": "김채승",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "송은혁p",
-              "role": "카페",
-              "isParttimer": true
-            }
-          ]
-        },
-        {
-          "time": "18:00~18:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "18:30~19:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:00~19:30",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "19:30~20:00",
-          "assignments": [
-            {
-              "name": "최현미",
-              "role": "인포마감",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "인포마감",
-              "isParttimer": false
-            }
-          ]
-        }
-      ]
-    },
     {
       "date": "9/7",
       "label": "월",
@@ -3867,7 +41,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "09:00~09:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "건물오픈",
               "isParttimer": false
             },
@@ -3882,7 +56,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "09:30~10:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -3897,7 +71,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "10:00~10:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -3912,7 +86,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "10:30~11:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -3927,7 +101,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "11:00~11:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -3942,7 +116,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "11:30~12:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페오픈",
               "isParttimer": false
             },
@@ -3982,7 +156,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "13:00~13:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4002,7 +176,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "13:30~14:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4022,7 +196,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "14:00~14:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4042,7 +216,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "14:30~15:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4062,7 +236,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "15:00~15:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4082,7 +256,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "15:30~16:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4102,7 +276,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:00~16:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4122,7 +296,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:30~17:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4137,7 +311,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "17:00~17:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             }
@@ -4147,7 +321,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "17:30~18:00",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -4162,7 +336,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "18:00~18:30",
           "assignments": [
             {
-              "name": "유송희",
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
@@ -5964,6 +2138,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -5992,6 +2171,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "임구슬",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "교육",
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -6024,6 +2208,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
+              "name": "지유미p",
+              "role": "교육",
+              "isParttimer": true
+            },
+            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -6047,6 +2236,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채승",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "교육",
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -6585,11 +2779,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
             }
           ]
         },
@@ -6629,11 +2818,6 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "백창현p",
               "role": "베이커리카페",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
               "isParttimer": true
             }
           ]
@@ -6680,11 +2864,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "우미덕p",
               "role": "피크",
               "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
             }
           ]
         },
@@ -6729,11 +2908,6 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "우미덕p",
               "role": "타임",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
               "isParttimer": true
             }
           ]
@@ -6780,11 +2954,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "우미덕p",
               "role": "청소",
               "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
             }
           ]
         },
@@ -6830,11 +2999,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "우미덕p",
               "role": "&",
               "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
             }
           ]
         },
@@ -6875,11 +3039,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "우미덕p",
               "role": "카페",
               "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
-              "isParttimer": true
             }
           ]
         },
@@ -6904,11 +3063,6 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "우미덕p",
               "role": "정리",
-              "isParttimer": true
-            },
-            {
-              "name": "김수연p",
-              "role": "근무",
               "isParttimer": true
             }
           ]
@@ -7230,6 +3384,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "남미현p",
               "role": "베이커리카페",
               "isParttimer": true
@@ -7257,6 +3416,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7290,6 +3454,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7317,6 +3486,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7360,6 +3534,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7397,6 +3576,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7445,6 +3629,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7487,6 +3676,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7535,6 +3729,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7575,6 +3774,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7610,6 +3814,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
               "name": "우미덕p",
               "role": "정리",
               "isParttimer": true
@@ -7637,6 +3846,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "송은혁p",
               "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
               "isParttimer": true
             }
           ]
@@ -7736,6 +3950,3977 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/14",
+      "label": "월",
+      "key": "2026-09-14",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "20:00~20:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/15",
+      "label": "화",
+      "key": "2026-09-15",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/16",
+      "label": "수",
+      "key": "2026-09-16",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/17",
+      "label": "목",
+      "key": "2026-09-17",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/18",
+      "label": "금",
+      "key": "2026-09-18",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "엄윤희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "20:00~20:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "인포마감",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/19",
+      "label": "토",
+      "key": "2026-09-19",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "07:00~07:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "07:30~08:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리 보조",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "이모",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "피크",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "타임",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "청소",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "&",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "백창현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "정리",
+              "isParttimer": true
+            },
+            {
+              "name": "김수연p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "유송희",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "9/20",
+      "label": "일",
+      "key": "2026-09-20",
+      "sheetLabel": "26년9월3주",
+      "blocks": [
+        {
+          "time": "07:00~07:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "07:30~08:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "08:00~08:30",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리 보조",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "08:30~09:00",
+          "assignments": [
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "09:00~09:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "건물오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "09:30~10:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "10:00~10:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "이모",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "10:30~11:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "11:00~11:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페오픈",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "11:30~12:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "남미현p",
+              "role": "베이커리카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "농장",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "12:00~12:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "12:30~13:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "13:00~13:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "13:30~14:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "피크",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "14:00~14:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "타임",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "14:30~15:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "청소",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "15:00~15:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "&",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "윤예림p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "16:00~16:30",
+          "assignments": [
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "우미덕p",
+              "role": "정리",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "근무",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "16:30~17:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "17:00~17:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "17:30~18:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "송은혁p",
+              "role": "카페",
+              "isParttimer": true
+            }
+          ]
+        },
+        {
+          "time": "18:00~18:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "18:30~19:00",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:00~19:30",
+          "assignments": [
+            {
+              "name": "김채승",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "19:30~20:00",
+          "assignments": [
+            {
+              "name": "김채승",
               "role": "카페",
               "isParttimer": false
             },
