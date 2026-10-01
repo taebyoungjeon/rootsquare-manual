@@ -3250,7 +3250,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김영훈p",
-              "role": "이모",
+              "role": "무인",
               "isParttimer": true
             }
           ]
@@ -3280,7 +3280,12 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김영훈p",
-              "role": "농장",
+              "role": "키즈",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "무인",
               "isParttimer": true
             }
           ]
@@ -3320,7 +3325,12 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김영훈p",
-              "role": "농장",
+              "role": "키즈",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "11~1",
               "isParttimer": true
             }
           ]
@@ -3355,7 +3365,12 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김영훈p",
-              "role": "농장",
+              "role": "키즈",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "11~1",
               "isParttimer": true
             }
           ]
@@ -3392,6 +3407,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
+            },
+            {
+              "name": "김영훈p",
+              "role": "11~1",
+              "isParttimer": true
             }
           ]
         },
@@ -3436,6 +3456,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "김영훈p",
               "role": "근무",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "11~1",
               "isParttimer": true
             }
           ]
@@ -3582,6 +3607,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김영훈p",
               "role": "근무",
               "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "2~4",
+              "isParttimer": true
             }
           ]
         },
@@ -3631,6 +3661,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "김영훈p",
               "role": "근무",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "2~4",
               "isParttimer": true
             }
           ]
@@ -3682,6 +3717,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김영훈p",
               "role": "근무",
               "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "2~4",
+              "isParttimer": true
             }
           ]
         },
@@ -3727,6 +3767,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김영훈p",
               "role": "근무",
               "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "2~4",
+              "isParttimer": true
             }
           ]
         },
@@ -3761,6 +3806,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "김영훈p",
               "role": "근무",
+              "isParttimer": true
+            },
+            {
+              "name": "김영훈p",
+              "role": "2~4",
               "isParttimer": true
             }
           ]
