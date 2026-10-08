@@ -2238,6 +2238,11 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "09:00~09:30",
           "assignments": [
             {
+              "name": "강세진",
+              "role": "근무",
+              "isParttimer": false
+            },
+            {
               "name": "최현미",
               "role": "건물오픈",
               "isParttimer": false
@@ -2259,7 +2264,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "강세진",
-              "role": "이모교육",
+              "role": "근무",
               "isParttimer": false
             },
             {
@@ -2278,7 +2283,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "준비",
               "isParttimer": false
             }
@@ -2289,17 +2294,17 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "강세진",
-              "role": "(수연)",
+              "role": "근무",
+              "isParttimer": false
+            },
+            {
+              "name": "유송희",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "최현미",
               "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지유미p (확인)",
-              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2318,7 +2323,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터1부",
               "isParttimer": false
             }
@@ -2329,17 +2334,17 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "강세진",
-              "role": "카페",
+              "role": "근무",
+              "isParttimer": false
+            },
+            {
+              "name": "유송희",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "최현미",
               "role": "카페오픈",
-              "isParttimer": false
-            },
-            {
-              "name": "지유미p (확인)",
-              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2358,7 +2363,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터1부",
               "isParttimer": false
             }
@@ -2369,12 +2374,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "강세진",
-              "role": "카페",
+              "role": "근무",
               "isParttimer": false
             },
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2383,14 +2388,9 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지유미p (확인)",
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "김채원p",
@@ -2403,7 +2403,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터1부",
               "isParttimer": false
             }
@@ -2413,13 +2413,8 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "11:30~12:00",
           "assignments": [
             {
-              "name": "강세진",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2428,9 +2423,9 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "김채원p",
@@ -2443,7 +2438,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터1부",
               "isParttimer": false
             }
@@ -2454,7 +2449,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2463,9 +2458,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2478,7 +2478,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "정리",
               "isParttimer": false
             }
@@ -2488,8 +2488,13 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "12:30~13:00",
           "assignments": [
             {
+              "name": "강세진",
+              "role": "근무",
+              "isParttimer": false
+            },
+            {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2503,9 +2508,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2524,7 +2534,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2538,9 +2548,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2553,7 +2568,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터2부",
               "isParttimer": false
             }
@@ -2569,7 +2584,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2583,9 +2598,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2603,7 +2623,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터2부",
               "isParttimer": false
             }
@@ -2619,7 +2639,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -2633,9 +2653,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2653,7 +2678,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터2부",
               "isParttimer": false
             }
@@ -2668,11 +2693,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
@@ -2683,9 +2703,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2698,7 +2723,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
-              "name": "김수연 (확인)",
+              "name": "무인 놀이터",
               "role": "놀이터2부",
               "isParttimer": false
             }
@@ -2713,6 +2738,51 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
+              "name": "최현미",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
+            },
+            {
+              "name": "지소희",
+              "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "우미덕p",
+              "role": "피크지원",
+              "isParttimer": true
+            },
+            {
+              "name": "무인 놀이터",
+              "role": "정리",
+              "isParttimer": false
+            }
+          ]
+        },
+        {
+          "time": "15:30~16:00",
+          "assignments": [
+            {
+              "name": "강세진",
+              "role": "근무",
+              "isParttimer": false
+            },
+            {
               "name": "유송희",
               "role": "카페",
               "isParttimer": false
@@ -2728,49 +2798,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
-              "role": "인포",
-              "isParttimer": false
-            },
-            {
-              "name": "지소희",
-              "role": "베이커리카페",
-              "isParttimer": false
-            },
-            {
-              "name": "우미덕p",
-              "role": "피크지원",
+              "name": "김수연p",
+              "role": "카페",
               "isParttimer": true
             },
             {
-              "name": "김수연 (확인)",
-              "role": "정리",
-              "isParttimer": false
-            }
-          ]
-        },
-        {
-          "time": "15:30~16:00",
-          "assignments": [
-            {
-              "name": "강세진",
-              "role": "근무",
-              "isParttimer": false
-            },
-            {
-              "name": "최현미",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
-              "name": "지유미p (확인)",
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "지소희",
@@ -2788,8 +2823,8 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:00~16:30",
           "assignments": [
             {
-              "name": "강세진",
-              "role": "근무",
+              "name": "유송희",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -2803,9 +2838,14 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "지유미p (확인)",
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
               "role": "인포",
-              "isParttimer": false
+              "isParttimer": true
             },
             {
               "name": "우미덕p",
@@ -2818,11 +2858,6 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "16:30~17:00",
           "assignments": [
             {
-              "name": "강세진",
-              "role": "근무",
-              "isParttimer": false
-            },
-            {
               "name": "유송희",
               "role": "카페",
               "isParttimer": false
@@ -2831,6 +2866,21 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "임구슬",
+              "role": "카페",
+              "isParttimer": false
+            },
+            {
+              "name": "김수연p",
+              "role": "카페",
+              "isParttimer": true
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -2861,11 +2911,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
-            },
-            {
-              "name": "임구슬",
-              "role": "카페",
-              "isParttimer": false
             }
           ]
         },
@@ -2889,7 +2934,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "마감",
               "isParttimer": false
             },
             {
@@ -2903,11 +2948,6 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "19:00~19:30",
           "assignments": [
             {
-              "name": "유송희",
-              "role": "카페",
-              "isParttimer": false
-            },
-            {
               "name": "임구슬",
               "role": "카페",
               "isParttimer": false
@@ -2918,10 +2958,15 @@ window.SCHEDULE_SHEET_CONFIG = {
           "time": "19:30~20:00",
           "assignments": [
             {
-              "name": "유송희",
-              "role": "마감",
+              "name": "임구슬",
+              "role": "카페",
               "isParttimer": false
-            },
+            }
+          ]
+        },
+        {
+          "time": "20:00~20:30",
+          "assignments": [
             {
               "name": "임구슬",
               "role": "마감",
@@ -3136,11 +3181,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
-              "name": "지유미p",
-              "role": "인포",
-              "isParttimer": true
-            },
-            {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -3724,6 +3764,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -3940,17 +3985,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -3962,6 +4002,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채원p",
               "role": "베이커리카페",
               "isParttimer": true
+            },
+            {
+              "name": "이모 농장",
+              "role": "준비",
+              "isParttimer": false
             },
             {
               "name": "김영훈p",
@@ -3975,17 +4020,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -3999,6 +4039,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "이모 농장",
+              "role": "이모1부",
+              "isParttimer": false
+            },
+            {
               "name": "김영훈p",
               "role": "놀이터1부",
               "isParttimer": true
@@ -4010,7 +4055,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -4037,6 +4082,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채원p",
               "role": "베이커리카페",
               "isParttimer": true
+            },
+            {
+              "name": "이모 농장",
+              "role": "이모1부",
+              "isParttimer": false
             },
             {
               "name": "김영훈p",
@@ -4074,6 +4124,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "이모 농장",
+              "role": "이모1부",
+              "isParttimer": false
+            },
+            {
               "name": "김영훈p",
               "role": "놀이터1부",
               "isParttimer": true
@@ -4106,6 +4161,11 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "지소희",
               "role": "베이커리카페",
+              "isParttimer": false
+            },
+            {
+              "name": "이모 농장",
+              "role": "정리",
               "isParttimer": false
             },
             {
@@ -4184,6 +4244,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
+              "name": "이모 농장",
+              "role": "이모2부",
+              "isParttimer": false
+            },
+            {
               "name": "김영훈p",
               "role": "놀이터2부",
               "isParttimer": true
@@ -4229,6 +4294,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
+              "name": "이모 농장",
+              "role": "이모2부",
+              "isParttimer": false
+            },
+            {
               "name": "김영훈p",
               "role": "놀이터2부",
               "isParttimer": true
@@ -4272,6 +4342,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "우미덕p",
               "role": "피크지원",
               "isParttimer": true
+            },
+            {
+              "name": "이모 농장",
+              "role": "정리",
+              "isParttimer": false
             },
             {
               "name": "김영훈p",
@@ -4442,6 +4517,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -4457,6 +4537,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
