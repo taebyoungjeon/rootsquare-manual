@@ -4520,7 +4520,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "지유미p",
-              "role": "인포",
+              "role": "5시까지",
               "isParttimer": true
             }
           ]
@@ -4537,11 +4537,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "최현미",
               "role": "카페",
               "isParttimer": false
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
-              "isParttimer": true
             }
           ]
         },
