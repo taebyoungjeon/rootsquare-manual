@@ -2437,17 +2437,12 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -2477,17 +2472,12 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -2517,7 +2507,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -3004,6 +2994,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채승",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -3112,6 +3107,16 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채원p",
               "role": "베이커리카페",
               "isParttimer": true
+            },
+            {
+              "name": "이모 농장",
+              "role": "이효선",
+              "isParttimer": false
+            },
+            {
+              "name": "김영훈p",
+              "role": "오픈",
+              "isParttimer": true
             }
           ]
         },
@@ -3210,17 +3215,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "최현미",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -3245,17 +3245,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "최현미",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -3285,7 +3280,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "최현미",
-              "role": "카페오픈",
+              "role": "인포",
               "isParttimer": false
             },
             {
@@ -3682,6 +3677,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "임구슬",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -6597,11 +6597,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
-              "name": "지유미p",
-              "role": "인포",
-              "isParttimer": true
-            },
-            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -6644,11 +6639,6 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7235,6 +7225,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "임구슬",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
@@ -7460,11 +7455,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": true
             },
             {
-              "name": "지유미p",
-              "role": "인포",
-              "isParttimer": true
-            },
-            {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
@@ -7492,11 +7482,6 @@ window.SCHEDULE_SHEET_CONFIG = {
             {
               "name": "윤예림p",
               "role": "카페",
-              "isParttimer": true
-            },
-            {
-              "name": "지유미p",
-              "role": "인포",
               "isParttimer": true
             },
             {
@@ -7953,6 +7938,11 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "김채승",
               "role": "카페",
               "isParttimer": false
+            },
+            {
+              "name": "지유미p",
+              "role": "인포",
+              "isParttimer": true
             }
           ]
         },
