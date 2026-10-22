@@ -2827,7 +2827,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -2872,7 +2872,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -2917,7 +2917,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "유송희",
-              "role": "카페오픈",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -3047,7 +3047,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "놀이터",
-              "role": "정리",
+              "role": "놀이터1부",
               "isParttimer": false
             }
           ]
