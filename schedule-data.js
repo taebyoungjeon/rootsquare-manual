@@ -2502,7 +2502,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2547,7 +2547,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2602,7 +2602,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2652,7 +2652,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2697,7 +2697,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2742,7 +2742,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2782,7 +2782,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2837,7 +2837,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2897,7 +2897,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -2957,7 +2957,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -3012,7 +3012,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
@@ -3062,7 +3062,7 @@ window.SCHEDULE_SHEET_CONFIG = {
               "isParttimer": false
             },
             {
-              "name": "윤예림p",
+              "name": "김연주p",
               "role": "카페",
               "isParttimer": true
             },
