@@ -1836,11 +1836,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -1866,11 +1861,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -1901,11 +1891,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -1936,11 +1921,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2046,11 +2026,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2086,11 +2061,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2116,11 +2086,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2146,11 +2111,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "지소희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2174,7 +2134,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "근무",
+              "role": "면접",
               "isParttimer": true
             },
             {
@@ -2191,11 +2151,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2219,7 +2174,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "근무",
+              "role": "면접",
               "isParttimer": true
             },
             {
@@ -2236,11 +2191,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2264,7 +2214,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "근무",
+              "role": "이모농장",
               "isParttimer": true
             },
             {
@@ -2281,11 +2231,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2309,7 +2254,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "근무",
+              "role": "이모농장",
               "isParttimer": true
             },
             {
@@ -2326,11 +2271,6 @@ window.SCHEDULE_SHEET_CONFIG = {
               "name": "엄윤희",
               "role": "베이커리카페",
               "isParttimer": false
-            },
-            {
-              "name": "백창현p",
-              "role": "베이커리카페",
-              "isParttimer": true
             }
           ]
         },
@@ -2354,7 +2294,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "근무",
+              "role": "이모농장",
               "isParttimer": true
             },
             {
@@ -2389,7 +2329,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "김연주p",
-              "role": "인포",
+              "role": "이모농장",
               "isParttimer": true
             },
             {
