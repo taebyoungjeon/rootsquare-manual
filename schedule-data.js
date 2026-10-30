@@ -3127,7 +3127,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "지소희",
-              "role": "놀이/정리",
+              "role": "베이커리카페",
               "isParttimer": false
             },
             {
@@ -3242,12 +3242,12 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "유송희",
-              "role": "카페",
+              "role": "놀이/정리",
               "isParttimer": false
             },
             {
               "name": "김채승",
-              "role": "놀이/정리",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -3262,7 +3262,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "놀이/정리",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -3277,7 +3277,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "놀이/정리",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -3292,7 +3292,7 @@ window.SCHEDULE_SHEET_CONFIG = {
           "assignments": [
             {
               "name": "김채승",
-              "role": "놀이/정리",
+              "role": "카페",
               "isParttimer": false
             },
             {
@@ -3835,7 +3835,7 @@ window.SCHEDULE_SHEET_CONFIG = {
             },
             {
               "name": "지소희",
-              "role": "놀이/정리",
+              "role": "베이커리카페",
               "isParttimer": false
             }
           ]
